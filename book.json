@@ -1,0 +1,53 @@
+{
+    "title": "Colin-Blog",
+    "description": "描述",
+    "plugins": [
+        "editlink",
+        "splitter",
+        "image-captions",
+        "github",
+        "anchors",
+        "disqus",
+        "tbfed-pagefooter",
+        "github-buttons",
+        "expandable-chapters",
+        "-lunr", "-search", "search-pro"
+    ],
+    "pluginsConfig": {
+        "editlink": {
+            "base": "https://github.com/zhaoda/webpack-handbook/edit/master/content",
+            "label": "Edit This Page",
+            "multilingual": false
+        },
+        "image-captions": {
+            "caption": "图 - _CAPTION_",
+            "align": "center"
+        },
+        "github": {
+            "url": "https://github.com/your/repo"
+        },
+        "disqus": {
+            "shortName": "GitBook"
+        },
+        "sitemap": {
+            "hostname": "http://colin-chang.site/"
+        },
+        "tbfed-pagefooter": {
+            "copyright": "&copy Colin Chang",
+            "modify_label": "文件修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "github-buttons": {
+            "repo": "colin-chang/colin-chang.github.io/subscription",
+            "types": [
+                "star",
+                "watch"
+            ],
+            "size": "large"
+        },
+        "expandable-chapters": {}
+    },
+    "styles": {
+        "website": "website.css"
+    }
+}

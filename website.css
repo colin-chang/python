@@ -16,3 +16,7 @@ abbr[title] {
     line-height: 1.5;
     font-size: 14px;
 }
+
+.markdown-section small{
+    font-size: 85%;
+}

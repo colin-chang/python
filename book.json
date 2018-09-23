@@ -2,10 +2,7 @@
     "title": "PythonBook",
     "description": "Python学习笔记",
     "plugins": [
-        "disqus",
-        "-lunr", "-search", "search-pro",
-        "prism",
-        "-highlight",
+        "-lunr", "-search", "search-plus",
         "advanced-emoji",
         "github",
         "multipart",
@@ -20,14 +17,6 @@
         "toggle-chapters"
     ],
     "pluginsConfig": {
-        "disqus": {
-            "shortName": "Idea"
-        },
-        "prism": {
-            "css": [
-                "prismjs/themes/prism-solarizedlight.css"
-            ]
-        },
         "github": {
             "url": "https://github.com/colin-chang/PythonBook"
         },
@@ -60,10 +49,6 @@
                 "weibo", "instapaper"
             ]
         }
-
-
-
-        
     },
     "styles": {
         "website": "website.css"

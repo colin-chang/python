@@ -1,51 +1,69 @@
 {
-    "title": "Colin-Blog",
-    "description": "描述",
+    "title": "PythonBook",
+    "description": "Python学习笔记",
     "plugins": [
-        "editlink",
-        "splitter",
-        "image-captions",
-        "github",
-        "anchors",
         "disqus",
+        "-lunr", "-search", "search-pro",
+        "prism",
+        "-highlight",
+        "advanced-emoji",
+        "github",
+        "multipart",
+        "katex",
+        "splitter",
         "tbfed-pagefooter",
-        "github-buttons",
-        "expandable-chapters",
-        "-lunr", "-search", "search-pro"
+        "anchors",
+        "favicon",
+        "sitemap",
+        "copy-code-button",
+        "-sharing",
+        "toggle-chapters"
     ],
     "pluginsConfig": {
-        "editlink": {
-            "base": "https://github.com/zhaoda/webpack-handbook/edit/master/content",
-            "label": "Edit This Page",
-            "multilingual": false
+        "disqus": {
+            "shortName": "Idea"
         },
-        "image-captions": {
-            "caption": "图 - _CAPTION_",
-            "align": "center"
+        "prism": {
+            "css": [
+                "prismjs/themes/prism-solarizedlight.css"
+            ]
         },
         "github": {
-            "url": "https://github.com/your/repo"
-        },
-        "disqus": {
-            "shortName": "GitBook"
-        },
-        "sitemap": {
-            "hostname": "http://colin-chang.site/"
+            "url": "https://github.com/colin-chang/PythonBook"
         },
         "tbfed-pagefooter": {
             "copyright": "&copy Colin Chang",
             "modify_label": "文件修订时间：",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },
-        "github-buttons": {
-            "repo": "colin-chang/colin-chang.github.io/subscription",
-            "types": [
-                "star",
-                "watch"
-            ],
-            "size": "large"
+        "favicon": {
+            "shortcut": "assets/images/favicon.ico",
+            "bookmark": "assets/images/favicon.ico",
+            "appleTouch": "assets/images/apple-touch-icon.png",
+            "appleTouchMore": {
+                "120x120": "assets/images/apple-touch-icon-120x120.png",
+                "180x180": "assets/images/apple-touch-icon-180x180.png"
+            }
         },
-        "expandable-chapters": {}
+        "sitemap": {
+            "hostname": "https://colinchang.gitbook.io/colinblog/"
+        },
+        "sharing": {
+            "facebook": true,
+            "twitter": true,
+            "google": false,
+            "weibo": false,
+            "instapaper": false,
+            "vk": false,
+            "all": [
+                "facebook", "google", "twitter",
+                "weibo", "instapaper"
+            ]
+        }
+
+
+
+        
     },
     "styles": {
         "website": "website.css"

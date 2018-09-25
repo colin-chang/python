@@ -17,6 +17,10 @@ abbr[title] {
     font-size: 14px;
 }
 
+.markdown-section *{
+    font-size: 14px;
+    /*font-family: '微软雅黑';*/
+}
 .markdown-section small{
     font-size: 85%;
 }

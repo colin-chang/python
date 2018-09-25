@@ -69,7 +69,9 @@ $ sudo dpkg -i <deb安装包>
 
 #### 2) 安装Sogou
 * 搜索并打开`语言支持`修改`键盘输入法系统`为`fcitx`
+
 ![语言支持](../img/inputmethod.png '键盘输入法系统')
+
 * 如果没有`fcitx`选项则需要先安装`fctix`。默认有`fctix`选项可以跳过此步
 
     ```

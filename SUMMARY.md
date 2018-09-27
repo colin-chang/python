@@ -21,8 +21,9 @@
     * [1.1 Linux内核与发行版](part2/versions.md)
     * [1.2 Linux目录结构](part2/directory.md)
     * [1.3 Linux命令介绍](part2/directive.md)
-    * [1.4 文件和目录命令](part2/file.md)
-
+    * [1.4 文件和目录](part2/file.md)
+    * [1.5 远程管理](part2/remote.md)
+    * [1.6 用户(组)权限管理](part2/permision.md)
     * [1.8 vi编辑器](part2/vi.md)
     * [1.9 Ubuntu安装常用软件](part2/installsoftware.md)
     * [1.10 CentOS配置FTP与Nginx](part2/ftpnginx.md)

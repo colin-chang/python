@@ -1,15 +1,15 @@
-## Linux远程管理
+# Linux远程管理
 
 | 命令 | 说明 |
 |:-|:-|
 | `logout [n]`|注销登录的shell。不在shell执行报错|
-| [`shutdown [-options] [time]`](#1shutdown命令)|关机/重启|
-| [`ifconfig [-options]`](#2ifconfig命令)|查看或配置网卡信息|
-| [`ping [-options] destination`](#3ping命令)|检测到目标地址连接通讯是否正常|
-| [`ssh [-options] [user@hostname]`](#4ssh命令)|远程连接服务器|
-| <a href='#5scp命令'>`scp [-options] [[user@]host1:]file1 [[user@]host2:]file2`</a>|远程复制文件|
+| [`shutdown [-options] [time]`](#1-shutdown命令)|关机/重启|
+| [`ifconfig [-options]`](#2-ifconfig命令)|查看或配置网卡信息|
+| [`ping [-options] destination`](#3-ping命令)|检测到目标地址连接通讯是否正常|
+| [`ssh [-options] [user@hostname]`](#4-ssh命令)|远程连接服务器|
+| <a href='#5-scp命令'>`scp [-options] [[user@]host1:]file1 [[user@]host2:]file2`</a>|远程复制文件|
 
-### 1.shutdown命令
+## 1. shutdown命令
 ```
 # 命令格式
 $ shutdown [-options] [time]
@@ -17,7 +17,7 @@ $ shutdown [-options] [time]
 * `shutdown`命令一般需要root权限执行
 * 远程维护服务器时，最好不要关闭系统(关闭后启动不方便)，一般选择重启系统
 
-##### 1) options
+#### 1) options
 
 options | 含义
 :-|:-
@@ -25,7 +25,7 @@ options | 含义
 `-r` | 重新启动。`shutdown -r now` 等价于 `reboot`
 `-c` | 取消代执行的关机或重启任务，必须在关机或重启之前执行
 
-##### 2) time
+#### 2) time
 
 options | 含义
 :-|:-
@@ -51,7 +51,7 @@ $ shutdown -r 20:30
 $ shutdown -c
 ```
 
-### 2.ifconfig命令
+## 2. ifconfig命令
 ```
 # 命令格式
 $ ifconfig [-options]
@@ -68,7 +68,7 @@ $ ifconfig
 $ ifconfig | grep inet
 ```
 
-### 3.ping命令
+## 3. ping命令
 ```
 # 命令格式
 $ ping [-options] destination
@@ -78,8 +78,8 @@ $ ping [-options] destination
 * Linux中`ping`命令不会自动停止，可以使用`Ctrl + C`退出。
 * `ping 127.0.0.1` 可以测试本机网卡是否正常工作 
 
-### 4.ssh命令
-#### 4.1 ssh基础使用
+## 4. ssh命令
+### 4.1 ssh基础使用
 * ssh客户端是一种使用`Secure Shell(ssh)`协议连接到运行了ssh服务端的远程服务器上。
 * ssh是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议
     * 有效防止远程管理过程中的信息泄漏
@@ -104,7 +104,7 @@ $ ssh colin@192.168.1.196
 $ ssh -p 2222 colin@192.168.1.198 
 ```
 
-#### 4.2 ssh高级配置
+### 4.2 ssh高级配置
 ssh配置信息都保存在`~/.ssh` 中
 
 配置文件|作用
@@ -113,7 +113,7 @@ known_hosts|作为客户端。记录曾连接服务器授权。ssh第一次连�
 authorized_keys|作为服务端。客户端的免密连接公钥文件
 config|作为客户端。记录连接服务器配置的别名
 
-##### 1) 服务器别名
+#### 1) 服务器别名
 远程管理命令(如ssh,scp等)连接一台服务器市一般都需要提供 服务器地址、端口、用户名 ，每次输入比较繁琐，我们可以把经常使用的服务器连接参数打包记录到配置文件中并为其设置一个简单易记的别名。这样我们就可以通过别名方便的访问服务器，而不需要提供地址、端口、用户名等信息了。
 
 配置方法如下：
@@ -131,7 +131,7 @@ $ ssh ColinMac
 $ scp 123.txt ColinMac:Desktop
 ```
 
-##### 2) 免密登录
+#### 2) 免密登录
 * 远程管理命令(如ssh,scp等)每次都需要提供用户密码保证安全。除此之外，我们也可配置使用非对称加密方式，避免每次输入密码
 * 配置免密登录后，ssh连接和scp等远程管理命令都不需要再输密码
 * 配置只有以下两步：
@@ -144,7 +144,7 @@ $ ssh-keygen
 ssh-copy-id user@hostname   # 文件会自动上传为服务器特定文件 ～/.ssh/authorized_keys
 ```
 
-### 5.scp命令
+## 5. scp命令
 ```
 # 命令格式
 $ scp [-options] [[user@]host1:]file1 [[user@]host2:]file2

@@ -5,8 +5,8 @@
 * [前言](README.md)
 
 ## Part I - Python基础
-* 1.计算机组成原理
-* 2.Python开发环境
+* [1.Python简介](part1/intro.md)
+* [2.Python开发环境](part1/ide.md)
 * 3.Python变量
 * 4.流程控制语句
 * 5.高级变量类型
@@ -16,7 +16,7 @@
 * 9.异常处理
 * 10.模块和包
 
-## Part Ⅱ - Python和Linux高级编程
+## Part Ⅱ - Python高级编程
 * 1.网络编程
 * 2.并发编程 
 * 3.数据库编程

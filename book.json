@@ -2,7 +2,6 @@
     "title": "PythonBook",
     "description": "Python学习笔记",
     "plugins": [
-        "-lunr", "-search", "search-plus",
         "advanced-emoji",
         "github",
         "multipart",
@@ -18,7 +17,7 @@
     ],
     "pluginsConfig": {
         "github": {
-            "url": "https://github.com/colin-chang/PythonBook"
+            "url": "https://github.com/colin-chang/Python"
         },
         "tbfed-pagefooter": {
             "copyright": "&copy Colin Chang",
@@ -35,7 +34,7 @@
             }
         },
         "sitemap": {
-            "hostname": "https://colinchang.gitbook.io/colinblog/"
+            "hostname": "https://colinchang.gitbook.io/python/"
         },
         "sharing": {
             "facebook": true,

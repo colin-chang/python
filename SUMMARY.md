@@ -17,21 +17,12 @@
 * 10.模块和包
 
 ## Part Ⅱ - Python和Linux高级编程
-* [1.Linux基础](part2/linuxfundamental.md)
-    * [1.1 Linux版本简介](part2/versions.md)
-    * [1.2 Linux命令简介](part2/directive.md)
-    * [1.3 软件安装](part2/installsoftware.md)
-    * [1.4 文件目录管理](part2/file.md)
-    * [1.5 远程管理](part2/remote.md)
-    * [1.6 用户(组)权限管理](part2/permision.md)
-    * [1.7 系统维护](part2/system.md)
-* 2.网络编程
-* 3.并发编程 
-* 4.正则表达式
-* 5.数据库编程
-* 6.Python语法强化
-* 7.项目1：mini-web服务器
-* 8.项目2：mini-web框架
+* 1.网络编程
+* 2.并发编程 
+* 3.数据库编程
+* 4.Python语法强化
+* 5.项目1：mini-web服务器
+* 6.项目2：mini-web框架
 
 ## Part Ⅲ - 前端开发
 * 1.html

@@ -5,16 +5,18 @@
 * [前言](README.md)
 
 ## Part I - Python基础
-* [1.Python简介](part1/intro.md)
-* [2.Python开发环境](part1/ide.md)
-* 3.Python变量
-* 4.流程控制语句
-* 5.高级变量类型
-* 6.函数应用
-* 7.文件操作
-* 8.面向对象
-* 9.异常处理
-* 10.模块和包
+* [1. Python基础](part1/intro.md)
+    * [1.1 执行方式](part1/ide.md)
+    * [1.2 数据类型](part1/variabletype.md)
+    * [1.3 运算符](part1/operator.md)
+    * [1.4 输入输出](part1/inout.md)
+    * [1.5 代码规范](part1/standard.md)
+* 5. 流程控制语句
+* 6. 函数应用
+* 7. 文件操作
+* 8. 面向对象
+* 9. 异常处理
+* 10. 模块和包
 
 ## Part Ⅱ - Python高级编程
 * 1.网络编程

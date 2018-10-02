@@ -1,11 +1,8 @@
-# Python开发环境
+# Python执行方式
 
  * [1. 解释器执行](#1-解释器执行)
  * [2. 交互式执行python](#2-交互式执行python)
  * [3. Python开发IDE](#3-python开发ide)
-
-
-Python程序通常有 解释器执行、交互式执行、IDE执行等三种常用的执行方式，下面进行依次介绍。
 
 ## 1. 解释器执行
 
@@ -99,3 +96,4 @@ $ sudo python3 -m pip install --upgrade pip setuptools wheel
 执行完毕后重试执行`ipython`成功
 
 ## 3. Python开发IDE
+推荐使用PyCharm。Pycharm是流行的Python集成开发环境,支持Windows/mac OS/Linux。

@@ -2,17 +2,11 @@
     "title": "PythonBook",
     "description": "Python学习笔记",
     "plugins": [
-        "advanced-emoji",
-        "github",
         "multipart",
         "katex",
         "splitter",
         "tbfed-pagefooter",
-        "anchors",
-        "favicon",
-        "sitemap",
-        "copy-code-button",
-        "-sharing",
+        "anchors",        
         "toggle-chapters"
     ],
     "pluginsConfig": {

@@ -7,12 +7,13 @@
 ## Part I - Python基础
 * [1. Python基础](part1/intro.md)
     * [1.1 执行方式](part1/ide.md)
-    * [1.2 数据类型](part1/variabletype.md)
-    * [1.3 运算符](part1/operator.md)
+    * [1.2 代码规范](part1/standard.md)
+    * [1.3 数据类型](part1/variabletype.md)
     * [1.4 输入输出](part1/inout.md)
-    * [1.5 代码规范](part1/standard.md)
-* 5. 流程控制语句
-* 6. 函数应用
+    * [1.5 运算符](part1/operator.md)
+    * [1.6 流程控制语句](part1/processctrl.md)
+    * [1.7 函数](part1/function.md)
+* [2. 模块](part1/module.md)
 * 7. 文件操作
 * 8. 面向对象
 * 9. 异常处理

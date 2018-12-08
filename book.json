@@ -1,6 +1,6 @@
 {
-    "title": "PythonBook",
-    "description": "Python学习笔记",
+    "title": "Python-软件开发",
+    "description": "Python—人工智能主流语言",
     "plugins": [
         "multipart",
         "katex",
@@ -11,7 +11,7 @@
     ],
     "pluginsConfig": {
         "github": {
-            "url": "https://github.com/colin-chang/Python"
+            "url": "https://github.com/colin-chang/python"
         },
         "tbfed-pagefooter": {
             "copyright": "&copy Colin Chang",
@@ -28,7 +28,7 @@
             }
         },
         "sitemap": {
-            "hostname": "https://colinchang.gitbook.io/python/"
+            "hostname": "http://colin-chang.site/book/python/"
         },
         "sharing": {
             "facebook": true,

@@ -1,6 +1,6 @@
 # Python Book
 
-* [About Me](http://colin-chang.site/about/)
+* [About Me](http://colin-chang.site/contact/)
 * [Colin's Blog](http://colin-chang.site)
 * [前言](README.md)
 

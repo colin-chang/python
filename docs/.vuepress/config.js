@@ -17,8 +17,6 @@ module.exports = {
     ],
     themeConfig: {
         repo: 'https://github.com/colin-chang/python',
-        editLinks: true,
-        editLinkText: '帮助改善此页面！',
         nav: [{
                 text: 'Get Start',
                 link: '/basic/intro'

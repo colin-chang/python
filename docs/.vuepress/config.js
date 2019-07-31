@@ -11,7 +11,6 @@ module.exports = {
     plugins: [
         '@vuepress/active-header-links',
         '@vuepress/back-to-top',
-        '@vuepress/last-updated',
         ['@vuepress/google-analytics', {
             ga: 'UA-131744342-1'
         }]

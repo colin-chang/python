@@ -1,15 +1,11 @@
 # Python执行方式
 
- * [1. 解释器执行](#1-解释器执行)
- * [2. 交互式执行python](#2-交互式执行python)
- * [3. Python开发IDE](#3-python开发ide)
-
 ## 1. 解释器执行
 
 ```sh
 # python 2.x解释器
 $ python xxx.py
-·
+
 # python 2.x解释器
 $ python3 xxx.py
 ```

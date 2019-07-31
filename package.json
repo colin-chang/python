@@ -1,0 +1,30 @@
+{
+  "name": "Python",
+  "version": "1.0.0",
+  "description": "Python—人工智能主流语言",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "deploy": "gh-pages -d docs/.vuepress/dist",
+    "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colin-chang/python.git"
+  },
+  "author": "Colin Chang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colin-chang/python/issues"
+  },
+  "homepage": "https://colin-chang.site/books/python",
+  "devDependencies": {
+    "@vuepress/plugin-active-header-links": "^1.0.0-rc.1",
+    "@vuepress/plugin-back-to-top": "^1.0.0-rc.1",
+    "@vuepress/plugin-google-analytics": "^1.0.0-rc.1"
+  }
+}

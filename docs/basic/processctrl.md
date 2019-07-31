@@ -1,11 +1,8 @@
 # 流控制语句
 
-* [1. 条件语句](#1-条件语句)
-* [2. 循环语句](#2-循环语句)
-
 ## 1. 条件语句
 ### 1.1 if语句
-```
+```py
 if condition1 :
     do something
 elif condition2 :
@@ -56,9 +53,10 @@ while i <= 100:
     i += 1
 
 print(sum)
-
 ```
-> Python不支持 i++/i--等自增自减等语法
+::: warning
+Python不支持 i++/i--等自增自减等语法
+:::
 
 ### 2.2 for in
 Python的`for in`循环与JavaScript类似,相当与C#的foreach

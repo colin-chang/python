@@ -1,8 +1,5 @@
 # 输入输出
 
-* [1. 输入](#1-输入)
-* [2. 输出](#2-输出)
-
 ## 1. 输入
 Python捕获用户输入使用`input`函数。任何输入都将以`str`类型接收。
 
@@ -11,7 +8,9 @@ age = input("请输入您的年龄")
 print(age)
 ```
 
->  python2.x中使用`raw_input`函数获取用户输入，而`input`则只能接收表达式。python3.x已将两者合并为`input`函数
+::: warning  
+python2.x中使用`raw_input`函数获取用户输入，而`input`则只能接收表达式。python3.x已将两者合并为`input`函数
+:::
 
 ## 2. 输出
 Python中输出内容使用`Print`函数。普通的输入一个字符串可以直接使用`print(str)`如,`print("Hello")`。如果要按照特定格输出内容或者输出动态内容，就需要利用格式化输出，Python的格式化输出于C语言类似。
@@ -31,7 +30,9 @@ Python中输出内容使用`Print`函数。普通的输入一个字符串可以�
 %g | ％f和％e 的简写
 %G | ％f和％E的简写
 
-> 格式化输出中使用使用`%%`输出`%`
+::: warning 
+格式化输出中使用使用`%%`输出`%`
+:::
 
 ```py
 name = "colin"
@@ -60,7 +61,9 @@ and its balance is 10.20
 my homework is finished about 87.50%
 ```
 
-> print函数`end`参数控制输出内容以什么结尾，默认为`end='\n'`输出完成自动换行,如果想单行输出可以指定`end=''`
+::: tip
+print函数`end`参数控制输出内容以什么结尾，默认为`end='\n'`输出完成自动换行,如果想单行输出可以指定`end=''`
+:::
 
 ```py
 print(123)

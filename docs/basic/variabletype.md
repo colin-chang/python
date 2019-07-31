@@ -5,7 +5,7 @@ python中主要包含以下数据类型：
 * 数字型
     * 整型(int)
     * 浮点型(float)
-    * 布尔型(bool)  Python中布尔型于C语言的`真假`类似，0 为Ture，非0 为False
+    * 布尔型(bool)  Python中布尔型于C语言的`真假`类似，0 为False，非0 为Ture
     * 复数型(complex)
 * 非数字类型
     * 字符串(str)

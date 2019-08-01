@@ -3,19 +3,20 @@
 ## 1. 条件语句
 ### 1.1 if语句
 ```py
-if condition1 :
+if condition1:
     do something
-elif condition2 :
+elif condition2:
     do something
-elif condition3 :
+elif condition3:
     do something
-else :
+else:
     do something
 ```
 * `if`之后判断条件可以省略括号，如果判断条件较长则可以使用括号后将条件换行
 * 判断条件之后使用`:`
 * 执行内容之前的代码缩进为一个tab键，或者4个空格。Tab和空格不可混用
 * 缩进相同的代码视作一个代码块，而不是通过{}来界定
+* Python当中不支持`switch`语法
 
 ```py
 import random
@@ -37,7 +38,7 @@ else:
 ### 2.1 while
 
 ```py
-while condition :
+while condition:
     do something
 ```
 
@@ -53,8 +54,22 @@ while i <= 100:
 print(sum)
 ```
 ::: warning
-Python不支持 `i++` / `i--` 等自增自减等语法
+* Python不支持 `i++` / `i--` 等自增自减等语法
+* Python不支持 `do while`语法
+* Python支持`break`和`continue`语法
 :::
+
+```py
+# 输出99乘法表
+i = 1
+while i <= 9:
+    j = 1
+    while j <= i:
+        print("%d*%d=%d" % (j, i, i * j), end=" ")
+        j += 1
+    i += 1;
+    print("")
+```
 
 ### 2.2 for in
 Python的`for in`循环与JavaScript类似,相当与C#的foreach

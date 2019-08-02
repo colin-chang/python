@@ -45,6 +45,17 @@ str.find("haha") # -1
 str.index("haha") # 异常
 ```
 
+:::tip contains
+Python中字符串没有contains函数，我们可以通过以下两种方式判断是否包含字符串。
+:::
+
+```py
+str = "how do you do"
+
+str.find("do") >= 0     # 根据索引判断是否包含
+"do" in str             # 根据列表元素存在性判断是否包含
+```
+
 ### 2）count
 `count`方法用户统计字符串出现此处。
 ```py

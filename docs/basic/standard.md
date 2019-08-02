@@ -49,3 +49,15 @@ Python官方提供了一系列的PEP(Python增强规范)文档。其中第8篇�
 * PEP8: https://www.python.org/dev/peps/pep-0008/ 
 * Google文档: https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/
 :::
+
+## 5. pass
+在编写代码过程中，如果暂时不确定代码逻辑但需要完成整体代码结构，可以使用`pass`关键字占位，解释器会跳过pass的执行。
+```py
+num = 0
+if num < 0:
+    pass    # 暂不确定代码逻辑而先完成代码结构
+elif num == 0:
+    pass
+else:
+    pass
+```

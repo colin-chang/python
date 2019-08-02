@@ -83,3 +83,19 @@ a
 m
 e
 ```
+
+### 2.3 循环中的else
+在while和for循环当中也可以使用else关键字。执行逻辑是，**只要循环中执行了break则else不执行，否则else必定执行**。此语法仅在Python中存在，较少使用。
+
+```py
+names = ["Colin", "Robin", "Sean"]
+keyword = "Tom"
+for name in names:
+    if name == keyword:
+        print(name)
+        break
+else:
+    print("cannot find %s" % keyword)
+
+# 输出 cannot find Tom
+```

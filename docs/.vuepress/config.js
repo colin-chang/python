@@ -46,6 +46,7 @@ module.exports = {
                     '/basic/io',
                     '/basic/operator',
                     '/basic/processctrl',
+                    '/basic/str',
                     '/basic/function',
                     '/basic/module'
                 ]

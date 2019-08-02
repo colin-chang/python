@@ -59,7 +59,7 @@ Google开源机器学习框架：TensorFlow
 
 * 构思实现，产品早期原型和迭代
 
-    Google、NASA、Facebook都在内部大量地使用Python。
+    YouTube、Google、Yahoo!、NASA都在内部大量地使用Python。
 
 ## 4. Python版本
 

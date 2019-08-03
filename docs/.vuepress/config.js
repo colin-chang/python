@@ -42,7 +42,7 @@ module.exports = {
                     '/basic/intro',
                     '/basic/ide',
                     '/basic/standard',
-                    '/basic/variabletype',
+                    '/basic/datatype',
                     '/basic/io',
                     '/basic/operator',
                     '/basic/processctrl',
@@ -50,6 +50,7 @@ module.exports = {
                     '/basic/list',
                     '/basic/dict',
                     '/basic/function',
+                    '/basic/file',
                     '/basic/module'
                 ]
             },

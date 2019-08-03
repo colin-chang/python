@@ -43,7 +43,7 @@ Linking /usr/local/Cellar/python3/3.6.3... 1 symlinks created
 
 ## 2. 交互式执行Python
 
-#### 1) Python Shell
+### 2.1 Python Shell
 
 直接在Python的shell中输入Python代码，可以立即查看程序执行结果，此为交互式运行Python。
 
@@ -51,7 +51,7 @@ Linking /usr/local/Cellar/python3/3.6.3... 1 symlinks created
 
 可以使用使用 `exit()` 函数或 `ctrl + D` 退出Python Shell。
 
-#### 2) IPython
+### 2.2 IPython
 IPython是一个第三方python的交互式shell，功能远胜于python shell。
 * 支持代码智能提示，自动补全
 * 支持自动缩紧
@@ -91,5 +91,5 @@ $ sudo python3 -m pip install --upgrade pip setuptools wheel
 ```
 执行完毕后重试执行`ipython`成功
 
-## 3. Python开发IDE
+## 3. Python IDE
 推荐使用PyCharm。Pycharm是流行的Python集成开发环境,支持Windows/mac OS/Linux。

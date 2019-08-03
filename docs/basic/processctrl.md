@@ -1,7 +1,6 @@
 # 流控制语句
 
 ## 1. 条件语句
-### 1.1 if语句
 ```py
 if condition1:
     do something
@@ -71,7 +70,7 @@ while i <= 9:
     print("")
 ```
 
-### 2.2 for in
+### 2.2 for...in...
 Python的`for in`循环与JavaScript类似,相当与C#的foreach
 ```py
 for x in "name":

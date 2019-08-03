@@ -7,7 +7,7 @@ Python中的列表是一个动态数据集合，类似于JavaScript的数组或C
 list = [1,3.14,"awsome",True]  # 初始化一个列表
 ```
 
-### 1) Create
+### 1.1 Create
 函数|作用
 :-|:-
 append|附加元素
@@ -31,7 +31,7 @@ list2 = ["Jerry","John"]
 list = list1 + list2    # ['Colin', 'Robin', 'Jerry', 'John']
 ```
 
-### 2) Read
+### 1.2 Read
 列表可以使用与字符串相同的下标和切片语法，字符串本质上是字符列表。
 
 ```py
@@ -52,13 +52,13 @@ list = ["Colin","Robin"]
 "Robin" not in list # False
 ```
 
-### 3) Update
+### 1.3 Update
 ```py
 list = ["Colin","Robin"]
 list[0] = "Colin Chang" # ['Colin Chang', 'Robin']
 ```
 
-###  4) Delete
+### 1.4 Delete
 函数|作用
 :-|:-
 pop|出栈最后的元素并返回
@@ -72,8 +72,20 @@ list.remove("Tom")   # ['Colin', 'Robin', 'Sean', 'Jerry']
 del list[2] # ['Colin', 'Robin', 'Jerry'] 删除特定下标的元素
 ```
 
+### 1.5 排序
+```py
+nums = [4,1,3,2]
+nums.sort() # [1,2,3,4] 默认为生序
+nums.sort(reverse=True) # [4,3,2,1] 降序
+
+persons = [{"name": "Colin", "age": 19}, {"name": "Robin", "age": 21}, {"name": "Sean", "age": 20}]
+persons.sort(key=lambda p: p["age"])    # 指定排序规则
+```
+
 ## 2. 元组
-元组与列表类似，但元组定义之后是只读的，内容不允许修改。
+元组与列表类似，但**元组定义之后是只读的，内容不允许修改。**
+
+空元组用`()`表示。元组只有一个元素时，第一个元素后必须加一个逗号,如`nums = (18,)`。
 
 ```py
 person = ("Colin",18)
@@ -81,3 +93,12 @@ name,age = person   # name = 'Colin',age = 18
 ```
 
 开发中，列表多用于存储相同数据类型的多个元素，而元组则多用于组合多个任意类型数据或内容不变的情况，可以存储简单的只读对象。
+
+:::tip 
+利用元组交换变量
+:::
+```py
+a = 1
+b = 2
+a, b = b, a     # 等价于 (a,b) = (b,a)
+```

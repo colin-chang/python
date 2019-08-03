@@ -3,7 +3,7 @@
 ## 1. 声明调用
 ```py
 # 定义函数
-def function_name(arg1: dataType, arg2: dataType, ...):
+def function_name(arg1: dataType, arg2: dataType, ...) -> returnType:
     '''
     函数注释文档
     :param arg1: 第一个参数说明
@@ -20,20 +20,27 @@ function_name(arg2=sth, arg1=sth)
 * 函数必须先定义后调用，Python顺序逐行解释执行
 * 函数注释文档类似于C#中`///`中对函数的说明，可以在`Quick Documentation`中查看(F1)。命令行中可以使用`help()`函数查看，如`help(print)`可以查看`print`函数说明文档
 * 函数参数默认按照函数定义顺序书写。如果只提供部分参数或者无序提供，可以显式声明形参名称
-* 函数参数数据类型可以省略
+* 函数参数和返回值数据类型可以省略
 * 函数有多个返回值时可以通过元组或列表返回。元组做函数返回值时括号可以省略。
 * Python不支持函数重载
 
 ```py
-def sum(a, b):
+# 完整版
+def sum(x: int, y: int) -> int:
     '''
     计算两个数字的和
-    :param a: 第一数字
-    :param b: 第二个数字
-    :return: 和值
+    :param x: 第一个加数
+    :param y:第二个加数
+    :return:和
     '''
-    return a + b
+    return x + y
 
+
+# 简化版
+'''
+def sum(x, y):
+    return x + y
+'''
 
 sum(1, 2)
 sum(b=3, a=1)

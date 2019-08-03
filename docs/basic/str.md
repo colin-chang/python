@@ -57,7 +57,7 @@ str.find("do") >= 0     # 根据索引判断是否包含
 ```
 
 ### 4.2 count
-`count`方法用户统计字符串出现此处。
+`count`方法用户统计字符串出现次数。
 ```py
 str = "Hello world"
 str.count("o")  # 2

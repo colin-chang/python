@@ -42,17 +42,18 @@ module.exports = {
                     '/basic/intro',
                     '/basic/ide',
                     '/basic/standard',
-                    '/basic/datatype',
                     '/basic/io',
+                    '/basic/datatype',
                     '/basic/operator',
                     '/basic/processctrl',
                     '/basic/str',
                     '/basic/list',
                     '/basic/dict',
+                    '/basic/exception',
                     '/basic/function',
-                    '/basic/file',
                     '/basic/oo',
-                    '/basic/module'
+                    '/basic/module',
+                    '/basic/file'
                 ]
             },
             {

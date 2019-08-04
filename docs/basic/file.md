@@ -165,7 +165,7 @@ def backupFile(file: str, backupFile='', binary=False):
 
     # 判断file是否存在且是文件
     if (not os.path.exists(file)) or (not os.path.isfile(file)):
-        return
+        return False
 
     # 确定备份文件名
     if len(backupFile) <= 0:
@@ -194,4 +194,5 @@ def backupFile(file: str, backupFile='', binary=False):
     # 关闭文件
     oldFile.close()
     newFile.close()
+    return True
 ```

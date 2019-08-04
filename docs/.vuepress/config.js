@@ -51,6 +51,7 @@ module.exports = {
                     '/basic/dict',
                     '/basic/function',
                     '/basic/file',
+                    '/basic/oo',
                     '/basic/module'
                 ]
             },

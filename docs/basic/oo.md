@@ -68,12 +68,28 @@ p.name = "Colin"  # 为对象动态扩展属性，仅对当前对象有效
 ## 2. 魔法方法
 Python中具有特殊功能的方法常称为魔法方法。
 ### 2.1 \_\_new\_\_
-`__new__`方法用于创建对象。
+`__new__`方法用于创建对象。该方法定义在`object`类中，被所有类继承。
+
+`__new__`方法至少有一个参数，通常为`cls`,指向要实例化的类自身对象， 此参数在实例化时由Python解释器自动提供。
+
+`__new__`方法把创建的实例作为返回值。如果要重写`__new__`方法需要调用并返回父类或`object`的`__new__`创建的实例。
+
+创建一个对象的过程包含如下三步：
+* 执行`__new__`方法创建实例并返回。
+* 执行`__init__`方法初始化对象。`__new__`方法返回值作为`__init__`方法的`self`参数。
+* 将变量指向新建的对象引用。
+
+**`__new__`方法执行完成并返回结果后才会执行`__init__`方法。**
 
 ### 2.2 \_\_init\_\_
-`__init__`方法用于初始化对象。`__new__`和`__init__`两者组合相当与C#中的构造方法。
+`__init__`方法用于初始化对象。`__new__`和`__init__`组合起来相当与C#中的构造方法。
 
-一般需要在此初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常。
+`__init__`方法至少有一个参数，通常为`self`，指向`__new__`方法创建的实例。
+
+`__init__`方法没有返回值。
+
+
+一般需要在`__init__`方法中初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常。
 
 如果父类定义了多参`__init__`方法，其子类必须也要定义`__init__`方法,参数列表可以与父类不同，但应当在`__init__`方法中调用其所有父类`__init__`方法(非强制)初始化必要属性，否则可能会在访问到未按父类`__init__`方法初始化的成员时触发异常。
 
@@ -202,6 +218,8 @@ print(Person.count)  # 30
 ### 3.2 类方法
 与普通实例属性类似，为了数据安全我们通常会私有化类属性，并通过类方法暴露类属性操作。调用类方法修改的类属性全局有效。同样为避免相互影响，不推荐将类方法通过实例访问。
 
+类方法至少有一个参数，通常为`cls`指向类本身(类本身就是一个对象)。
+
 ```py
 class Person:
     __count = 0  # 类属性
@@ -252,6 +270,66 @@ class Message:
 Message.sendNotification("hello")
 msg = Message()
 msg.sendEmail("hello")
+```
+
+### 3.4 案例--在线用户统计
+```py
+class User:
+    __onlineUsers = []  # 记录所有在线用户
+
+    @classmethod
+    def getOnlineUsers(cls):  # 获取在线用户
+        return cls.__onlineUsers
+
+    @classmethod
+    def addOnlineUser(cls, user):  # 添加在线用户
+        cls.__onlineUsers.append(user)
+
+    @classmethod
+    def removeOnlineUser(cls, id):  # 移除在线用户
+        for user in cls.__onlineUsers:
+            if user.getId() == id:
+                cls.__onlineUsers.remove(user)
+                break
+
+    @staticmethod
+    def displayObjectList(list):  # 打印对象列表
+        listStr = []
+        for item in list:
+            listStr.append(eval(str(item)))
+        print(listStr)
+
+    def __init__(self, id, name):
+        self.__id, self.__name = id, name
+
+    def __str__(self):
+        return "{'id':%d,'name':'%s'}" % (self.__id, self.__name)
+
+    def getId(self):
+        return self.__id
+
+    # 登录
+    def login(self):
+        User.addOnlineUser(self)
+        print("%s login" % self.__name)
+
+    # 登出
+    def logout(self):
+        User.removeOnlineUser(self.__id)
+        print("%s logout" % self.__name)
+
+
+user1 = User(1, "Colin")
+user2 = User(2, "Robin")
+
+user1.login()
+user2.login()
+onlineUsers = User.getOnlineUsers()
+User.displayObjectList(onlineUsers)  # [{'id': 1, 'name': 'Colin'}, {'id': 2, 'name': 'Robin'}]
+
+user2.logout()
+onlineUsers = User.getOnlineUsers()
+User.displayObjectList(onlineUsers)  # [{'id': 1, 'name': 'Colin'}]
 ```
 
 ## 4. 继承

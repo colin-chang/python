@@ -70,7 +70,7 @@ Python中具有特殊功能的方法常称为魔法方法。
 ### 2.1 \_\_new\_\_
 `__new__`方法用于创建对象。该方法定义在`object`类中，被所有类继承。
 
-`__new__`方法至少有一个参数，通常为`cls`,指向要实例化的类自身对象， 此参数在实例化时由Python解释器自动提供。
+`__new__`方法至少有一个参数，通常为`cls`,指向要实例化的类自身对象， 此参数在实例化时由Python解释器自动提供。除了`cls`参数，`__new__`方法参数列表应该与`__init__`方法相同。因为开发者实例化对象时提供的相关初始化参数会首先传递到`__new__`方法中，`__new__`方法必须定义相关形参接收，即使不使用这些参数。
 
 `__new__`方法把创建的实例作为返回值。如果要重写`__new__`方法需要调用并返回父类或`object`的`__new__`创建的实例。
 
@@ -80,6 +80,8 @@ Python中具有特殊功能的方法常称为魔法方法。
 * 将变量指向新建的对象引用。
 
 **`__new__`方法执行完成并返回结果后才会执行`__init__`方法。**
+
+`__new__`方法使用参见[单例类](#_3-4-1-单例类)。
 
 ### 2.2 \_\_init\_\_
 `__init__`方法用于初始化对象。`__new__`和`__init__`组合起来相当与C#中的构造方法。
@@ -272,7 +274,39 @@ msg = Message()
 msg.sendEmail("hello")
 ```
 
-### 3.4 案例--在线用户统计
+### 3.4 类属性案例
+#### 3.4.1 单例类
+```py
+class China:
+    __instance = None
+    __initialized = False
+
+    @classmethod
+    def singleton(cls):
+        return cls.__instance
+
+    def __new__(cls, name):
+        if not cls.__instance:  # 确保只会创建一次
+            cls.__instance = object.__new__(cls)
+        return cls.__instance
+
+    def __init__(self, name):
+        if China.__initialized:  # 确保只会初始化一次
+            return
+        self.__name = name
+        China.__initialized = True
+
+    def getName(self):
+        return self.__name
+
+
+c1, c2, c3 = China("中国"), China("台湾"), China.singleton()
+print(id(c1) == id(c2) == id(c3))
+print(c1.getName())
+print(c2.getName())
+print(c3.getName())
+```
+#### 3.4.2 在线用户统计
 ```py
 class User:
     __onlineUsers = []  # 记录所有在线用户
@@ -367,7 +401,7 @@ tom.eat()
 ```
 
 ### 4.2 多继承
-Python支持多继承。如果多个或多级父类中存在同名方法(实际开发中应当避免)，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
+Python支持多继承。如果多个或多级父类中存在同名方法，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
 
 ```py
 class People:
@@ -405,27 +439,38 @@ C#等强类型多态主要包括方法重载体现的编译时的多态性和虚
 
 以下示例演示了python中重写父类方法体现的简单多态特性。
 ```py
+# 模拟抽象类
 class People:
-    def speak(self):
-        print("说话...")
+    # 模拟抽象方法
+    def sayHi(self):
+        pass
+
+    # 通用业务方法
+    def sleep(self):
+        print("huhuhu...")
 
 
+# 具体业务类
 class Chinese(People):
-    def speak(self):
-        print("说中文...")
+    # 模拟重写实现抽象方法
+    def sayHi(self):
+        print("你好...")
 
 
+# 具体业务类
 class American(People):
-    def speak(self):
-        print("说英文...")
+    # 模拟重写实现抽象方法
+    def sayHi(self):
+        print("Hello...")
 
 
-def saySomething(people: People):
-    people.speak()  #  定义时不确定执行内容，执行时根据调用对象确定实际执行内容
+def greeting(people: People):
+    people.sayHi()  # 定义时不确定执行内容，执行时根据调用对象确定实际执行内容
 
 
-c = Chinese()
-saySomething(c)
-a = American()
-saySomething(a)
+c, a = Chinese(), American()
+greeting(c)
+greeting(a)
 ```
+
+我们常在一个业务基类中完成整理业务流程，实现通用方法(相当于C#中的抽象业务基类的工作)，具体不同的业务方法则只做声明，而后在具体业务子类中重写并实现具体业务方法(相当于C#的具体业务子类的工作)。Python中没有抽象类和抽象方法，但我们可以在基类中定义方法但不实现来模拟抽象方法。

@@ -6,6 +6,7 @@
 * 类示例化与函数调用类似，而不需要像C#一样使用`new`关键字
 * 类中定义的成员名称以`__`开头表示为私有成员，外部不可访问
 * Python中属性相当于C#当中的字段。为了数据安全我们通常将属性私有化而后定义并暴露属性操作方法
+* **Python中每个类本身就是一个对象，可以直接使用类名访问**
 
 ```py
 # 示例代码
@@ -13,10 +14,15 @@ class Person:
     'Person帮助信息'
 
     def __init__(self, name):
-        # 在此初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常
+        '''
+        私有属性
+        一般在此初始化所有私有属性，不管是否在参数列表中传值，
+        否则直接调用属性对应get方法会抛异常
+        '''
         self.__name = name
         self.__age = 0
 
+    # 属性操作方法
     # __name 初始化后只读
     def getName(self):
         return self.__name
@@ -27,6 +33,8 @@ class Person:
     def setAge(self, age):
         self.__age = age if age >= 0 and age <= 100 else 0
 
+
+    # 业务方法
     def sayHi(self):
         print(self.__getText())
 
@@ -59,28 +67,47 @@ p.name = "Colin"  # 为对象动态扩展属性，仅对当前对象有效
 
 ## 2. 魔法方法
 Python中具有特殊功能的方法常称为魔法方法。
-### 2.1 \_\_init\_\_
-`__init__`方法类似与C#当中的构造函数，用于初始化对象。一般需要在构造函数中初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常。
+### 2.1 \_\_new\_\_
+`__new__`方法用于创建对象。
 
-### 2.2 \_\_str\_\_
-C#中一个对象被直接打印时默认会输出其类名，我们可以通过`override`其`ToString()`方法定制输出内容。与之类似，Python中对象被直接`print`时会默认输出类名和对象内存地址，我们可以通过`__str__`方法定制输出内容，该方法必须返回字符串。
+### 2.2 \_\_init\_\_
+`__init__`方法用于初始化对象。`__new__`和`__init__`两者组合相当与C#中的构造方法。
+
+一般需要在此初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常。
+
+如果父类定义了多参`__init__`方法，其子类必须也要定义`__init__`方法,参数列表可以与父类不同，但应当在`__init__`方法中调用其所有父类`__init__`方法(非强制)初始化必要属性，否则可能会在访问到未按父类`__init__`方法初始化的成员时触发异常。
 
 ```py
-class Person:
+class Chinese():
     def __init__(self, name):
         self.__name = name
-        self.__age = 0
 
-    def __str__(self):
-        return "my name is %s and I'm %d" % (self.__name, self.__age)
+    def getName(self):
+        return self.__name
 
-    def setAge(self, age):
-        self.__age = age if age >= 0 and age <= 100 else 0
-        
 
-p = Person("Colin")
-p.setAge(18)
-print(p)  # my name is Colin and I'm 18
+class American():
+    def __init__(self, age):
+        self.__age = age
+
+    def getAge(self):
+        return self.__age
+
+
+class ChineseAmerican(Chinese, American):
+    def __init__(self, name, age, gender):
+        # 调用父类初始化方法
+        Chinese.__init__(self, name)
+        American.__init__(self, age)
+        self.__gender = gender
+
+    def selfIntroduce(self):
+        print("my name is %s,I'm %d years old and my gender is %s"
+              % (self.getName(), self.getAge(), self.__gender))
+
+
+ca = ChineseAmerican("Colin", 18, "Male")
+ca.selfIntroduce()
 ```
 
 ### 2.3 \_\_del\_\_
@@ -119,15 +146,35 @@ p1被删除
 p2被删除
 ```
 
+### 2.4 \_\_str\_\_
+C#中一个对象被直接打印时默认会输出其类名，我们可以通过`override`其`ToString()`方法定制输出内容。与之类似，Python中对象被直接`print`时会默认输出类名和对象内存地址，我们可以通过`__str__`方法定制输出内容，该方法必须返回字符串。
+
+```py
+class Person:
+    def __init__(self, name):
+        self.__name = name
+
+    def __str__(self):
+        return "my name is %s" % self.__name        
+
+
+p = Person("Colin")
+print(p)  # my name is Colin
+```
+
 ## 3. 类特殊成员
-类属性用于在类级别存储数据，类方法用于操作类属性。静态方法则常用于封装工具方法。
+类属性多用于存储当前类的全局数据，如统计当前类有多少实例等，类方法用于操作类属性。
+
+在C#等多数语言中没有类属性，如果我们要存储一个类有多少实例和每个实例的情况等统计数据，往往需要另外声明一个静态集合变量去存储这些统计信息，而Python则可以直接存储到类属性当中即可。
+
+静态方法则常用于封装工具方法。
 
 ### 3.1 类属性
 前面我们用到的属性都是实例属性，实例属性一般在`__init__`中初始化。除此之外，我们还可以直接在类根代码块中定义类属性。
 
 ```py
 class Person:
-    count = 0  # 类属性
+    count = 0  # 类属性。一般需要私有化类属性，通过类方法操作类属性
 
     def __init__(self):
         self.__name = None  # 实例属性
@@ -153,7 +200,7 @@ print(Person.count)  # 30
 类属性属于类本身，但类属性既可以通过类名访问也可以通过实例访问。通过实例访问,修改其值仅对当前实例有效。通过类名访问，修改其值会对类属性本身和未修改过的实例有效，新创建实例也会使用新的修改后的类属性值。因为会被全局修改影响，故而不推荐使用类属性做实例方式访问使用。
 
 ### 3.2 类方法
-与普通实例属性类似，为了数据安全我们通常会私有化类属性，并通过类方法暴露类属性操作。调用类方法修改的类属性全局有效。同样为避免相互应将，不推荐将类方法通过实例访问。
+与普通实例属性类似，为了数据安全我们通常会私有化类属性，并通过类方法暴露类属性操作。调用类方法修改的类属性全局有效。同样为避免相互影响，不推荐将类方法通过实例访问。
 
 ```py
 class Person:

@@ -1,6 +1,6 @@
 module.exports = {
-    title: 'Python学习笔记',
-    description: 'Python—人工智能主流语言',
+    title: 'python学习笔记',
+    description: 'python—人工智能主流语言',
     base: '/python/',
     head: [
         ['link', {
@@ -36,7 +36,7 @@ module.exports = {
         ],
         sidebar:[
             {
-                title: 'Python基础',
+                title: 'python基础',
                 collapsable: false,
                 children: [
                     '/basic/intro',

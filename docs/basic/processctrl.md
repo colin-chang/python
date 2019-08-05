@@ -15,7 +15,7 @@ else:
 * 判断条件之后使用`:`
 * 执行内容之前的代码缩进为一个tab键，或者4个空格。Tab和空格不可混用
 * 缩进相同的代码视作一个代码块，而不是通过{}来界定
-* Python当中不支持`switch`语法
+* python当中不支持`switch`语法
 
 ```py
 import random
@@ -67,9 +67,9 @@ while i <= 100:
 print(sum)
 ```
 ::: warning
-* Python不支持 `i++` / `i--` 等自增自减等语法
-* Python不支持 `do while`语法
-* Python支持`break`和`continue`语法
+* python不支持 `i++` / `i--` 等自增自减等语法
+* python不支持 `do while`语法
+* python支持`break`和`continue`语法
 :::
 
 ```py
@@ -85,7 +85,7 @@ while i <= 9:
 ```
 
 ### 2.2 for...in...
-Python的`for in`循环与JavaScript类似,相当与C#的foreach
+python的`for in`循环与JavaScript类似,相当与C#的`foreach`。
 ```py
 for x in "name":
     print(x)
@@ -96,9 +96,20 @@ a
 m
 e
 ```
+python没有C#等语言中普通的`for`循环语法方便的控制循环次数，但可以借助 [range](list.md#_1-2-1-range) 实现。
+
+```py
+# 从0-4循环5次
+for i in range(5):
+    pass
+
+# 从5-9循环5次
+for i in range(5, 10):
+    pass
+```
 
 ### 2.3 循环中的else
-在while和for循环当中也可以使用else关键字。执行逻辑是，**只要循环中执行了break则else不执行，否则else必定执行**。此语法仅在Python中存在，较少使用。
+在while和for循环当中也可以使用else关键字。执行逻辑是，**只要循环中执行了break则else不执行，否则else必定执行**。此语法仅在python中存在，较少使用。
 
 ```py
 names = ["Colin", "Robin", "Sean"]

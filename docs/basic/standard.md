@@ -18,7 +18,7 @@ python单行注释使用`#`,多行注释使用`'''`或`"""`。
 ```
 ## 2. 中文支持
 
-Python2不支持直接使用中文，仅支持ASCII。如果要使用中文需要在文件首行添加 `#coding=utf-8`即可。python语法规范推荐使用`# -*- coding:utf-8 -*-`
+python2不支持直接使用中文，仅支持ASCII。如果要使用中文需要在文件首行添加 `#coding=utf-8`即可。python语法规范推荐使用`# -*- coding:utf-8 -*-`
 
 ```py
 # -*- coding:utf-8 -*-
@@ -26,7 +26,7 @@ print("你好")
 ```
 
 ## 3. 命名规则
-* Python中标识符 **大小写敏感**
+* python中标识符 **大小写敏感**
 * 官方推荐使用`lower_with_under`命名(类和扩展则使用大驼峰命名法)
 * 避免于系统关键字冲突
 
@@ -42,7 +42,7 @@ keyword.kwlist
 
 ## 4. 代码规范
 
-Python官方提供了一系列的PEP(Python增强规范)文档。其中第8篇专门针对Python的代码格式给出了建议，俗称 **PEP8**
+python官方提供了一系列的PEP(python增强规范)文档。其中第8篇专门针对python的代码格式给出了建议，俗称 **PEP8**
 
 ::: tip 规范文档
 
@@ -50,7 +50,7 @@ Python官方提供了一系列的PEP(Python增强规范)文档。其中第8篇�
 * Google文档: [https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/)
 :::
 
-在Python文件中，我们通常按照以下顺序书写代码：
+在python文件中，我们通常按照以下顺序书写代码：
 * 模块导入
 * 全局变量定义
 * 代码封装(类/函数等)

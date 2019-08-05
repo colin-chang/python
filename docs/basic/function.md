@@ -17,7 +17,7 @@ def function_name(arg1: dataType, arg2: dataType, ...) -> returnType:
 function_name(arg1, arg2)
 function_name(arg2=sth, arg1=sth)
 ```
-* 函数必须先定义后调用，Python顺序逐行解释执行
+* 函数必须先定义后调用，python顺序逐行解释执行
 * 函数注释文档类似于C#中`///`中对函数的说明，可以在`Quick Documentation`中查看(F1)。命令行中可以使用`help()`函数查看，如`help(print)`可以查看`print`函数说明文档
 * 函数参数默认按照函数定义顺序书写。如果只提供部分参数或者无序提供，可以显式声明形参名称
 * 函数参数和返回值数据类型可以省略

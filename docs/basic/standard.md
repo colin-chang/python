@@ -42,6 +42,14 @@ keyword.kwlist
 
 ## 4. 代码规范
 
+一行可以书写多个语句，语句之间用分号隔开即可。一行过长的语句可以使用反斜杠分解成几行
+```py
+print('I love you');print('very much!') 
+
+3 > 4 and \
+1 < 2
+```
+
 python官方提供了一系列的PEP(python增强规范)文档。其中第8篇专门针对python的代码格式给出了建议，俗称 **PEP8**
 
 ::: tip 规范文档

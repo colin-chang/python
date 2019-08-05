@@ -73,7 +73,7 @@ lst.remove("Tom")   # ['Colin', 'Robin', 'Sean', 'Jerry']
 del lst[2] # ['Colin', 'Robin', 'Jerry'] 删除特定下标的元素
 ```
 
-#### 1.1.5 排序
+#### 1.1.5 排序/乱序
 ```py
 nums = [4,1,3,2]
 nums.sort() # [1,2,3,4] 默认为生序
@@ -81,6 +81,15 @@ nums.sort(reverse=True) # [4,3,2,1] 降序
 
 persons = [{"name": "Colin", "age": 19}, {"name": "Robin", "age": 21}, {"name": "Sean", "age": 20}]
 persons.sort(key=lambda p: p["age"])    # 指定排序规则
+```
+
+`random`模块的`shuffle`可以将列表随机打乱。
+```py
+import random
+
+lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+random.shuffle(lst)
+print(lst)
 ```
 
 ### 1.2 列表推导式
@@ -109,6 +118,15 @@ range对象作为整数序列，常被用于[控制循环次数](processctrl.md#
 
 # 多层循环
 [(x, y) for x in range(1, 3) for y in range(3)]  # [(1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+```
+
+请写出一段 Python 代码实现分组一个 list 里面的元素,比如 [1,2,3,...100]变成 [[1,2,3],[4,5,6]....]
+```py
+start, end, step = 1, 100, 3
+lst = [i for i in range(start, end + 1)]  # 模拟现有列表
+
+# 以下为分组方法
+[lst[i:i+3] for i in range(start-1,len(lst),step)]
 ```
 
 ## 2. 元组

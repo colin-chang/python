@@ -57,6 +57,8 @@ print_info("colin")
 # 输出 name = colin age = 18 gender = 男
 ```
 
+**如果缺省参数是可变类型，参数只会初始化一次，下次调用时会使用上次已经存在的值**，一定要避免这么写，如果确实需要默认参数可以在函数内部初始化，不要把可变类型做缺省参数。
+
 ### 2.2 不定长参数
 有时可能需要一个函数能处理比当初声明时更多的参数, 这些参数叫做不定长参数，声明时不会命名，类似与C#中可变参数。
 语法格式如下：
@@ -151,3 +153,26 @@ sum = lambda x, y: x + y
 ```
 
 lambda函数主要用来写一些小体量的一次性函数，简化代码,常作为函数参数传递，类似与C#的委托和Lamda表达式。
+
+## 5. 常用标准内建函数
+python的强大有很大一部分是因为其庞大的标准库提供了各式各样的功能，基本上日常使用中你所需要的功能都可以从中找到，从而大大减轻开发人员的压力，节省开发人员的时间。pytho的标准库模块中内建函数（Built-in Function）提供了一些最最常用的功能，是其它很多模块的基础，这里我们简单的介绍一些。
+
+标准内建函数|功能|示例
+:-|:-|:-
+`all`|是否集合全部元素为真或空集合|`all([None,1]) -> False`<br>`all(["a",1])-> True`<br>`all([]) -> True`
+`any`|是否集合有中元素为真|`all([None,1]) -> True`<br>`all(["",{}])-> False`<br>`all([]) -> False`
+**`filter`**|对集合对象每个元素使用给定函数过滤，返回iterator yielding。相当于C#中`Linq`的`Where()`扩展方法|`users = [{"name": "Colin", "age": 16}, {"name": "Robin", "age": 20}, {"name": "Sean", "age": 21}]`<br>`adults = list(filter(lambda u: u["age"] >= 18, users))`
+`reversed`|逆序给定序列内容|`list(reversed([1,3,2])) -> [2, 3, 1]`
+`sorted`|对序列排序|`sorted([3,4,2,1]) -> [1, 2, 3, 4]`
+`max/min`|返回集合最大最小值|`max(1, 3, 5) -> 5`
+`sum`|序列求和|`sum([1,2,3]) -> 6`
+`len`|返回容器内容数量|`len("abc") -> 3`
+`zip`|返回一个元组列表，其中第i个元组包含每个序列中第i个元素|`list(zip(["Colin","Robin","Sean"],[98,95,96])) -> [('Colin', 98), ('Robin', 95), ('Sean', 96)]`
+`isinstance`|判断对象是否是指定类或其子类的实例|`class A:pass`<br> `isinstance(A(),A) -> True`
+`issubclass`|判断某个类是否是指定类的子类|`class A:pass`<br> `issubclass(A,object) -> True`
+`round`|四舍五入|`round(3.1415,2) -> 3.14`
+`abs`|取绝对值|`abs(-1) -> 1`
+`bin`|将整数转换为二进制字符串|`bin(2) -> '0b10'`
+`delattr`|删除对象的指定属性|`delattr(user,"remark")`
+
+可以通过`dir(__builtin__)`查看所有内建函数。

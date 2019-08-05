@@ -63,6 +63,8 @@ class Person:
 
 p = Person()
 p.name = "Colin"  # 为对象动态扩展属性，仅对当前对象有效
+
+delattr(p, "name")  # 删除p的name属性 等价与 del p.name
 ```
 
 ## 2. 魔法方法

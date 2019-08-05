@@ -130,11 +130,14 @@ os.listdir("/path")  # 列出目录下所有内容，默认为当前目录
 ```py
 import os
 
+
 os.path.basename("path")  # 获得文件名
 os.path.dirname("path")  # 获得目录
 os.path.split("path")  # 分离目录与文件名
 os.path.splitext("path")  # 分离文件名与扩展名
 os.path.abspath("path")  # 获得绝对路径
+
+os.walk("path")  # 递归搜索路径，并返回各层路径、子目录列表、文件列表
 
 os.path.join("path1", "path2")  # 连接路径
 
@@ -145,6 +148,21 @@ os.path.isfile("path")  # 判断path是否是文件
 os.path.getsize("file")  # 获得文件大小
 os.path.getmtime("path")  # 获取文件或目录修改时间
 os.path.getctime("path")  # 获取文件或目录创建时间
+```
+路径操作大部分只是单纯的字符串处理操作，并不会校验目录或文件是否正确。如，`os.path.abspath("path")`获取绝对路径只是把当成执行程序所在目录与参数`path`做字符串拼接，如果参数`path`代表的文件或目录不在程序根目录下那得到的结果就是错误的。
+
+如果要确保路径拼接正确，操作非程序根目录时需要转到相应目录下。
+
+```py
+# 从当前目录递归搜索.pyc文件
+import os
+
+pycs = []
+for root, dirs, files in os.walk("."):
+    for file in files:
+        if (file.endswith(".pyc")):
+            pycs.append(os.path.join(root, file))
+print(pycs)
 ```
 
 ## 4.案例

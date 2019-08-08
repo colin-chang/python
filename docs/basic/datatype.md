@@ -19,11 +19,19 @@ a = b = c = 1
 a, b, c, d = 1, 3.14, True, "Hello"
 ```
 
-::: warning 
+
 * python2.x中整数根据长度分为 int(整型) 和 long(长整型)类型
 * python在定义变量的时不需要指定变量类型。程序运行时解释器会自动根据变量内容推断数据类型。
-* type() 可以查看数据类型。type(123) -> int
+
+::: tip type 查看数据类型
+[type(object)](../senior/metaclass.md#_2-type-类) 可以查看对象数据类型。type(123) -> int。其实返回的对象的`__class__`属性。
 :::
+
+```py
+d = 123
+type(d)  # int
+d.__class__  # int
+```
 
 ## 2. 数据类型转换
 * 不同类型的数字在进行混合运算时，整数将会转换成浮点数进行运算

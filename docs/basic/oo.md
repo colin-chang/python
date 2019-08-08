@@ -6,7 +6,7 @@
 * 类示例化与函数调用类似，而不需要像C#一样使用`new`关键字
 * 类中定义的成员名称以`__`开头表示为私有成员，外部不可访问
 * python中属性相当于C#当中的字段。为了数据安全我们通常将属性私有化而后定义并暴露属性操作方法
-* **python中每个类本身就是一个对象，可以直接使用类名访问**
+* **python中每个类本身就是一个对象常称做[类对象](../senior/metaclass.md#_1-类对象)，可以直接使用类名访问**。
 
 ```py
 # 示例代码
@@ -46,25 +46,6 @@ class Person:
 p = Person("Colin")
 p.setAge(18)
 p.sayHi()  # Hi,my name is Colin and I'm 18 years old
-```
-
-
-:::warning 动态扩展属性
-python是动态类型语言，可以为对象动态扩展属性，扩展属性仅在当前对象中可用。对象扩展属性不应在类内部使用，否则其他实例使用时没有对应扩展属性会触发异常。此方法仅在特殊情况下使用。
-:::
-
-```py
-class Person:
-    '人类'
-
-    def sayHi(self):
-        print("hi")
-
-
-p = Person()
-p.name = "Colin"  # 为对象动态扩展属性，仅对当前对象有效
-
-delattr(p, "name")  # 删除p的name属性 等价与 del p.name
 ```
 
 ## 2. 魔法方法

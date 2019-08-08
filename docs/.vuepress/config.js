@@ -60,7 +60,10 @@ module.exports = {
                 title: '高级编程',
                 collapsable: false,
                 children: [
-                    '/senior/network'
+                    '/senior/dynamic',
+                    '/senior/generator',
+                    '/senior/iterator',
+                    '/senior/metaclass',
                 ]
             }
         ],

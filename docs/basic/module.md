@@ -15,9 +15,10 @@
 在python中用关键字import来引入某个模块。使用`模块名.成员名`方式调用的。
 
 ```py
-import math     # 引入math模块
+import time   # 引入time模块
 
-math.sqrt(4)    # 调用math模块sqrt函数
+time.ctime()  # 调用time模块ctime函数
+time.sleep(5)  # 让程序延迟执行5秒
 ```
 
 ### 2.2 from...import...
@@ -25,9 +26,9 @@ math.sqrt(4)    # 调用math模块sqrt函数
 如果要引用某个模块中指定成员,可以使用`from module import member`语法。这只会单独引入指定的成员，而不会引入整个模块。
 
 ```py
-from math import sqrt,sin   # 引入math模块的sqrt和sin函数
+from math import sqrt,sin  # 引入math模块的sqrt和sin函数
 
-sqrt(4)                 # 调用引入的模块函数
+sqrt(4)  # 调用引入的模块函数
 sin(60)
 
 '''
@@ -86,7 +87,7 @@ kf(4)
 ### 3.1 \_\_name\_\_
 实际开中，模块编写完成后，为了验证模块是否达到预期效果，通常会在模块文件中添加一些测试代码，但测试代码不应该在模块被外部调用时执行。
 
-python文件在执行时有一个`__name__`变量表征当前代码被执行调用的文件。此变量值为`__main__`时表示当前在模块定义文件内部执行,否则为模块被外部调用，值为引用此模块的文件名(不含扩展名)。因此，我们可以选择性的执行模块测试代码。
+python模块在执行时有一个`__name__`变量表征当前代码被执行调用的文件。此变量值为`__main__`时表示当前在模块定义文件内部执行,否则为模块被外部调用，值为引用此模块的文件名(不含扩展名)。因此，我们可以选择性的执行模块测试代码。
 
 `calc.py`:
 ```py
@@ -107,6 +108,17 @@ import calc # 导入模块时不会打印测试信息
 
 sum = calc.sum(1, 2)
 print(sum)
+```
+
+除了模块外，类和函数也有`__name__`属性表示自身名称。
+
+```py
+class Person:
+    def sayHi():
+        pass
+
+Person.__name__  # Person
+Person().sayHi.__name__  # sayHi
 ```
 
 ### 3.2 \_\_all\_\_

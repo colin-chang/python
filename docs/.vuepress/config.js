@@ -57,12 +57,13 @@ module.exports = {
                 ]
             },
             {
-                title: '高级编程',
+                title: 'python深入',
                 collapsable: false,
                 children: [
                     '/senior/dynamic',
                     '/senior/generator',
                     '/senior/iterator',
+                    '/senior/decorator',
                     '/senior/metaclass',
                 ]
             }

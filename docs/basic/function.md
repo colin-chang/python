@@ -104,7 +104,8 @@ fun(1, 2, *args, **kwargs)        # 对元组和字典拆包
 ```
 
 
-## 3. 变量作用域
+## 3. 作用域
+### 3.1 局部变量与全局变量
 * 函数内部定义的变量为局部变量，外部的为全局变量。如果在函数内部定义了与全局变量同名的局部变量，则变量的修改只在函数内部生效，不会修改全局变量。如果函数内部没有定义而直接修改全局变量(列表或字典)，全局变量则会被全局修改。
 * 函数中使用`global`引用全局变量后,如果函数中出现与全局变量同名的局部变量，变量修改后全局生效。
 
@@ -131,19 +132,55 @@ def fun4():
     print(a)
 
 
-fun1()
-fun2()
-fun3()
-fun4()
-
-# 输出结果
-100
-0
-200
-200
+fun1()  # 100
+fun2()  # 0
+fun3()  # 200
+fun4()  # 200
 ```
 
 局部变量与全局变量同名会在一定程度上降低代码可读性，实际开发中我们应该遵循一定规则避免此问题，如全局变量使用global前缀等，如全局变量为`globalName`，局部变量为`name`。
+
+:::tip
+* `locals()` 可以查看当前作用域中所有局部变量
+* `globals()` 可以查看当前作用域中所有全局变量
+:::
+
+```py {6}
+num = 10
+
+
+def test():
+    num = 20
+    print(locals())  # {'num': 20}
+
+
+test()
+```
+
+### 3.2 LEGB 规则
+LEGB是指 `局部作用域(locals)—>闭包函数作用域(enclosing function)->全局作用域(globals)->内建模块作用域(builtins)`
+python 使用LEGB顺序来查找变量，找到即止，LEGB查找完毕没有找到会抛出`NameError`异常。
+
+```py
+a = 0
+
+
+def test():
+    b = 1
+
+    def inner():
+        c = 2
+        print("locals : c = %d" % c)
+        print("enclosing function : b = %d" % b)
+        print("globals : a = %d" % a)
+        print("builtins : __name__ = %s" % __name__)
+
+    return inner
+
+
+func = test()
+func()
+```
 
 ## 4. lambda 匿名函数
 Pyton中可以使用lambda表达式创建匿名函数。语法格式为 `lambda [arg1[, arg2, ... argN]]: expression`。可以有任意参数任，且主体只有一条表达式返回。

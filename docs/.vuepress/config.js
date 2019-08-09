@@ -49,11 +49,11 @@ module.exports = {
                     '/basic/str',
                     '/basic/list',
                     '/basic/dict',
-                    '/basic/exception',
                     '/basic/function',
                     '/basic/oo',
                     '/basic/module',
-                    '/basic/file'
+                    '/basic/file',
+                    '/basic/exception'
                 ]
             },
             {

@@ -47,3 +47,18 @@
 and	| x and y|	布尔"与"：如果 x 为 False，x and y 返回 False，否则它返回 y 的值。|	True and False， 返回 False。
 or	| x or y|	布尔"或"：如果 x 是 True，它返回 True，否则它返回 y 的值。|	False or True， 返回 True。
 not	| not x	|布尔"非"：如果 x 为 True，返回 False 。如果 x 为 False，它返回 True。|	not True 返回 False, not False 返回 True
+
+## 5. 位运算符
+运算符|描述|备注
+:-|:-|:-
+`&` |按位与|全1才1否则0。只有对应的两个二进位均为1时,结果位才为1,否则为0
+`|` |按位或|有1就1。只要对应的二个二进位有一个为1时,结果位就为1,否则为0
+`^` |按位异或|不同为1。当对应的二进位相异(不相同)时,结果为1,否则为0
+`~` |按位取反|
+`<<`|按位左移|左移1位相当于乘以2
+`>>`|按位右移|右移1位相当于除以2
+
+::: tip 
+进制互转
+:::
+![进制转换](../img/basic/numbertrans.jpg)

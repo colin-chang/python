@@ -74,14 +74,66 @@ from math import sqrt as kf
 kf(4)
 ```
 
-### 2.4 模块定位
-导入模块后，python解析器对模块位置的搜索顺序如下：
+### 2.4 模块查找
+导入一个模块时，python解释器会按照一定的顺序到在某些目录下寻找模块文件。搜索目录和顺序存储在`sys`模块的`path`变量中。
+```py {4}
+import sys
 
-* 当前目录
-* Shell变量`PYTHONPATH`下的每个目录。
-* 默认路径。UNIX下，默认路径一般为`/usr/local/lib/python/`
 
-模块搜索路径存储在`sys`模块的`sys.path`变量中。变量里包含当前目录，`PYTHONPATH`和由安装过程决定的默认目录。
+print(sys.path)
+```
+`sys.path`是一个目录列表，python解释器会按照列表顺序依次查找，找到即止。最终找不到会抛出`ModuleNotFoundError`异常。
+
+既然定位模块依赖`sys.path`，那我们可以按需修改此列表。如果我们想要解释器到我们自定义的某个路径下查找模块文件，那我们可以将目录加入到`sys.path`当中，也可以控制其优先顺序。
+
+```py {1,2}
+sys.path.append("/home/colin/modules")
+sys.path.insert(0,"/home/robin/modules")  # 确保先搜索这个路径
+```
+
+### 2.5 重新加载模块
+当我们导入一个模块使用过程中，如果此模块内容被修改，就需要我们重新加载模块。`importlib`模块的`reload(module)`方法就用于重新加载模块。
+
+```py {5,7}
+import test
+
+test.greet()
+
+from importlib import reload
+
+reload(test)  # 重新加载模块
+test.greet()
+```
+
+::: warning
+`reload`仅支持`import module`方式导入的模块
+:::
+
+### 2.6 循环导入问题
+`a.py`:
+```py
+from b import b 
+
+def a():
+    print("hello, a")
+    b() 
+
+a() # 异常 ImportError
+```
+`b.py`:
+```py
+from a import a
+
+def b():
+    print("hello, b")
+    a()
+```
+以上两个模块中代码相互以来会导致循环导入(`ImportError`)异常。
+
+我们通常通过以下方式避免循环导入问题。
+
+1. 分层设计，避免基础模块间引用，降低模块耦合。如果a,b基础模块间存在依赖，可以抽象一个更高层c模块导入a,b后进行逻辑聚合
+2. 需要依赖是再导入。如在一个函数中依赖其他模块，则可以在函数内部进行导入
 
 ## 3. 相关系统变量
 ### 3.1 \_\_name\_\_

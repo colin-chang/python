@@ -65,10 +65,10 @@ module.exports = {
                     '/senior/generator',
                     '/senior/iterator',
                     '/senior/decorator',
-                    '/senior/intern',
-                    '/senior/gc',
                     '/senior/dynamic',
                     '/senior/metaclass',
+                    '/senior/intern',
+                    '/senior/gc'
                 ]
             }
         ],

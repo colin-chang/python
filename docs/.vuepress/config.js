@@ -62,10 +62,12 @@ module.exports = {
                 title: 'python深入',
                 collapsable: false,
                 children: [
-                    '/senior/dynamic',
                     '/senior/generator',
                     '/senior/iterator',
                     '/senior/decorator',
+                    '/senior/intern',
+                    '/senior/gc',
+                    '/senior/dynamic',
                     '/senior/metaclass',
                 ]
             }

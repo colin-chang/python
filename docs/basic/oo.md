@@ -108,14 +108,9 @@ ca.selfIntroduce()
 ```
 
 ### 2.3 \_\_del\_\_()
-`__del__()`类似于C#当中的析构函数，会在对象销毁时调用。由于对象是地址引用，一个对象实际可能有多个变量引用，只有当对象的引用数为0时才会真正删除对象。类似与Linux中的文件硬链接。
-
-可以通过`sys`模块的`sys.getrefcount(obj)`获取obj对象的引用数，由于该函数执行时会内部会定义变量接收对象，统计完即释放，所以`测量引用数=实际引用数+1`。
+`__del__()`类似于C#当中的析构函数，会在对象销毁时调用。由于对象是地址引用，一个对象实际可能有多个变量引用，一般会在对象的[引用计数](../senior/gc.md#_1-引用计数)为0时才会[GC](../senior/gc.md)。
 
 ```py
-import sys
-
-
 class Person:
     def __del__(self):
         print("对象被销毁")
@@ -123,8 +118,6 @@ class Person:
 
 p1 = Person()
 p2 = p1
-
-print(sys.getrefcount(p1))  # 3
 
 del p1
 print("p1被删除")
@@ -213,7 +206,7 @@ print(p.name)  # Robin
 ```
 通过以上代码我们可以看到`property`对象关联了`getter`和`setter`方法，我们直接操作`proeprty`对象会自动调用其绑定属性的`getter`和`setter`方法。
 
-除了以上方式，我们还可以使用`property`[装饰器](../senior/decorator.md)简化其使用。此方式要求`getter`和`setter`方法必须使用相同方法名，才方法名也是我们最终操作的`property`对象名称。
+除了以上方式，我们还可以使用`property`[装饰器](../senior/decorator.md)简化其使用。此方式要求`getter`和`setter`方法必须使用相同方法名，此方法名也是我们最终操作的`property`对象名称。`getter`方法必须在`setter`前面定义。
 
 ```py {5,10}
 class Person:
@@ -234,6 +227,30 @@ p = Person()
 print(p.name)  # Colin
 p.name = "Robin"
 print(p.name)  # Robin
+```
+
+::: tip
+只读/只写 property
+:::
+```py
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    @property
+    def name(self):  # 只读
+        return self.__name
+
+    def setAge(self, value):  # 只写
+        self.__age = value
+
+    age = property(None, setAge)
+
+
+p = Person("Colin", 18)
+print(p.name)
+p.age = 20
 ```
 
 ## 4. 类级别成员

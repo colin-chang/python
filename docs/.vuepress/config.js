@@ -52,6 +52,7 @@ module.exports = {
                     '/basic/function',
                     '/basic/oo',
                     '/basic/module',
+                    '/basic/copy',
                     '/basic/file',
                     '/basic/exception'
                 ]

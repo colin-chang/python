@@ -4,12 +4,10 @@
 * 类的帮助信息可以通过`ClassName.__doc__`查看
 * 类中方法定义时至少有一个参数，通常名为`self`表示当前类实例。相当于C#当中`this`对象
 * 类示例化与函数调用类似，而不需要像C#一样使用`new`关键字
-* 类中定义的成员名称以`__`开头表示为私有成员，外部不可访问
-* python中属性相当于C#当中的字段。为了数据安全我们通常将属性私有化而后定义并暴露属性操作方法
+* python中类的实例属性(类中的变量)相当于C#中类的字段，而[property](#_3-property)则相当于C#当中操作字段的`get`和`set`方法。属性+`property`组合才相当C#中的属性。
 * **python中每个类本身就是一个对象常称做[类对象](../senior/metaclass.md#_1-类对象)，可以直接使用类名访问**。
 
 ```py
-# 示例代码
 class Person:
     'Person帮助信息'
 
@@ -20,19 +18,15 @@ class Person:
         否则直接调用属性对应get方法会抛异常
         '''
         self.__name = name
-        self.__age = 0
 
-    # 属性操作方法
-    # __name 初始化后只读
-    def getName(self):
+    @property
+    def name(self):
+        "姓名"
         return self.__name
 
-    def getAge(self):
-        return self.__age
-
-    def setAge(self, age):
-        self.__age = age if age >= 0 and age <= 100 else 0
-
+    @name.setter
+    def name(self, value):
+        self.__name = value
 
     # 业务方法
     def sayHi(self):
@@ -40,13 +34,15 @@ class Person:
 
     # 私有方法
     def __getText(self):
-        return "Hi,my name is %s and I'm %d years old" % (self.__name, self.__age)
+        return "Hi,my name is %s" % self.__name
 
 
 p = Person("Colin")
-p.setAge(18)
-p.sayHi()  # Hi,my name is Colin and I'm 18 years old
+print(p.name)  # Colin
+p.name = "Robin"
+p.sayHi()  # Hi,my name is Robin
 ```
+以上示例中涉及的[\_\_init\_\_()](#_2-2-init)和[property](#_3-property)会在后面章节中介绍。
 
 ## 2. 魔法方法
 python中具有特殊功能的方法常称为魔法方法。
@@ -190,14 +186,64 @@ p = Person()
 p()  # called...
 ```
 
-## 3. 类特殊成员
+## 3. property
+直接暴露对象的属性是不全安的，我们之前使用了`getter`和`setter`方法来封装对私有属性的操作，在外部可以通过`getter`和`setter`以方法方式操作私有属性。
+
+除了之外python还提供`property`方式操作属性。
+
+```py {12}
+class Person:
+    def __init__(self):
+        self.__name = "Colin"
+
+    def getName(self):
+        return self.__name
+
+    def setName(self, value):
+        self.__name = value
+
+    # property对象关联了属性的getter和setter方法
+    name = property(getName, setName, doc="姓名")
+
+
+p = Person()
+print(p.name)  # Colin
+p.name = "Robin"
+print(p.name)  # Robin
+```
+通过以上代码我们可以看到`property`对象关联了`getter`和`setter`方法，我们直接操作`proeprty`对象会自动调用其绑定属性的`getter`和`setter`方法。
+
+除了以上方式，我们还可以使用`property`[装饰器](../senior/decorator.md)简化其使用。此方式要求`getter`和`setter`方法必须使用相同方法名，才方法名也是我们最终操作的`property`对象名称。
+
+```py {5,10}
+class Person:
+    def __init__(self):
+        self.__name = "Colin"
+
+    @property
+    def name(self):
+        "姓名"
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+
+p = Person()
+print(p.name)  # Colin
+p.name = "Robin"
+print(p.name)  # Robin
+```
+
+## 4. 类级别成员
 类属性多用于存储当前类的全局数据，如统计当前类有多少实例等，类方法用于操作类属性。
 
 在C#等多数语言中没有类属性，如果我们要存储一个类有多少实例和每个实例的情况等统计数据，往往需要另外声明一个静态集合变量去存储这些统计信息，而python则可以直接存储到类属性当中即可。
 
 静态方法则常用于封装工具方法。
 
-### 3.1 类属性
+### 4.1 类属性
 前面我们用到的属性都是实例属性，实例属性一般在`__init__`中初始化。除此之外，我们还可以直接在类根代码块中定义类属性。
 
 ```py
@@ -227,7 +273,7 @@ print(Person.count)  # 30
 ```
 类属性属于类本身，但类属性既可以通过类名访问也可以通过实例访问。通过实例访问,修改其值仅对当前实例有效。通过类名访问，修改其值会对类属性本身和未修改过的实例有效，新创建实例也会使用新的修改后的类属性值。因为会被全局修改影响，故而不推荐使用类属性做实例方式访问使用。
 
-### 3.2 类方法
+### 4.2 类方法
 与普通实例属性类似，为了数据安全我们通常会私有化类属性，并通过类方法暴露类属性操作。调用类方法修改的类属性全局有效。同样为避免相互影响，不推荐将类方法通过实例访问。
 
 类方法至少有一个参数，通常为`cls`指向类本身(类本身就是一个对象)。
@@ -263,7 +309,7 @@ print(p2.getCount())  # 20
 print(Person.getCount())  # 20
 ```
 
-### 3.3 静态方法
+### 4.3 静态方法
 静态方法常用于封装通用工具方法，静态方法既可以通过类名访问也可以通过实例访问。静态方法可以无参。
 
 ```py
@@ -284,8 +330,8 @@ msg = Message()
 msg.sendEmail("hello")
 ```
 
-### 3.4 类属性案例
-#### 3.4.1 单例类
+### 4.4 类属性案例
+#### 4.4.1 单例类
 ```py
 class China:
     __instance = None
@@ -316,7 +362,7 @@ print(c1.getName())
 print(c2.getName())
 print(c3.getName())
 ```
-#### 3.4.2 在线用户统计
+#### 4.4.2 在线用户统计
 ```py
 class User:
     __onlineUsers = []  # 记录所有在线用户
@@ -376,7 +422,7 @@ onlineUsers = User.getOnlineUsers()
 User.displayObjectList(onlineUsers)  # [{'id': 1, 'name': 'Colin'}]
 ```
 
-## 4. 继承
+## 5. 继承
 继承语法如下:
 ```py
 class BaseClass:
@@ -388,7 +434,7 @@ class SubClass(BaseClass):
 * 所有类最终都继承自`object`类。
 * 子类不能访问父类私有成员。
 
-### 4.1 方法重写
+### 5.1 方法重写
 在子类中定义与父类同名的方法即可重写父类方法。子类中可以通过父类名称或`super()`调用父类方法。
 ```py
 class Animal:
@@ -410,7 +456,7 @@ tom = Cat()
 tom.eat()
 ```
 
-### 4.2 多继承
+### 5.2 多继承
 python支持多继承。如果多个或多级父类中存在同名方法，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
 
 ```py
@@ -440,7 +486,7 @@ ca.speak()  # 默认顺序方法调用
 Chinese.speak(ca)  # 强制调用指定父类方法
 ```
 
-## 5. 多态
+## 6. 多态
 C#等强类型多态主要包括方法重载体现的编译时的多态性和虚方法重写体现的运行时多态性。
 
 作为解释型语言python没有编译过程，同时不支持函数或方法重载，故而没有编译时多态性。

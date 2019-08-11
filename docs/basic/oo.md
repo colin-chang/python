@@ -44,8 +44,8 @@ p.sayHi()  # Hi,my name is Robin
 ```
 以上示例中涉及的[\_\_init\_\_()](#_2-2-init)和[property](#_3-property)会在后面章节中介绍。
 
-## 2. 魔法方法
-python中具有特殊功能的方法常称为魔法方法。
+## 2. 类内建属性和方法
+python中类默认定义了一些特殊属性和方法，称为类内建属性和方法。具有特殊功能的方法也称为魔法方法。
 ### 2.1 \_\_new\_\_()
 `__new__()`用于创建对象。该方法定义在`object`类中，被所有类继承。
 
@@ -72,7 +72,7 @@ python中具有特殊功能的方法常称为魔法方法。
 
 一般需要在`__init__()`中初始化所有私有属性，不管是否在参数列表中传值，否则直接调用属性对应get方法会抛异常。
 
-如果父类定义了多参`__init__()`，其子类必须也要定义`__init__()`,参数列表可以与父类不同，但应当在`__init__()`中调用其所有父类`__init__()`(非强制)初始化必要属性，否则可能会在访问到未按父类`__init__()`初始化的成员时触发异常。
+如果父类定义了`__init__()`，子类中没有重写`__init__()`，则新建子类对象时会调用父类`__init__()`并要求相应的参数列表。当然子类也可以重写`__init__()`,参数列表可以与父类不同，但应当在`__init__()`中调用其所有父类`__init__()`(非强制)初始化必要属性，否则可能会在访问到未按父类`__init__()`初始化的成员时触发异常。
 
 ```py
 class Chinese():
@@ -177,6 +177,88 @@ class Person:
 
 p = Person()
 p()  # called...
+```
+
+### 2.6 \_\_getattribute\_\_()
+`__getattribute__()`会在访问实例属性时被触发，称为属性访问拦截器。通常可以在拦截器中记录日志或控制返回内容。
+
+```py {14}
+class Person:
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.__age = age
+        self.__gender = gender
+
+    @property
+    def age(self):
+        return self.__age
+
+    def __getattribute__(self, item):
+        print("%s was visited..." % item)  # 记录访问日志
+
+        val = object.__getattribute__(self, item)  # 不要使用 self.xx 否则会陷入递归死循环
+        if item == "age":  # 控制返回内容
+            return 18 if val < 18 else val
+        else:
+            return val
+
+    def selfIntroduce(self):
+        print(self.__format())
+
+    def __format(self):
+        return "my name is %s,I'm %d and my gender is %s" % (self.name, self.age, self.__gender)
+
+
+p = Person("Colin", 16, "male")
+p.selfIntroduce()
+
+"""
+输出结果:
+selfIntroduce was visited...
+_Person__format was visited...
+name was visited...
+age was visited...
+_Person__age was visited...
+_Person__gender was visited...
+my name is Colin,I'm 18 and my gender is male
+"""
+```
+通过以上示例我们发现，`__getattribute__()`拦截实例属性访问效果如下：
+* 实例公有属性。
+* `property`。同时会访问其绑定的私有属性(名字重整)
+* 实例私有属性。会访问名字重整后的属性
+* 实例公有方法。实例方法也属于`attribute`，故而也会被拦截
+* 实例私有方法。与私有属性类似，会访问其名字重整后的方法
+
+**切勿在`__getattribute__()`中使用实例属性**，属性拦截器中访问实例属性会进入再次触发拦截器，导致陷入递归死循环。
+
+### 2.7 内建属性
+常用属性|说明|
+:-|:-
+`__class__`|实例类型。`obj.__class__`等价于`type(obj)`
+`__dict__`|实例**自定义**公有属性和值，不含`property`。`dir(obj)`则可拿到实例所有公有属性，含`property`
+`__doc__`|类文档,子类不继承。
+`__bases__`|类的所有父类构成元素
+
+```py
+class Person:
+    "人类"
+
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.__age = age
+        self.__gender = gender
+
+    @property
+    def age(self):
+        return self.__age
+
+
+p = Person("Colin", 16, "male")
+print(p.__class__)  # <class '__main__.Person'>
+print(p.__dict__)  # {'name': 'Colin', '_Person__age': 16, '_Person__gender': 'male'}
+print(p.__doc__)  # 人类
+print(Person.__bases__)  # (<class 'object'>,)
 ```
 
 ## 3. property

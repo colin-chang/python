@@ -68,7 +68,8 @@ module.exports = {
                     '/senior/dynamic',
                     '/senior/metaclass',
                     '/senior/intern',
-                    '/senior/gc'
+                    '/senior/gc',
+                    '/senior/pdb'
                 ]
             }
         ],

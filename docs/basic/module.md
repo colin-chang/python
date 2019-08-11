@@ -339,3 +339,63 @@ import persistance
 persistance.db.save("db0", "data")
 persistance.file.save("file.txt", "data")
 ```
+
+## 5. 标准库
+python的强大有很大一部分是因为其庞大的标准库(standard library)提供了各式各样的功能，基本上日常使用中你所需要的功能都可以从中找到，从而大大减轻开发人员的压力，节省开发人员的时间。标准库会随着Python解释器，一起安装在你的电脑中的。它是python的一个组成部分。
+
+标准库|说明
+:-|:-
+builtins|内建函数默认加载
+os|操作系统接口
+sys|Python自身的运行环境
+functools|常用的工具
+json|编码和解码JSON对象
+logging|记录日志，调试
+multiprocessing|多进程
+threading|多线程
+copy|拷贝
+time|时间
+datetime|日期和时间
+calendar|日历
+hashlib|加密算法
+random|生成随机数
+re|字符串正则匹配
+socket|标准的BSD Sockets API
+shutil|文件和目录管理
+glob|基于文件通配符搜索
+
+```py
+# 标准库使用示例
+import hashlib
+
+md5 = hashlib.md5()
+md5.update(b"something to encrypt")
+md5.hexdigest()
+```
+
+pyhton除了强大标准库，还有异常丰富的第三方扩展库。
+
+扩展库|说明
+:-|:-
+requests|使用的是urllib3，继承了urllib2的所有特性
+urllib|基于http的高层库
+scrapy|爬虫
+beautifulsoup4|HTML/XML的解析器
+celery|分布式任务调度模块
+redis|缓存
+Pillow(PIL)|图像处理
+xlsxwriter|仅写excle功能,支持xlsx
+xlwt|仅写excle功能,支持xls ,2013或更早版office
+xlrd|仅读excle功能
+elasticsearch|全文搜索引擎
+pymysql|数据库连接库
+mongoengine/pymongo|mongodbpython接口
+matplotlib|画图
+numpy/scipy|科学计算
+django/tornado/flask|web框架
+xmltodict|xml 转dict
+SimpleHTTPServer|简单地HTTP Server,不使用Web框架
+gevent|基于协程的Python网络库
+fabric|系统管理
+pandas|数据处理库
+scikit-learn|机器学习库

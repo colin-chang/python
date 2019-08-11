@@ -30,7 +30,7 @@ class Person:
 
 
 class Student(Person):
-    def selfIntroduce(self):
+    def self_introduce(self):
         print("my name is %s,I'm %d" % (self.name, self._age))
         # print(self.__gender) 私有属性不可访问
 ```
@@ -43,7 +43,7 @@ print(public)
 # print(__private)  # 私有属性不可访问
 
 s = Student("Colin", 18, "Male")
-s.selfIntroduce()
+s.self_introduce()
 print(s.name)
 print(s._age)
 # print(s.__gender)  # 私有属性不可访问

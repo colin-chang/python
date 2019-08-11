@@ -44,9 +44,9 @@ print("I'm %d years old" % age)
 idno = 1
 print("my ID NO is %06d" % idno)
 
-phoneNumber = 110
+phone_number = 110
 balance = 10.2
-print("my phone number is %s and its balance is %.2f" % (phoneNumber, balance))
+print("my phone number is %s and its balance is %.2f" % (phone_number, balance))
 
 percent = 0.875
 print("my homework is finished about %.2f%%" % (percent * 100))

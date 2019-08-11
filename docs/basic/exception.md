@@ -36,15 +36,15 @@ class InvalidContentException(Exception):
 
     def __init__(self, content):
         self.__content = content
-        self.__errorMessage = "'%s' can only be letters or numbers" % content
+        self.__error_message = "'%s' can only be letters or numbers" % content
 
     def __str__(self):
-        return self.__errorMessage
+        return self.__error_message
 
 
 class User:
-    def __init__(self, userName, password: str):
-        self.__userName = userName
+    def __init__(self, username, password: str):
+        self.__user_name = username
         if not password.isalnum():
             raise InvalidContentException(password)  # 手动抛出异常
         else:

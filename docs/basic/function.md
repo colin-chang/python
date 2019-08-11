@@ -3,7 +3,7 @@
 ## 1. 声明调用
 ```py
 # 定义函数
-def function_name(arg1: dataType, arg2: dataType, ...) -> returnType:
+def function_name(arg1: data_type, arg2: data_type, ...) -> return_type:
     '''
     函数注释文档
     :param arg1: 第一个参数说明
@@ -138,7 +138,7 @@ fun3()  # 200
 fun4()  # 200
 ```
 
-局部变量与全局变量同名会在一定程度上降低代码可读性，实际开发中我们应该遵循一定规则避免此问题，如全局变量使用global前缀等，如全局变量为`globalName`，局部变量为`name`。
+局部变量与全局变量同名会在一定程度上降低代码可读性，实际开发中我们应该遵循一定规则避免此问题，如全局变量使用global前缀等，如全局变量为`global_name`，局部变量为`name`。
 
 :::tip
 * `locals()` 可以查看当前作用域中所有局部变量
@@ -214,10 +214,10 @@ f()  # new func
 在函数内部定义再定义一个内部函数，同时内部函数引用了外层函数的变量，则称之为闭包。
 ```py {5}
 def test(name):
-    def testInner(greet):
+    def test_inner(greet):
         print("%s %s" % (greet, name))
 
-    return testInner  # 返回对闭包函数的引用
+    return test_inner  # 返回对闭包函数的引用
 
 
 t = test("Colin")
@@ -228,10 +228,10 @@ t("Hi")  # Hi Colin
 
 ```py
 def test(name):
-    def testInner(greet):
+    def test_inner(greet):
         print("%s %s" % (greet, name))
 
-    return testInner  # 返回对闭包函数的引用
+    return test_inner  # 返回对闭包函数的引用
 
 
 t1 = test("Colin")
@@ -253,14 +253,14 @@ t1("Hi")  # Hi Sean
 
 ```py
 # y = kx + b 线性函数
-def lineConf(k, b):
+def line_conf(k, b):
     def line(x):
         return k * x + b
 
     return line
 
 
-ln = lineConf(2, 3)
+ln = line_conf(2, 3)
 # 获取线性函数坐标点
 [(i, ln(i)) for i in range(5)]  # [(0, 3), (1, 5), (2, 7), (3, 9), (4, 11)]
 ```

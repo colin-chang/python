@@ -53,12 +53,12 @@ def fly(self):
 
 
 @classmethod
-def countBirds(cls):
+def count_birds(cls):
     cls.count += 1
 
 
 @staticmethod
-def sayHi():
+def sayhi():
     print("hi there...")
 
 
@@ -66,22 +66,22 @@ def sayHi():
 动态Bird类(对象)
 1.继承Animal类。 
 2.__name为私有属性
-3.getName为属性方法
+3.get_name为属性方法
 4.fly为实例方法
 6.count为类属性
-7.countBirds为类方法
-8.sayHi为静态方法
+7.count_birds为类方法
+8.sayhi为静态方法
 '''
 Bird = type("Bird", (Animal,),
-            {"__name": "黄鹂", "getName": lambda self: self.__name, "fly": fly, "count": 0,
-             "countBirds": countBirds,
-             "sayHi": sayHi})
+            {"__name": "黄鹂", "get_name": lambda self: self.__name, "fly": fly, "count": 0,
+             "count_birds": count_birds,
+             "sayhi": sayhi})
 bird = Bird()
-print(bird.getName())
+print(bird.get_name())
 bird.fly()
 print(Bird.count)
-Bird.countBirds()
-Bird.sayHi()
+Bird.count_birds()
+Bird.sayhi()
 ```
 
 ## 3. 元类
@@ -95,16 +95,16 @@ python中一切皆对象，实例对象的类型是类，而类对象的类型�
 
 ```py
 class UpperAttrMetaClass(type):
-    def __new__(cls, className, baseClasses, attrs):
-        upperAttrs = {}
+    def __new__(cls, class_name, base_classes, attrs):
+        upper_attrs = {}
         for name, value in attrs.items():
             if name.startswith("__"):
-                upperAttrs[name] = value
+                upper_attrs[name] = value
             else:
-                upperAttrs[name.upper()] = value
+                upper_attrs[name.upper()] = value
 
-        # return type(className, baseClasses, upperAttrs)
-        return super().__new__(cls, className, baseClasses, upperAttrs)
+        # return type(class_name, base_classes, upper_attrs)
+        return super().__new__(cls, class_name, base_classes, upper_attrs)
 
 
 class Person(object, metaclass=UpperAttrMetaClass):

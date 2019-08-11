@@ -7,17 +7,17 @@ python装饰器类似于C#当中的`Attrbute`实现的过滤器，作用和使�
 
 ```py
 # 查询余额
-def checkBalance():
+def check_balance():
     print("balance is $100")
 
 
 # 下单
-def makeOrder():
+def make_order():
     print("make order success")
 
 
-checkBalance()
-makeOrder()
+check_balance()
+make_order()
 ```
 
 假定我们有以上两个已在生产环境中运行的基础库函数。现在业务需求的变动，我们要求在调用两个函数的时候首先要进行权限校验。按照开放封闭的原则，我们不应该改动函数之前的内容，而是添加新的逻辑来满足业务需求。
@@ -27,18 +27,18 @@ makeOrder()
 ```py
 def authorize(func):
     # 定义新函数
-    def newFunc():
+    def new_func():
         print('authorize...')  # 模拟权限校验工作
         func()  # 执行原函数
 
-    return newFunc  # 返回有权限校验功能的新函数
+    return new_func  # 返回有权限校验功能的新函数
 
 
-checkBalance = authorize(checkBalance)  # 用原函数名指向新的包装后的函数
-makeOrder = authorize(makeOrder)
+check_balance = authorize(check_balance)  # 用原函数名指向新的包装后的函数
+make_order = authorize(make_order)
 
-checkBalance()
-makeOrder()
+check_balance()
+make_order()
 ``` 
 
 以上就是装饰器的实现原理，不难发现装饰器就是一个闭包。
@@ -52,20 +52,20 @@ makeOrder()
 ```py
 # 定义装饰器函数
 def authorize(func):
-    def newFunc():
+    def new_func():
         print('authorize...')
         func()
 
-    return newFunc
+    return new_func
 
 
 @authorize  # 使用装饰器
-def checkBalance():
+def check_balance():
     print("balance is $100")
 
 
 @authorize
-def makeOrder():
+def make_order():
     print("make order successfully")
 ```
 
@@ -76,26 +76,26 @@ def makeOrder():
 
 ```py
 def strong(func):
-    def newFunc():
+    def new_func():
         return "<strong>%s</strong>" % func()
 
-    return newFunc
+    return new_func
 
 
 def italic(func):
-    def newFunc():
+    def new_func():
         return "<i>%s</i>" % func()
 
-    return newFunc
+    return new_func
 
 
 @strong
 @italic
-def sayHi():
+def sayhi():
     return "hello world"
 
 
-print(sayHi())  # <strong><i>hello world</i></strong>
+print(sayhi())  # <strong><i>hello world</i></strong>
 ```
 
 ## 3. 参数与返回值
@@ -104,60 +104,60 @@ print(sayHi())  # <strong><i>hello world</i></strong>
 
 ```py
 def authorize(func):
-    def newFunc(*args, **kwargs):
+    def new_func(*args, **kwargs):
         print('authorize...')
         func(*args, **kwargs)
 
-    return newFunc
+    return new_func
 
 
 @authorize
-def checkBalance(user):
+def check_balance(user):
     print("%s's balance is $100" % user)
 
 
 @authorize
-def makeOrder(user, goods):
+def make_order(user, goods):
     print("%s buy %s successfully" % (user, goods))
 
 
-checkBalance("Colin")
-makeOrder("Colin", "books")
+check_balance("Colin")
+make_order("Colin", "books")
 ```
 ### 3.2 装饰有返回值函数
 如果装饰一个有返回值的函数，只需要在装饰器内部调用原函数完成后`return`其返回值即可。如果函数没有返回值，`return`会返回`None`，为了装饰器的通用性，不管是否有返回值我们都可以`return`其返回值。
 
 ```py
 def authorize(func):
-    def newFunc(*args, **kwargs):
+    def new_func(*args, **kwargs):
         print('authorize...')
         return func(*args, **kwargs)
 
-    return newFunc
+    return new_func
 
 
 @authorize
-def checkBalance(user):
+def check_balance(user):
     return 100
 
 
 @authorize
-def makeOrder(user, goods):
+def make_order(user, goods):
     print("%s buy %s successfully" % (user, goods))
 
 
-print(checkBalance("Colin"))    # 100
-print(makeOrder("Colin", "books"))  # None
+print(check_balance("Colin"))    # 100
+print(make_order("Colin", "books"))  # None
 ```
 
 通用的装饰器应该形似如下结构：
 ```py
-def decoratorName(func):
-    def newFunc(*args, **kwargs):
+def decorator_name(func):
+    def new_func(*args, **kwargs):
         pass # do some extra work
         return func()
     
-    return newFunc
+    return new_func
 ```
 
 ## 4. 有参装饰器
@@ -165,27 +165,27 @@ def decoratorName(func):
 
 ```py
 def color(col='red'):
-    def innerColor(func):
-        def newFunc():
+    def inner_color(func):
+        def new_func():
             return '<font color="%s">%s</font>' % (col, func())
 
-        return newFunc
+        return new_func
 
-    return innerColor
+    return inner_color
 
 
 @color()
-def sayHi():
+def sayhi():
     return "hi there"
 
 
 @color("blue")
-def sayHello():
+def say_hello():
     return "hello world"
 
 
-print(sayHi())  # <font color="red">hi there</font>
-print(sayHello())  # <font color="blue">hello world</font>
+print(sayhi())  # <font color="red">hi there</font>
+print(say_hello())  # <font color="blue">hello world</font>
 ```
 
 装饰器名称后使用`()`表示有参装饰器,否则表示无参装饰器。python解释器发现函数声明上有标注装饰器时会立即执行装饰器。
@@ -194,8 +194,8 @@ print(sayHello())  # <font color="blue">hello world</font>
 
 以上装饰器代码可以理解为:
 ```py
-sayHi = color()(sayHi)()
-sayHello = color('blue')(sayHello)()
+sayhi = color()(sayhi)()
+say_hello = color('blue')(say_hello)()
 ```
 
 ## 5. 类装饰器
@@ -214,11 +214,11 @@ class Strong:  # 声明类装饰器
 
 
 @Strong  # 使用类装饰器
-def sayHi(name):
+def sayhi(name):
     return "hi %s" % name
 
 
-print(sayHi("Colin"))  # <strong>hi Colin</strong>
+print(sayhi("Colin"))  # <strong>hi Colin</strong>
 ```
 
 ### 5.2 有参类装饰器
@@ -239,17 +239,17 @@ class Color:
 
 
 @Color()
-def sayHi(name):
+def sayhi(name):
     return "hi %s" % name
 
 
 @Color("blue")
-def sayHello(name):
+def say_hello(name):
     return "hello %s" % name
 
 
-print(sayHi("Colin"))  # <font color="red">hi Colin</font>
-print(sayHello("Robin"))  # <font color="blue">hello Robin</font>
+print(sayhi("Colin"))  # <font color="red">hi Colin</font>
+print(say_hello("Robin"))  # <font color="blue">hello Robin</font>
 ```
 
 不难发现，有参类装饰器中的`__call__()`就是一个函数装饰器，不同的是，它是类实例函数，作用域被限定在类内部，当装饰器逻辑比较复杂时，可以在类内部拆解为多个方法处理，类内部共享数据，符合面向对象的思想且适合处理复杂逻辑。

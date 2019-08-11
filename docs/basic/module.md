@@ -218,11 +218,11 @@ print(sum)
 
 ```py
 class Person:
-    def sayHi():
+    def sayhi():
         pass
 
 Person.__name__  # Person
-Person().sayHi.__name__  # sayHi
+Person().sayhi.__name__  # sayhi
 ```
 
 ## 4. 包

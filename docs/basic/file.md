@@ -102,16 +102,16 @@ file.close()
 ```py
 import shutil, os
 
-shutil.copy("src.txt", "destDir")  # 复制文件到目录
+shutil.copy("src.txt", "dest_dir")  # 复制文件到目录
 shutil.copy("src.txt", "dest.txt")  # 复制并重命名文件
-shutil.copy("srcDir", "destDir")  # 复制目录
+shutil.copy("src_dir", "dest_dir")  # 复制目录
 
-shutil.move("src.txt", "destDir")  # 移动文件
+shutil.move("src.txt", "dest_dir")  # 移动文件
 shutil.move("src.txt", "dest.txt")  # 重命名文件
-shutil.move("srcDir", "destDir")  # 移动或重命名目录
+shutil.move("src_dir", "dest_dir")  # 移动或重命名目录
 
 os.rename("src.txt", "dest.txt")  # 重命名文件
-os.rename("srcDir", "destDir")  # 重命名目录
+os.rename("src_dir", "dest_dir")  # 重命名目录
 
 os.remove("file.txt")  # 删除文件
 os.removedirs("dir")  # 删除空目录
@@ -172,11 +172,11 @@ print(pycs)
 import os
 
 
-def backupFile(file: str, backupFile='', binary=False):
+def backup(file: str, backup_file='', binary=False):
     '''
     制作文件备份
     :param file:文件名
-    :param backupFile:备份文件名
+    :param backup_file:备份文件名
     :param binary:是否为二进制文件
     :return:
     '''
@@ -186,31 +186,31 @@ def backupFile(file: str, backupFile='', binary=False):
         return False
 
     # 确定备份文件名
-    if len(backupFile) <= 0:
-        fileName, ext = os.path.splitext(file)
-        backupFile = fileName + "[copy]" + ext
+    if len(backup_file) <= 0:
+        file_name, ext = os.path.splitext(file)
+        backup_file = file_name + "[copy]" + ext
 
     # 确定文件打开方式
     if binary:
-        readMode = "rb"
-        writeMode = "wb"
+        read_mode = "rb"
+        write_mode = "wb"
     else:
-        readMode = "r"
-        writeMode = "w"
+        read_mode = "r"
+        write_mode = "w"
 
     # 打开文件
-    oldFile = open(file, readMode)
-    newFile = open(backupFile, writeMode)
+    old_file = open(file, read_mode)
+    new_file = open(backup_file, write_mode)
 
     # 备份文件
     while True:
-        content = oldFile.read(10 * 1024)
+        content = old_file.read(10 * 1024)
         if len(content) <= 0:
             break
-        newFile.write(content)
+        new_file.write(content)
 
     # 关闭文件
-    oldFile.close()
-    newFile.close()
+    old_file.close()
+    new_file.close()
     return True
 ```

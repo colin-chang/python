@@ -85,13 +85,13 @@ lst = [i for i in range(10)]
 # 要求删除lst中奇数和质数
 prime = [2, 3, 5, 7]  # 质数
 
-toDel = []
+to_del = []
 # 遍历标记元素
 for i in lst:
     if i in prime or i % 2 == 1:
-        toDel.append(i)
+        to_del.append(i)
 # 删除元素
-for i in toDel:
+for i in to_del:
     lst.remove(i)
 ```
 

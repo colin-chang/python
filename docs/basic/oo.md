@@ -1,7 +1,6 @@
 # 面向对象
 
 ## 1. 类
-* 类的帮助信息可以通过`ClassName.__doc__`查看
 * 类中方法定义时至少有一个参数，通常名为`self`表示当前类实例。相当于C#当中`this`对象
 * 类示例化与函数调用类似，而不需要像C#一样使用`new`关键字
 * python中类的实例属性(类中的变量)相当于C#中类的字段，而[property](#_3-property)则相当于C#当中操作字段的`get`和`set`方法。属性+`property`组合才相当C#中的属性。
@@ -29,7 +28,7 @@ class Person:
         self.__name = value
 
     # 业务方法
-    def sayHi(self):
+    def sayhi(self):
         print(self.__getText())
 
     # 私有方法
@@ -40,7 +39,7 @@ class Person:
 p = Person("Colin")
 print(p.name)  # Colin
 p.name = "Robin"
-p.sayHi()  # Hi,my name is Robin
+p.sayhi()  # Hi,my name is Robin
 ```
 以上示例中涉及的[\_\_init\_\_()](#_2-2-init)和[property](#_3-property)会在后面章节中介绍。
 
@@ -79,7 +78,7 @@ class Chinese():
     def __init__(self, name):
         self.__name = name
 
-    def getName(self):
+    def get_name(self):
         return self.__name
 
 
@@ -87,7 +86,7 @@ class American():
     def __init__(self, age):
         self.__age = age
 
-    def getAge(self):
+    def get_age(self):
         return self.__age
 
 
@@ -98,13 +97,13 @@ class ChineseAmerican(Chinese, American):
         American.__init__(self, age)
         self.__gender = gender
 
-    def selfIntroduce(self):
+    def self_introduce(self):
         print("my name is %s,I'm %d years old and my gender is %s"
-              % (self.getName(), self.getAge(), self.__gender))
+              % (self.get_name(), self.get_age(), self.__gender))
 
 
 ca = ChineseAmerican("Colin", 18, "Male")
-ca.selfIntroduce()
+ca.self_introduce()
 ```
 
 ### 2.3 \_\_del\_\_()
@@ -157,13 +156,13 @@ print(p)  # my name is Colin
 
 ```py
 class Person:
-    def sayHi(self):
+    def sayhi(self):
         print("Hi there...")
 
 
 p = Person()
 callable(Person)  # True 类可调用
-callable(p.sayHi)  # True 函数可调用
+callable(p.sayhi)  # True 函数可调用
 callable(p)  # False
 ```
 
@@ -202,7 +201,7 @@ class Person:
         else:
             return val
 
-    def selfIntroduce(self):
+    def self_introduce(self):
         print(self.__format())
 
     def __format(self):
@@ -210,11 +209,11 @@ class Person:
 
 
 p = Person("Colin", 16, "male")
-p.selfIntroduce()
+p.self_introduce()
 
 """
 输出结果:
-selfIntroduce was visited...
+self_introduce was visited...
 _Person__format was visited...
 name was visited...
 age was visited...
@@ -271,14 +270,14 @@ class Person:
     def __init__(self):
         self.__name = "Colin"
 
-    def getName(self):
+    def get_name(self):
         return self.__name
 
-    def setName(self, value):
+    def set_name(self, value):
         self.__name = value
 
     # property对象关联了属性的getter和setter方法
-    name = property(getName, setName, doc="姓名")
+    name = property(get_name, set_name, doc="姓名")
 
 
 p = Person()
@@ -324,10 +323,10 @@ class Person:
     def name(self):  # 只读
         return self.__name
 
-    def setAge(self, value):  # 只写
+    def set_age(self, value):  # 只写
         self.__age = value
 
-    age = property(None, setAge)
+    age = property(None, set_age)
 
 
 p = Person("Colin", 18)
@@ -383,29 +382,29 @@ class Person:
 
     # 类方法
     @classmethod  # 类方法修饰器
-    def setCount(cls, cnt):  # cls代表当前类，与实例方法中的self类似
+    def set_count(cls, cnt):  # cls代表当前类，与实例方法中的self类似
         cls.__count = cnt
 
     @classmethod
-    def getCount(cls):
+    def get_count(cls):
         return cls.__count
 
 
 p1 = Person()
 p2 = Person()
-print(p1.getCount())  # 0
-print(p2.getCount())  # 0
-print(Person.getCount())  # 0
+print(p1.get_count())  # 0
+print(p2.get_count())  # 0
+print(Person.get_count())  # 0
 
-p1.setCount(10)
-print(p1.getCount())  # 10
-print(p2.getCount())  # 10
-print(Person.getCount())  # 10
+p1.set_count(10)
+print(p1.get_count())  # 10
+print(p2.get_count())  # 10
+print(Person.get_count())  # 10
 
-Person.setCount(20)
-print(p1.getCount())  # 20
-print(p2.getCount())  # 20
-print(Person.getCount())  # 20
+Person.set_count(20)
+print(p1.get_count())  # 20
+print(p2.get_count())  # 20
+print(Person.get_count())  # 20
 ```
 
 ### 4.3 静态方法
@@ -415,18 +414,18 @@ print(Person.getCount())  # 20
 class Message:
     # 静态文件装饰器
     @staticmethod
-    def sendNotification(msg):
+    def send_notification(msg):
         print("消息通知" + msg)
 
     @staticmethod
-    def sendEmail(msg):
+    def send_email(msg):
         print("邮件通知" + msg)
 
 
 # 类名方式访问
-Message.sendNotification("hello")
+Message.send_notification("hello")
 msg = Message()
-msg.sendEmail("hello")
+msg.send_email("hello")
 ```
 
 ### 4.4 类属性案例
@@ -451,15 +450,15 @@ class China:
         self.__name = name
         China.__initialized = True
 
-    def getName(self):
+    def get_name(self):
         return self.__name
 
 
 c1, c2, c3 = China("中国"), China("台湾"), China.singleton()
 print(id(c1) == id(c2) == id(c3))
-print(c1.getName())
-print(c2.getName())
-print(c3.getName())
+print(c1.get_name())
+print(c2.get_name())
+print(c3.get_name())
 ```
 #### 4.4.2 在线用户统计
 ```py
@@ -477,16 +476,16 @@ class User:
     @classmethod
     def removeOnlineUser(cls, id):  # 移除在线用户
         for user in cls.__onlineUsers:
-            if user.getId() == id:
+            if user.get_id() == id:
                 cls.__onlineUsers.remove(user)
                 break
 
     @staticmethod
     def displayObjectList(list):  # 打印对象列表
-        listStr = []
+        list_str = []
         for item in list:
-            listStr.append(eval(str(item)))
-        print(listStr)
+            list_str.append(eval(str(item)))
+        print(list_str)
 
     def __init__(self, id, name):
         self.__id, self.__name = id, name
@@ -494,7 +493,7 @@ class User:
     def __str__(self):
         return "{'id':%d,'name':'%s'}" % (self.__id, self.__name)
 
-    def getId(self):
+    def get_id(self):
         return self.__id
 
     # 登录
@@ -513,12 +512,12 @@ user2 = User(2, "Robin")
 
 user1.login()
 user2.login()
-onlineUsers = User.getOnlineUsers()
-User.displayObjectList(onlineUsers)  # [{'id': 1, 'name': 'Colin'}, {'id': 2, 'name': 'Robin'}]
+online_users = User.getOnlineUsers()
+User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}, {'id': 2, 'name': 'Robin'}]
 
 user2.logout()
-onlineUsers = User.getOnlineUsers()
-User.displayObjectList(onlineUsers)  # [{'id': 1, 'name': 'Colin'}]
+online_users = User.getOnlineUsers()
+User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}]
 ```
 
 ## 5. 继承
@@ -597,7 +596,7 @@ C#等强类型多态主要包括方法重载体现的编译时的多态性和虚
 # 模拟抽象类
 class People:
     # 模拟抽象方法
-    def sayHi(self):
+    def sayhi(self):
         pass
 
     # 通用业务方法
@@ -608,19 +607,19 @@ class People:
 # 具体业务类
 class Chinese(People):
     # 模拟重写实现抽象方法
-    def sayHi(self):
+    def sayhi(self):
         print("你好...")
 
 
 # 具体业务类
 class American(People):
     # 模拟重写实现抽象方法
-    def sayHi(self):
+    def sayhi(self):
         print("Hello...")
 
 
 def greeting(people: People):
-    people.sayHi()  # 定义时不确定执行内容，执行时根据调用对象确定实际执行内容
+    people.sayhi()  # 定义时不确定执行内容，执行时根据调用对象确定实际执行内容
 
 
 c, a = Chinese(), American()

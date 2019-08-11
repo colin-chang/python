@@ -268,26 +268,109 @@ ln = line_conf(2, 3)
 
 除此之外，闭包还是[装饰器](../senior/decorator.md#_1-装饰器)的技术实现基础。
 
-## 6. 常用标准内建函数
-python的强大有很大一部分是因为其庞大的标准库提供了各式各样的功能，基本上日常使用中你所需要的功能都可以从中找到，从而大大减轻开发人员的压力，节省开发人员的时间。pytho的标准库模块中内建函数（Built-in Function）提供了一些最最常用的功能，是其它很多模块的基础，这里我们简单的介绍一些。
+## 6. 内建函数
+python的强大有很大一部分是因为其庞大的标准库提供了各式各样的功能，基本上日常使用中你所需要的功能都可以从中找到，从而大大减轻开发人员的压力，节省开发人员的时间。这些函数因为在编程时使用较多，Cpython解释器用C语言实现了这些函数，启动解释器时默认加载。内建函数数量众多，在这里介绍些常用的内建函数。
 
-标准内建函数|功能|示例
-:-|:-|:-
-`all`|是否集合全部元素为真或空集合|`all([None,1]) -> False`<br>`all(["a",1])-> True`<br>`all([]) -> True`
-`any`|是否集合有中元素为真|`all([None,1]) -> True`<br>`all(["",{}])-> False`<br>`all([]) -> False`
-**`filter`**|对集合对象每个元素使用给定函数过滤，返回iterator yielding。相当于C#中`Linq`的`Where()`扩展方法|`users = [{"name": "Colin", "age": 16}, {"name": "Robin", "age": 20}, {"name": "Sean", "age": 21}]`<br>`adults = list(filter(lambda u: u["age"] >= 18, users))`
-`reversed`|逆序给定序列内容|`list(reversed([1,3,2])) -> [2, 3, 1]`
-`sorted`|对序列排序|`sorted([3,4,2,1]) -> [1, 2, 3, 4]`
-`max/min`|返回集合最大最小值|`max(1, 3, 5) -> 5`
-`sum`|序列求和|`sum([1,2,3]) -> 6`
-`len`|返回容器内容数量|`len("abc") -> 3`
-`zip`|返回一个元组列表，其中第i个元组包含每个序列中第i个元素|`list(zip(["Colin","Robin","Sean"],[98,95,96])) -> [('Colin', 98), ('Robin', 95), ('Sean', 96)]`
-`isinstance`|判断对象是否是指定类或其子类的实例|`class A:pass`<br> `isinstance(A(),A) -> True`
-`issubclass`|判断某个类是否是指定类的子类|`class A:pass`<br> `issubclass(A,object) -> True`
-`round`|四舍五入|`round(3.1415,2) -> 3.14`
-`abs`|取绝对值|`abs(-1) -> 1`
-`bin`|将整数转换为二进制字符串|`bin(2) -> '0b10'`
-`delattr`|删除对象的指定属性|`delattr(user,"remark")`
-`dir`|列出对象可用的成员|`dir(object)`
+`dir()`内建函数可以查看对象所有公有属性(方法)列表，我们可以通过`dir(__builtin__)`查看内建函数列表。
 
-可以通过`dir(__builtin__)`查看所有内建函数。
+### 6.1 map()
+`map()`可以对可迭代对象每个元素执行特定函数，返回处理后的新的可迭代对象。类似于C#中`Linq`的`Select`扩展方法,但`map()`更强大，它支持对多个`iterable`操作，多个`iterable`顺序对应给定函数的参数列表。
+
+```py
+result = map(lambda i: i ** 2, [1, 2, 3])
+list(result)  # [1,4,9]
+
+# 支持多个iterable
+result = map(lambda i, j: i + j, [1,2,3], [4,5,6])
+list(result)  # [5,7,9]
+```
+
+### 6.2 filter()
+`filter()`可以使用给定函数过滤可迭代对象，返回过滤后的可迭代对象。类似于C#中`Linq`的`Where`扩展方法。
+
+```py
+users = [{"name": "Colin", "age": 16}, {"name": "Robin", "age": 20}, {"name": "Sean", "age": 21}]
+result = filter(lambda u: u["age"] >= 18, users)
+list(result)  # [{'name': 'Robin', 'age': 20}, {'name': 'Sean', 'age': 21}]
+```
+
+### 6.3 sorted()
+对可迭代对象排序。
+
+```py
+sorted([3,4,2,1]) # [1, 2, 3, 4]
+```
+
+### 6.4 reversed()
+逆序可迭代对象。
+
+```py
+result = reversed([1,3,2])
+list(result) # [2, 3, 1]
+```
+
+### 6.5 max()/min()
+`max()`取可迭代对象的最大值。
+
+`min()`取可迭代对象的最小值。
+
+```py
+lst = [1, 3, 2]
+max(lst)  # 3
+min(lst)  # 1
+```
+### 6.6 sum()
+对可迭代对象求和。
+```py
+sum([1, 2, 3]) # 6
+```
+### 6.7 zip()
+以元组方式组合多个可迭代对象。
+```py
+x = [1, 2, 3]
+y = [4, 5, 6]
+z = [7, 8, 9]
+result = zip(x, y, z)
+list(result) # [(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+```
+### 6.8 all()/any()
+`all`判断可迭代对象中是否所有元素为真。**特别要注意可迭代对象中没有元素则返回True**
+`any`判断可迭代对象中是否有任意元素为真。可迭代对象中没有元素则返回False
+
+```py
+all([None, 1])  # False
+all(["a", 1])  # True
+all([])  # True
+
+any([None, 1])  # True
+any(["", {}])  # False
+any([])  # false
+```
+
+### 6.9 isinstance()/issubclass()
+`isinstance()`判断对象是否是指定类(或子类)的实例。
+
+`issubclass()`判断一个类是否是指定类的子类。
+
+```py
+class A:
+    pass
+
+class B(A):
+    pass
+
+b = B()
+isinstance(b, B)  # True
+isinstance(b, A)  # True
+issubclass(B, A)  # True
+```
+
+### 6.10 round()/abs()
+`round()`对一个数字用于四舍五入。
+
+`abs()`取一个数字的绝对值。
+
+```py
+round(3.1415, 2)  # 3.14
+abs(-1)  # 1
+```

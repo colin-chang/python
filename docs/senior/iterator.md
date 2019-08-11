@@ -6,7 +6,7 @@
 可迭代类型都继承自`Iterable`类(位于`collections`模块)，我们可以通过内建函数`isinstance(obj,class)`来判断一个对象是否是可迭代对象。通过`issubclass(cls,baseclass)`来判断一个类型是否为可迭代类型。
 
 ```py
-from collections import Iterable
+from collections.abc import Iterable
 
 # 可迭代对象判断
 isinstance([], Iterable)  # True
@@ -17,6 +17,7 @@ isinstance((x for x in range(10)), Iterable)  # True 生成器
 # 可迭代类型判断
 issubclass(set, Iterable)  # True
 issubclass(dict, Iterable)  # True
+issubclass(range,Iterable)  # True
 ```
 
 ## 2. 迭代器
@@ -25,7 +26,7 @@ issubclass(dict, Iterable)  # True
 迭代器都继承自`Iterator`类(位于`collections`模块)，类似可迭代对象的判定方式，我们可以通过`isinstance(obj,class)`来判断一个对象是否是迭代器。通过`issubclass(cls,baseclass)`来判断一个类型是否为迭代器。
 
 ```py
-from collections import Iterator
+from collections.abc import Iterator
 
 # 迭代器对象判断
 isinstance([], Iterator)  # False
@@ -36,6 +37,7 @@ isinstance((x for x in range(10)), Iterator)  # True 生成器
 # 迭代器类型判断
 issubclass(set, Iterator)  # False
 issubclass(dict, Iterator)  # False
+issubclass(range,Iterator)  # False
 ```
 
 **迭代器对象一定是可迭代对象，可迭代对象不一定是迭代器对象。**

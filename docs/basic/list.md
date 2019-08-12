@@ -96,7 +96,7 @@ for i in to_del:
 ```
 
 #### 1.1.5 排序/乱序
-```py
+```py {6}
 nums = [4,1,3,2]
 nums.sort() # [1,2,3,4] 默认为生序
 nums.sort(reverse=True) # [4,3,2,1] 降序
@@ -106,7 +106,7 @@ persons.sort(key=lambda p: p["age"])    # 指定排序规则
 ```
 
 `random`模块的`shuffle`可以将列表随机打乱。
-```py
+```py {4}
 import random
 
 lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

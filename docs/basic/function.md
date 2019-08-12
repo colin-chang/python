@@ -201,6 +201,8 @@ Pyton中可以使用lambda表达式创建匿名函数。语法格式为 `lambda 
 
 ```py
 sum = lambda x, y: x + y
+
+greet = lambda : print("hi there") # 无参匿名函数
 ```
 
 lambda函数主要用来写一些小体量的一次性函数，简化代码,常作为函数参数传递，类似与C#的委托和Lamda表达式。

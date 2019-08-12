@@ -24,7 +24,7 @@ else:
 * 父子进程执行顺序完全取决于操作系统的调度算法，没有固定顺序。
 * 每个进程中都可以多次执行`fork()`创建新的子进程
 
-![fork创建线程](../img/senior/fork.jpg)
+![fork创建进程](../img/senior/fork.jpg)
 
 ## 2. Process
 `multiprocessing`模块是python跨平台的多进程模块，Windows下也可以使用。`multiprocessing`模块提供了一个`Process`类来管理进程对象，通过`Process`管理进程，**只有当所有子进程执行完成并退出后，主进程才会退出**。
@@ -110,8 +110,8 @@ if __name__ == "__main__":
 
 `Pool`方法|功能
 :-|:-
-`apply_async(func[,args[,kwds]])`|使用非阻塞方式(并行)调用`func`
-`apply(func[,args[,kwds]])`|使用阻塞方式调用`func`。上个进程退出才执行下个
+`apply_async(func[,args[,kwds]])`|异步方式调用`func`
+`apply(func[,args[,kwds]])`|同步方式调用`func`。上个进程退出才执行下个
 `close()`|关闭`Pool`，使其不再接受新的任务
 `terminate()`|立即终止,不管任务是否完成
 `join()`|等待`Pool`所有进程执行完成。必须在`close`或`terminate`后使用
@@ -146,7 +146,14 @@ if __name__ == "__main__":
 ```
 
 ## 4. 进程间通信
-`multiprocessing`模块的`Queue`是一个消息队列，可以使用`Queue`实现生产者消费者模式来进行进程间通信。
+我们可以使用队列实现生产者消费者模式来进行进程间通信。python为多任务提供了三个队列。
+
+* `multiprocessing.Queue()`用于`Process`方式使用进程
+* `multiprocessing.Manager().Queue()`用于进程池方式使用进程
+* `queue.Queue()`用于[线程](thread.md#_3-2-queue)的队列
+
+三个队列使用方式相同，但**特别需要注意的是三个队列不可混用。**
+
 
 常用方法|功能
 :-|:-
@@ -160,48 +167,45 @@ if __name__ == "__main__":
 
 非阻塞方式入队成员，如果队列已满会抛出`Queue.Full`异常。非阻塞出队如果队列为空会抛出`Queue.Empty`异常。
 
+`Process`方式使用进程和队列可以参考[多线程使用队列](thread.md#_3-2-queue),两者非常类似，这里不再赘述，下面我们简单看下进程池使用队列实现进程间通信。
 
-```py {9,15,21,22,23}
-from multiprocessing import Process, Queue
+
+```py {1,11,19,25}
+from multiprocessing import Pool, Manager
+import os
 import time
 import random
 
 
-def create(queue):
+def produce(queue):
     while True:
+        product = random.randint(10, 20)
+        print("process-%s produced product-%d\t%s" % (os.getpid(), product, time.ctime()))
+        queue.put(product)  # 入队
+
         time.sleep(random.randint(1, 3))
-        queue.put(time.ctime())  # 入队
 
 
 def consume(queue):
     while True:
         if not queue.empty():
-            print(queue.get())  # 出队
+            print("process-%s consumed product-%d\t%s" % (os.getpid(), queue.get(), time.ctime()))  # 出队
 
         time.sleep(random.randint(1, 3))
 
 
 def main():
-    queue = Queue()  # 创建队列
-    pcreate = Process(target=create, args=(queue,))
-    pcomsue = Process(target=consume, args=(queue,))
-    pcreate.start()
-    pcomsue.start()
+    queue = Manager().Queue()  # 创建队列
+    pool = Pool()  # 创建进程池
+    for i in range(2):
+        pool.apply_async(produce, (queue,))  # 创建2个生产者
+    for i in range(3):
+        pool.apply_async(consume, (queue,))  # 创建3个消费者
+
+    pool.close()
+    pool.join()
 
 
 if __name__ == "__main__":
     main()
 ```
-
-如果要使用`Pool`创建进程，就需要使用`multiprocessing.Manager()`中的`Queue`。
-
-```py {3,5,6}
-from multiprocessing import Manager, Pool
-
-queue = Manager().Queue()
-pool = Pool()
-pool.apply_async(xxx, (queue,))
-pool.apply(xxx, (queue,))
-```
-
-

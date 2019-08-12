@@ -31,7 +31,7 @@ person = Person("Colin")
 ```
 ### 2.1 实例属性
 
-```py
+```py {1}
 person.age = 18  # 为person对象扩展age属性，仅对当前对象有效
 print(person.age)  # 18
 
@@ -42,7 +42,7 @@ print(p.age)  # 异常。 p没有age属性
 对象扩展属性仅在当前对象中可用，不能通过其他实例访问，对象扩展属性也不应在实例方法中使用，否则其他实例使用时没有对应扩展属性会触发异常。
 ### 2.2 类属性
 
-```py
+```py {1}
 Person.nationality = "China" # 动态扩展类属性
 print(Person.nationality)  # China
 print(person.nationality)  # China 
@@ -51,7 +51,7 @@ print(person.nationality)  # China
 ### 2.2 实例方法
 我们知道类的实例方法中通常需要一个`self`接收当前对象，如果直接像扩展属性一样扩展实例方法，那扩展方法调用时并不会把当前实例作传到方法的`self`形参。这时候我们就需要把要扩展的实例方法与实例对象建立绑定关系，`types`模块中的`MethodType`类可以实现这一功能，它会把的给定的方法与实例建立绑定关系，并返回方法引用，方法被调用时会自动将实例作传递给`self`形参。
 
-```py
+```py {6}
 import types
 
 def sayhi(self):
@@ -65,7 +65,7 @@ person.sayhi()  # hi there
 
 ### 2.3 类方法和静态方法
 扩展类方法和静态方法与扩展属性一样简单，没有扩展实例方法参数传递问题。
-```py
+```py {9,10}
 @classmethod
 def count(cls):
     print("count instances")
@@ -98,9 +98,14 @@ class Person:
         self.name = name
 
 
-p = Person("Colin")
-p.name, p.age = "Colin", 18
-p.gender = "male"  # 异常，不允许使用非限定属性名称
+def main():
+    p = Person("Colin")
+    p.name, p.age = "Colin", 18
+    p.gender = "male"  # 异常，不允许使用非限定属性名称
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 需要注意的是，`__slots__`仅对当前类实例有效，对子类实例不起作用。

@@ -48,7 +48,7 @@ sum(b=3, a=1)
 ## 2. 函数参数
 ### 2.1 缺省参数
 在形参中默认有值的参数，称之为缺省参数，缺省位于参数列表的最后面。
-```py
+```py {1}
 def print_info(name, age=18, gender='男'):
     print("name = %s age = %d gender = %s" % (name, age, gender))
 
@@ -60,7 +60,7 @@ print_info("colin")
 ::: tip 偏函数
 `functiontool`模块中的`partial()`被称作偏函数，它可以把一个函数的某些参数设置默认值。
 :::
-```py
+```py {7}
 import functools
 
 
@@ -85,7 +85,7 @@ def functionname([formal_args,] *args, **kwargs):
 * 如果同时存在`*args`,`**kwargs`,缺省参数。三者的顺序为 `*args 缺省参数 **kwargs`
 * 如果参数较为复杂或不确定长度，也可使用元组字典等复杂类型传参
 
-```py
+```py{1}
 def fun(a, b, *args, **kwargs):
     print("a = %d" % a)
     print("b = %d" % b)
@@ -209,7 +209,7 @@ lambda函数主要用来写一些小体量的一次性函数，简化代码,常�
 ### 5.1 函数引用
 函数创建的过程为，python解释器执行到`def`关键字后会在内存中创建函数对象，然后将对象引用返回并赋值给函数名。相当于函数名是指向函数对象的一个变量。其实，不仅仅是函数创建过程如此，python中一切皆对象，而对象的创建过程都是先执行的创建代码完后返回对象引用给对应的变量。
 
-```py {1,4}
+```py {1,4,5,8}
 def func():
     print("func...")
 

@@ -36,10 +36,15 @@ class Person:
         return "Hi,my name is %s" % self.__name
 
 
-p = Person("Colin")
-print(p.name)  # Colin
-p.name = "Robin"
-p.sayhi()  # Hi,my name is Robin
+def main():
+    p = Person("Colin")
+    print(p.name)  # Colin
+    p.name = "Robin"
+    p.sayhi()  # Hi,my name is Robin
+
+
+if __name__ == '__main__':
+    main()
 ```
 以上示例中涉及的[\_\_init\_\_()](#_2-2-init)和[property](#_3-property)会在后面章节中介绍。
 
@@ -73,7 +78,7 @@ python中类默认定义了一些特殊属性和方法，称为类内建属性�
 
 如果父类定义了`__init__()`，子类中没有重写`__init__()`，则新建子类对象时会调用父类`__init__()`并要求相应的参数列表。当然子类也可以重写`__init__()`,参数列表可以与父类不同，但应当在`__init__()`中调用其所有父类`__init__()`(非强制)初始化必要属性，否则可能会在访问到未按父类`__init__()`初始化的成员时触发异常。
 
-```py
+```py {20,21}
 class Chinese():
     def __init__(self, name):
         self.__name = name
@@ -102,43 +107,53 @@ class ChineseAmerican(Chinese, American):
               % (self.get_name(), self.get_age(), self.__gender))
 
 
-ca = ChineseAmerican("Colin", 18, "Male")
-ca.self_introduce()
+def main():
+    ca = ChineseAmerican("Colin", 18, "Male")
+    ca.self_introduce()
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ### 2.3 \_\_del\_\_()
 `__del__()`类似于C#当中的析构函数，会在对象销毁时调用。由于对象是地址引用，一个对象实际可能有多个变量引用，一般会在对象的[引用计数](../senior/gc.md#_1-引用计数)为0时才会[GC](../senior/gc.md)。
 
-```py
+```py {2}
 class Person:
     def __del__(self):
         print("对象被销毁")
 
 
-p1 = Person()
-p2 = p1
+def main():
+    p1 = Person()
+    p2 = p1
 
-del p1
-print("p1被删除")
-del p2
-print("p2被删除")
+    del p1
+    print("p1被删除")
+    del p2
+    print("p2被删除")
 
-'''
-p1,p2指向同一个地址引用，所以p1指向的地址应用数为3。
-删除p1并不会删除内存对象，删除p2后，内存对象引用数为0，此时会调用__del__方法并删除该内存对象。
-'''
+    '''
+    p1,p2指向同一个地址引用，所以p1指向的地址应用数为3。
+    删除p1并不会删除内存对象，删除p2后，内存对象引用数为0，此时会调用__del__方法并删除该内存对象。
+    '''
 
-# 输出内容如下：
-3
-p1被删除
-对象被销毁
-p2被删除
+
+if __name__ == '__main__':
+    main()
+
+    # 输出内容如下：
+    3
+    p1被删除
+    对象被销毁
+    p2被删除
 ```
 
 ### 2.4 \_\_str\_\_()
 C#中一个对象被直接打印时默认会输出其类名，我们可以通过`override`其`ToString()`方法定制输出内容。与之类似，python中对象被直接`print`时会默认输出类名和对象内存地址，我们可以通过`__str__()`定制输出内容，该方法必须返回字符串。
 
-```py
+```py {5}
 class Person:
     def __init__(self, name):
         self.__name = name
@@ -146,9 +161,13 @@ class Person:
     def __str__(self):
         return "my name is %s" % self.__name        
 
+def main():
+    p = Person("Colin")
+    print(p)  # my name is Colin
 
-p = Person("Colin")
-print(p)  # my name is Colin
+
+if __name__ == '__main__':
+    main()
 ```
 
 ### 2.5 \_\_call\_\_()
@@ -160,15 +179,20 @@ class Person:
         print("Hi there...")
 
 
-p = Person()
-callable(Person)  # True 类可调用
-callable(p.sayhi)  # True 函数可调用
-callable(p)  # False
+def main():
+    p = Person()
+    callable(Person)  # True 类可调用
+    callable(p.sayhi)  # True 函数可调用
+    callable(p)  # False
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 实例对象是不可调用的，但只要在类定义中声明一个`__call__()`，该类的实例对象就是`callable`了。实例对象被调用时会执行`__call__()`
 
-```py
+```py {2}
 class Person:
     def __call__(self):
         print("called...")
@@ -181,7 +205,7 @@ p()  # called...
 ### 2.6 \_\_getattribute\_\_()
 `__getattribute__()`会在访问实例属性时被触发，称为属性访问拦截器。通常可以在拦截器中记录日志或控制返回内容。
 
-```py {14}
+```py {11,14}
 class Person:
     def __init__(self, name, age, gender):
         self.name = name
@@ -208,19 +232,24 @@ class Person:
         return "my name is %s,I'm %d and my gender is %s" % (self.name, self.age, self.__gender)
 
 
-p = Person("Colin", 16, "male")
-p.self_introduce()
+def main()
+    p = Person("Colin", 16, "male")
+    p.self_introduce()
 
-"""
-输出结果:
-self_introduce was visited...
-_Person__format was visited...
-name was visited...
-age was visited...
-_Person__age was visited...
-_Person__gender was visited...
-my name is Colin,I'm 18 and my gender is male
-"""
+    """
+    输出结果:
+    self_introduce was visited...
+    _Person__format was visited...
+    name was visited...
+    age was visited...
+    _Person__age was visited...
+    _Person__gender was visited...
+    my name is Colin,I'm 18 and my gender is male
+    """
+
+
+if __name__ == '__main__':
+    main()
 ```
 通过以上示例我们发现，`__getattribute__()`拦截实例属性访问效果如下：
 * 实例公有属性。
@@ -253,11 +282,16 @@ class Person:
         return self.__age
 
 
-p = Person("Colin", 16, "male")
-print(p.__class__)  # <class '__main__.Person'>
-print(p.__dict__)  # {'name': 'Colin', '_Person__age': 16, '_Person__gender': 'male'}
-print(p.__doc__)  # 人类
-print(Person.__bases__)  # (<class 'object'>,)
+def main():
+    p = Person("Colin", 16, "male")
+    print(p.__class__)  # <class '__main__.Person'>
+    print(p.__dict__)  # {'name': 'Colin', '_Person__age': 16, '_Person__gender': 'male'}
+    print(p.__doc__)  # 人类
+    print(Person.__bases__)  # (<class 'object'>,)
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ## 3. property
@@ -280,10 +314,15 @@ class Person:
     name = property(get_name, set_name, doc="姓名")
 
 
-p = Person()
-print(p.name)  # Colin
-p.name = "Robin"
-print(p.name)  # Robin
+def main():
+    p = Person()
+    print(p.name)  # Colin
+    p.name = "Robin"
+    print(p.name)  # Robin
+
+
+if __name__ == '__main__':
+    main()
 ```
 通过以上代码我们可以看到`property`对象关联了`getter`和`setter`方法，我们直接操作`proeprty`对象会自动调用其绑定属性的`getter`和`setter`方法。
 
@@ -304,16 +343,21 @@ class Person:
         self.__name = value
 
 
-p = Person()
-print(p.name)  # Colin
-p.name = "Robin"
-print(p.name)  # Robin
+def main():
+    p = Person()
+    print(p.name)  # Colin
+    p.name = "Robin"
+    print(p.name)  # Robin
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ::: tip
 只读/只写 property
 :::
-```py
+```py {6,13}
 class Person:
     def __init__(self, name, age):
         self.__name = name
@@ -329,9 +373,14 @@ class Person:
     age = property(None, set_age)
 
 
-p = Person("Colin", 18)
-print(p.name)
-p.age = 20
+def main():
+    p = Person("Colin", 18)
+    print(p.name)
+    p.age = 20
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ## 4. 类级别成员
@@ -344,7 +393,7 @@ p.age = 20
 ### 4.1 类属性
 前面我们用到的属性都是实例属性，实例属性一般在`__init__`中初始化。除此之外，我们还可以直接在类根代码块中定义类属性。
 
-```py
+```py {2}
 class Person:
     count = 0  # 类属性。一般需要私有化类属性，通过类方法操作类属性
 
@@ -352,22 +401,27 @@ class Person:
         self.__name = None  # 实例属性
 
 
-p1 = Person()
-p2 = Person()
+def main():
+    p1 = Person()
+    p2 = Person()
 
-print(p1.count)  # 0
-print(p2.count)  # 0
-print(Person.count)  # 0
+    print(p1.count)  # 0
+    print(p2.count)  # 0
+    print(Person.count)  # 0
 
-p1.count = 10  # 仅p1有效
-print(p1.count)  # 10
-print(p2.count)  # 0
-print(Person.count)  # 0
+    p1.count = 10  # 仅p1有效
+    print(p1.count)  # 10
+    print(p2.count)  # 0
+    print(Person.count)  # 0
 
-Person.count = 30  # 全局有效
-print(p1.count)  # 10
-print(p2.count)  # 30
-print(Person.count)  # 30
+    Person.count = 30  # 全局有效
+    print(p1.count)  # 10
+    print(p2.count)  # 30
+    print(Person.count)  # 30
+
+
+if __name__ == '__main__':
+    main()
 ```
 类属性属于类本身，但类属性既可以通过类名访问也可以通过实例访问。通过实例访问,修改其值仅对当前实例有效。通过类名访问，修改其值会对类属性本身和未修改过的实例有效，新创建实例也会使用新的修改后的类属性值。因为会被全局修改影响，故而不推荐使用类属性做实例方式访问使用。
 
@@ -376,7 +430,7 @@ print(Person.count)  # 30
 
 类方法至少有一个参数，通常为`cls`指向类本身(类本身就是一个对象)。
 
-```py
+```py {5,9}
 class Person:
     __count = 0  # 类属性
 
@@ -390,27 +444,32 @@ class Person:
         return cls.__count
 
 
-p1 = Person()
-p2 = Person()
-print(p1.get_count())  # 0
-print(p2.get_count())  # 0
-print(Person.get_count())  # 0
+def main():
+    p1 = Person()
+    p2 = Person()
+    print(p1.get_count())  # 0
+    print(p2.get_count())  # 0
+    print(Person.get_count())  # 0
 
-p1.set_count(10)
-print(p1.get_count())  # 10
-print(p2.get_count())  # 10
-print(Person.get_count())  # 10
+    p1.set_count(10)
+    print(p1.get_count())  # 10
+    print(p2.get_count())  # 10
+    print(Person.get_count())  # 10
 
-Person.set_count(20)
-print(p1.get_count())  # 20
-print(p2.get_count())  # 20
-print(Person.get_count())  # 20
+    Person.set_count(20)
+    print(p1.get_count())  # 20
+    print(p2.get_count())  # 20
+    print(Person.get_count())  # 20
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ### 4.3 静态方法
 静态方法常用于封装通用工具方法，静态方法既可以通过类名访问也可以通过实例访问。静态方法可以无参。
 
-```py
+```py {3,7}
 class Message:
     # 静态文件装饰器
     @staticmethod
@@ -422,15 +481,20 @@ class Message:
         print("邮件通知" + msg)
 
 
-# 类名方式访问
-Message.send_notification("hello")
-msg = Message()
-msg.send_email("hello")
+def main:
+    # 类名方式访问
+    Message.send_notification("hello")
+    msg = Message()
+    msg.send_email("hello")
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ### 4.4 类属性案例
 #### 4.4.1 单例类
-```py
+```py {2,3,10,11,15,16}
 class China:
     __instance = None
     __initialized = False
@@ -454,11 +518,16 @@ class China:
         return self.__name
 
 
-c1, c2, c3 = China("中国"), China("台湾"), China.singleton()
-print(id(c1) == id(c2) == id(c3))
-print(c1.get_name())
-print(c2.get_name())
-print(c3.get_name())
+def main():
+    c1, c2, c3 = China("中国"), China("台湾"), China.singleton()
+    print(id(c1) == id(c2) == id(c3))
+    print(c1.get_name())
+    print(c2.get_name())
+    print(c3.get_name())
+
+
+if __name__ == '__main__':
+    main()
 ```
 #### 4.4.2 在线用户统计
 ```py
@@ -507,17 +576,22 @@ class User:
         print("%s logout" % self.__name)
 
 
-user1 = User(1, "Colin")
-user2 = User(2, "Robin")
+def main():
+    user1 = User(1, "Colin")
+    user2 = User(2, "Robin")
 
-user1.login()
-user2.login()
-online_users = User.getOnlineUsers()
-User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}, {'id': 2, 'name': 'Robin'}]
+    user1.login()
+    user2.login()
+    online_users = User.getOnlineUsers()
+    User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}, {'id': 2, 'name': 'Robin'}]
 
-user2.logout()
-online_users = User.getOnlineUsers()
-User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}]
+    user2.logout()
+    online_users = User.getOnlineUsers()
+    User.displayObjectList(online_users)  # [{'id': 1, 'name': 'Colin'}]
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ## 5. 继承
@@ -534,7 +608,7 @@ class SubClass(BaseClass):
 
 ### 5.1 方法重写
 在子类中定义与父类同名的方法即可重写父类方法。子类中可以通过父类名称或`super()`调用父类方法。
-```py
+```py {2,6,8}
 class Animal:
     def eat(self):
         print("开吃...")
@@ -557,7 +631,7 @@ tom.eat()
 ### 5.2 多继承
 python支持多继承。如果多个或多级父类中存在同名方法，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
 
-```py
+```py {16,23,25}
 class People:
     def speak(self):
         print("说话...")
@@ -578,10 +652,15 @@ class ChineseAmerican(Chinese, American):
         print("说多种语言...")
 
 
-ca = ChineseAmerican()
-print(ChineseAmerican.__mro__)  # 多父类同名方法调用顺序
-ca.speak()  # 默认顺序方法调用
-Chinese.speak(ca)  # 强制调用指定父类方法
+def main():
+    ca = ChineseAmerican()
+    print(ChineseAmerican.__mro__)  # 多父类同名方法调用顺序
+    ca.speak()  # 默认顺序方法调用
+    Chinese.speak(ca)  # 强制调用指定父类方法
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 ## 6. 多态
@@ -622,9 +701,14 @@ def greeting(people: People):
     people.sayhi()  # 定义时不确定执行内容，执行时根据调用对象确定实际执行内容
 
 
-c, a = Chinese(), American()
-greeting(c)
-greeting(a)
+def main():
+    c, a = Chinese(), American()
+    greeting(c)
+    greeting(a)
+
+
+if __name__ == '__main__':
+    main()
 ```
 
-我们常在一个业务基类中完成整理业务流程，实现通用方法(相当于C#中的抽象业务基类的工作)，具体不同的业务方法则只做声明，而后在具体业务子类中重写并实现具体业务方法(相当于C#的具体业务子类的工作)。python中没有抽象类和抽象方法，但我们可以在基类中定义方法但不实现来模拟抽象方法。
+我们常在一个业务基类中完成整体业务流程，实现通用方法(相当于C#中的抽象业务基类的工作)，具体不同的业务方法则只做声明，而后在具体业务子类中重写并实现具体业务方法(相当于C#的具体业务子类的工作)。python中没有抽象类和抽象方法，但我们可以在基类中定义方法但不实现来模拟抽象方法。

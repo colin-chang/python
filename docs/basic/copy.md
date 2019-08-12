@@ -20,7 +20,7 @@ print(b)  # [1,2,3,4]
 ## 3. 深拷贝
 深拷贝需要使用`copy`模块中的`deepcopy()`
 
-```py
+```py {6}
 import copy
 
 a = [1, 2, 3]

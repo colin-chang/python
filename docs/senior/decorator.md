@@ -14,17 +14,13 @@ def check_balance():
 # 下单
 def make_order():
     print("make order success")
-
-
-check_balance()
-make_order()
 ```
 
 假定我们有以上两个已在生产环境中运行的基础库函数。现在业务需求的变动，我们要求在调用两个函数的时候首先要进行权限校验。按照开放封闭的原则，我们不应该改动函数之前的内容，而是添加新的逻辑来满足业务需求。
 
 现在业务很明确就是要在执行函数前先进行权限校验，既然不能修改现有函数，那我们可以尝试封装一个工具函数，功能就是包装现有函数，在现有函数之前进行权限校验，然后执行原函数。简言之就是传入原函数，返回一个附加了权限校验功能的新函数，这个可以包装函数的工具函数就称为装饰器(`decorator`)。
 
-```py
+```py {10,11}
 def authorize(func):
     # 定义新函数
     def new_func():
@@ -36,9 +32,6 @@ def authorize(func):
 
 check_balance = authorize(check_balance)  # 用原函数名指向新的包装后的函数
 make_order = authorize(make_order)
-
-check_balance()
-make_order()
 ``` 
 
 以上就是装饰器的实现原理，不难发现装饰器就是一个闭包。
@@ -49,7 +42,7 @@ make_order()
 3. 将原函数名指向装饰后的新函数
 
 为了简化以上步骤，python提供了一种简单的装饰器语法糖，直接在函数声明上标注`@decorator`即可，其本质就是对以上第2,3两个步骤的简化使用。
-```py
+```py {10,15}
 # 定义装饰器函数
 def authorize(func):
     def new_func():
@@ -74,7 +67,7 @@ def make_order():
 ## 2. 多装饰器
 当一个函数有多个装饰器时，装饰顺序由内而外，执行则由外而内，类似于栈的存值和取值的先进后出顺序。
 
-```py
+```py {15,16}
 def strong(func):
     def new_func():
         return "<strong>%s</strong>" % func()
@@ -204,7 +197,7 @@ say_hello = color('blue')(say_hello)()
 ### 5.1 类装饰器原理
 当装饰器是类(无参)时，会首先创建类的一个实例对象，并把当前函数作参数传入`__init__()`中，然后返回新创建的对象并赋值给原函数名。当调用函数时实际调用的是装饰后的对象，因此会执行对象的`__call__()`。我们可以在`__call__()`中对原函数进行扩展。
 
-```py
+```py {5}
 class Strong:  # 声明类装饰器
     def __init__(self, func):
         self.__func = func

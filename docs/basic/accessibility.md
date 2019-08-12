@@ -38,15 +38,20 @@ class Student(Person):
 ```py
 from setup import *
 
-print(public)
-# print(_internal)  # 模块内变量访问
-# print(__private)  # 私有属性不可访问
+def main():
+    print(public)
+    # print(_internal)  # 模块内变量访问
+    # print(__private)  # 私有属性不可访问
 
-s = Student("Colin", 18, "Male")
-s.self_introduce()
-print(s.name)
-print(s._age)
-# print(s.__gender)  # 私有属性不可访问
+    s = Student("Colin", 18, "Male")
+    s.self_introduce()
+    print(s.name)
+    print(s._age)
+    # print(s.__gender)  # 私有属性不可访问
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 :::tip 其他常用变量命名
@@ -73,11 +78,16 @@ class Student(Person):
     pass
 
 
-p = Person()
-print(p._Person__name)  # Colin
+def main():
+    p = Person()
+    print(p._Person__name)  # Colin
 
-s = Student()
-print(s._Person__name)  # Colin
+    s = Student()
+    print(s._Person__name)  # Colin
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 虽然了解名字重整规则后可以访问对象私有属性，但这违背了访问控制原则，不推荐直接操作私有成员。仅可在特殊情况下使用。

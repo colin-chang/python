@@ -30,7 +30,7 @@ finally:
 ## 2. 自定义异常
 自定义异常类继承`Exception`即可，异常相关数据和逻辑可以自定义。使用`raise`关键字可以手动抛出异常，也可以在向上抛出异常。
 
-```py
+```py {1,16}
 class InvalidContentException(Exception):
     '自定义异常'
 
@@ -51,9 +51,14 @@ class User:
             self.__password = password
 
 
-try:
-    user = User("Colin", "pwd#")
-except InvalidContentException as ex:
-    print(ex)  # 'pwd#' can only be letters or numbers
-    raise  # 继续向上抛出异常
+def main():
+    try:
+        user = User("Colin", "pwd#")
+    except InvalidContentException as ex:
+        print(ex)  # 'pwd#' can only be letters or numbers
+        raise  # 继续向上抛出异常
+
+
+if __name__ == '__main__':
+    main()
 ```

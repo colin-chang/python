@@ -35,7 +35,7 @@ for i in (x for x in range(5)):
 
 python中的`yield`关键字与C#中功能和用法类似，**每迭代一次都会中断函数运行并将`yield`关键字之后的值返回，同时记录自身的执行状态与相关变量, 下次迭代时直接在上次执行中断处恢复变量并继续执行**。
 
-```py
+```py {5}
 # 斐波那契数列
 def fib(n):
     a, b = 0, 1
@@ -58,7 +58,7 @@ for i in fib(5):
 
 使用`send(arg)`函数特别需要注意的是，第一次执行到`yield`语句时，程序会被阻断并返回`yield`语句中的值，而不会执行赋值语句,所以python不允许第一次调用生成器时`send`非`None`值，一般情况下第一次执行需要调用的`generator.__next__()`或`generator_.send(None)`
 
-```py
+```py {12}
 def gen():
     i = 0
     while i < 5:
@@ -70,7 +70,7 @@ def gen():
 g, n = gen(), 0
 while True:
     try:
-        r=g.send(n*'-' if n>0 else None)
+        r = g.send(n * '-' if n > 0 else None)
         print(r)
     except StopIteration:
         break

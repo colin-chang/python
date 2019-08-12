@@ -70,7 +70,8 @@ module.exports = {
                     '/senior/intern',
                     '/senior/gc',
                     '/senior/pdb',
-                    '/senior/process'
+                    '/senior/process',
+                    '/senior/thread'
                 ]
             }
         ],

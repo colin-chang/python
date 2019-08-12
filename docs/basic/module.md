@@ -159,7 +159,7 @@ def b():
 通过`import...`方式导入时，`__all__`无效。
 
 `test.py`:
-```py
+```py {1}
 __all__ = ["TestClass", "sum"]
 
 

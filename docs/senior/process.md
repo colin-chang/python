@@ -51,7 +51,7 @@ else:
 `name`|当前进程别名，默认为Process-N(N为从1开始递增的整数)
 `pid`|当前进程`PID`
 
-```py {11,12,14}
+```py {12,13,15}
 from multiprocessing import Process
 import os
 import time
@@ -62,11 +62,16 @@ def process_request(interval):
     time.sleep(interval)  # 模拟耗时操作
 
 
-pr = Process(target=process_request, args=(5,), name="pr")  # 创建子进程
-pr.start()  # 启动子进程
-print(pr.is_alive())  # 判断pr进程是否在运行
-pr.join()  # 等待pr执行完成后再执行下面代码
-print("%s process finished" % pr.name)
+def main():
+    pr = Process(target=process_request, args=(5,), name="pr")  # 创建子进程
+    pr.start()  # 启动子进程
+    print(pr.is_alive())  # 判断pr进程是否在运行
+    pr.join()  # 等待pr执行完成后再执行下面代码
+    print("%s process finished" % pr.name)
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ### 2.2 自定义进程封装
@@ -78,19 +83,24 @@ import os
 import time
 
 
-class ProcessRequest(Process):
+class PRProcess(Process):
     def __init__(self, request):
         super().__init__()  # 务必执行父类初始化方法
         self.__request = request
 
     def run(self):  # 会被自动调用
         print("subprocess's PID is %d and host process's PID is %d " % (os.getpid(), os.getppid()))
-        time.sleep(3)  # 模拟耗时操作
+        time.sleep(2)  # 模拟耗时操作
         print("%s processed" % self.__request)
 
 
-pr = ProcessRequest("request-0")
-pr.start()
+def main():
+    pr = PRProcess("request-0")
+    pr.start()
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 3. 进程池
@@ -110,7 +120,7 @@ pr.start()
 
 当任务数量大于`Pool`中最大进程数量时，程序并不会阻塞，只是任务需要等待进程池调度进程来执行。
 
-```py {11,13,15,16}
+```py {12,14,16,17}
 from multiprocessing import Pool
 import os
 import time
@@ -121,13 +131,18 @@ def process_request(request):
     print("%s processed by process %d" % (request, os.getpid()))
 
 
-pool = Pool(3)  # 创建进程池，并指定最大进程数
-for i in range(10):
-    pool.apply_async(process_request, ("request-%d" % i,))  # 给进程池分派任务
+def main():
+    pool = Pool(3)  # 创建进程池，并指定最大进程数
+    for i in range(10):
+        pool.apply_async(process_request, ("request-%d" % i,))  # 给进程池分派任务
 
-pool.close()  # 关闭进程池
-pool.join()  # 等待进程池中所有任务结束
-print("all done")
+    pool.close()  # 关闭进程池
+    pool.join()  # 等待进程池中所有任务结束
+    print("all done")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 4. 进程间通信
@@ -146,7 +161,7 @@ print("all done")
 非阻塞方式入队成员，如果队列已满会抛出`Queue.Full`异常。非阻塞出队如果队列为空会抛出`Queue.Empty`异常。
 
 
-```py {9,15,20,21,22}
+```py {9,15,21,22,23}
 from multiprocessing import Process, Queue
 import time
 import random
@@ -166,11 +181,16 @@ def consume(queue):
         time.sleep(random.randint(1, 3))
 
 
-queue = Queue()  # 创建队列
-pcreate = Process(target=create, args=(queue,))
-pcomsue = Process(target=consume, args=(queue,))
-pcreate.start()
-pcomsue.start()
+def main():
+    queue = Queue()  # 创建队列
+    pcreate = Process(target=create, args=(queue,))
+    pcomsue = Process(target=consume, args=(queue,))
+    pcreate.start()
+    pcomsue.start()
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 如果要使用`Pool`创建进程，就需要使用`multiprocessing.Manager()`中的`Queue`。

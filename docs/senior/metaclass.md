@@ -42,7 +42,7 @@ Person = type("Person",(),{})  # 动态创建Person类
 仅通过参数列表的不同来区分并实现两种毫无关联的功能是不合理的，这只是python为了向后兼容的妥协行为。
 :::
 
-```py
+```py {30,31,32,33}
 class Animal:
     def eat(self):
         print("eat something...")
@@ -76,12 +76,19 @@ Bird = type("Bird", (Animal,),
             {"__name": "黄鹂", "get_name": lambda self: self.__name, "fly": fly, "count": 0,
              "count_birds": count_birds,
              "sayhi": sayhi})
-bird = Bird()
-print(bird.get_name())
-bird.fly()
-print(Bird.count)
-Bird.count_birds()
-Bird.sayhi()
+             
+
+def main():          
+    bird = Bird()
+    print(bird.get_name())
+    bird.fly()
+    print(Bird.count)
+    Bird.count_birds()
+    Bird.sayhi()
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 3. 元类
@@ -93,7 +100,7 @@ python中一切皆对象，实例对象的类型是类，而类对象的类型�
 
 例如我们需要将类属性全部改为大写，我们就可以通过定制元类来实现。
 
-```py
+```py {2,14}
 class UpperAttrMetaClass(type):
     def __new__(cls, class_name, base_classes, attrs):
         upper_attrs = {}
@@ -125,12 +132,17 @@ class Person(object):
 '''
 
 
-print(hasattr(Person, "category"))  # False
-print(hasattr(Person, "CATEGORY"))  # True 元类定制了类属性为大写
-print(Person.CATEGORY)  # People
+def main():
+    print(hasattr(Person, "category"))  # False
+    print(hasattr(Person, "CATEGORY"))  # True 元类定制了类属性为大写
+    print(Person.CATEGORY)  # People
 
-p = Person("colin")
-print(hasattr(p, "name"))  # True
-print(hasattr(p, "NAME"))  # False  元类不能修改实例属性
-print(p.name)  # colin
+    p = Person("colin")
+    print(hasattr(p, "name"))  # True
+    print(hasattr(p, "NAME"))  # False  元类不能修改实例属性
+    print(p.name)  # colin
+
+
+if __name__ == '__main__':
+    main()
 ```

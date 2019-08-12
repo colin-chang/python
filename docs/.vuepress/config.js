@@ -71,7 +71,8 @@ module.exports = {
                     '/senior/gc',
                     '/senior/pdb',
                     '/senior/process',
-                    '/senior/thread'
+                    '/senior/thread',
+                    '/senior/gil'
                 ]
             }
         ],

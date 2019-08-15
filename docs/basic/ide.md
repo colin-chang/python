@@ -93,3 +93,9 @@ $ sudo python3 -m pip install --upgrade pip setuptools wheel
 
 ## 3. python IDE
 推荐使用PyCharm。Pycharm是流行的python集成开发环境,支持Windows/mac OS/Linux。
+
+> [Docker](https://hub.docker.com/_/python)
+```sh
+# 快速运行python脚本
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp python:alpine python xxx.py
+```

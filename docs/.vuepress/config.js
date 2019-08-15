@@ -72,7 +72,7 @@ module.exports = {
                     '/senior/pdb',
                     '/senior/process',
                     '/senior/thread',
-                    '/senior/gil'
+                    '/senior/socket',
                 ]
             }
         ],

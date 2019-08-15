@@ -145,7 +145,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## 4. 进程间通信
+## 4. 进程间通信(IPC)
 我们可以使用队列实现生产者消费者模式来进行进程间通信。python为多任务提供了三个队列。
 
 * `multiprocessing.Queue()`用于`Process`方式使用进程

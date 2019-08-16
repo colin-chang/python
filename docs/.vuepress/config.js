@@ -73,6 +73,7 @@ module.exports = {
                     '/senior/process',
                     '/senior/thread',
                     '/senior/socket',
+                    '/senior/udp'
                 ]
             }
         ],

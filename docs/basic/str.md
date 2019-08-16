@@ -1,11 +1,71 @@
 # 字符串
 
 ## 1. 字符串拼接
+### 1) 简单拼接
 ```py
 a = "Colin"
 b = "Hello " + a
-c = "Hello %s" % a # 类似于C#的String.Format()
+c = "Hello %s" % a
 ```
+### 2) str.format()
+Python2.6 开始，新增了一种格式化字符串的函数`str.format()`，可以方便地格式化字符串。
+* 参数顺序
+```py
+# 默认顺序
+"{} {}".format("how do", "you do")
+
+# 指定顺序
+"how {0} {1} {0}".format("do", "you")
+
+# 命名参数
+"how {do} {you} {do}".format(do="do", you="you")
+```
+
+* 复杂参数
+```py
+# 列表参数
+names=["Colin","Robin","Sean"]
+"the winners are {0[0]},{0[1]} and {0[2]}".format(names)
+
+# 字典参数
+person = {"name": "Colin", "age": 18}
+"my name is {name} and I'm {age}".format(**person)
+
+# 对象参数
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def age(self):
+        return self.__age
+
+
+p = Person("Colin", 18)
+"my name is {0.name} and I'm {0.age}".format(p)
+```
+
+* 数字格式化
+
+格式|描述|示例
+:-|:-|:-
+`{:.nf}`|保留小数点后n位|`"{:.2f}".format(3.1415926) -> 3.14`
+`{:+.nf}`|带符号保留小数点后n位|`"{:+.2f}".format(-3.1) -> -3.10`
+`{:0>nd}`|左侧补0填充,长为n|`"{:0>2d}".format(3) -> 03`
+`{:x<nd}`|左侧补x填充,长为n|`"{:x<3d}".format(3) -> 3xx`
+`{:,}`|逗号分隔|`"{:,}".format(10000) -> 10,000`
+`{:.n%}`|百分比格式n位小数|`"{:.2%}".format(0.25678) -> 25.68%`
+
+如果要输出`{}`可以使用`{}`转义。如：
+```py
+"{{{}}}".format(100)  # {100}
+```
+
 
 ## 2. 下标/长度
 与其他语言类似，python字符串可以看作是字符数组，顺序下标从0开始。不同的是，python支持从后往前的逆序下标，使用负数作为字符串下标，从-1开始。

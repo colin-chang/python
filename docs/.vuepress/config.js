@@ -72,8 +72,9 @@ module.exports = {
                     '/senior/pdb',
                     '/senior/process',
                     '/senior/thread',
-                    '/senior/socket',
-                    '/senior/udp'
+                    '/senior/network',
+                    '/senior/udp',
+                    '/senior/tcp',
                 ]
             }
         ],

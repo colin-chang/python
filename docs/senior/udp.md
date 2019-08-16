@@ -1,13 +1,31 @@
 # UDP
 
-## 1. UDP 协议
+## 1. Socket
+Socket是进程间通信的一种方式，它能实现不同主机间的进程间通信，我们网络上各种各样的服务大多都是基于Socket来完成通信的。
+
+在python中使用`socket`非常简单,`socket`模块中封装了`socket`相关对象。
+
+* python中`socket`对象为全双工通信，可以同时收发消息，即可作为客户端也可做服务端。
+* 每次创建`socket`对象都会使用随机的端口号。一般情况下，服务器需要绑定端口让客户端能够正确发送到此进程。
+
+```py
+from socket import *
+
+tcp_socket = socket(AF_INET, SOCK_STREAM)  # 创建跨主机TCP socket
+udp_socket = socket(AF_INET, SOCK_DGRAM)  # 创建跨主机UDP socket
+```
+* `family`：可选`AF_INET`(跨主机进程通信)或`AF_UNIX`(本机进程通信)
+* `type`：`socket`类型可选`SOCK_STREAM`(流式套接字，主要用于TCP协议)或者`SOCK_DGRAM`(数据报套接字，主要用于UDP协议)
+
+
+## 2. UDP 协议
 UDP为用户数据报协议，是一个无连接的面向数据报的运输层协议。UDP不提供可靠性，它只是把应用程序传给IP层的数据报发送出去，但是并不能保证它们能到达目的地。由于UDP在传输数据报前不用在客户和服务器之间建立一个连接，且没有超时重发等机制，故而传输速度很快。
 
 UDP数据包括目的端口号和源端口号信息，由于通讯不需要连接，所以可以实现广播发送。UDP传输数据时有大小限制，每个被传输的数据报必须限定在64KB之内。UDP是一个不可靠的协议，发送方所发送的数据报并不一定以相同的次序到达接收方。
 
 UDP一般用于多点通信和实时的数据业务，比如视频会议系统,语音广播,DNS等。
 
-![UDP网络通信过程](../img/senior/udp.jpg)
+![UDP网络通信过程](../img/senior/udp-network.jpg)
 
 UDP的网络通信过程如上图所示。客户端发送消息是消息被逐层组包的一个过程。客户端应用层传输字符串消息Hello，消息到达传输层后附加目标端口等信息，到达网络层后则会附加目标IP地址等信息，到达链路层后会附加目标MAC地址等信息，然后数据包进入物理网络开始传输。
 
@@ -15,9 +33,12 @@ UDP的网络通信过程如上图所示。客户端发送消息是消息被逐�
 
 综合来看，UDP的网络通讯会经理客户端组包，服务端解包的两个过程，类似于电商网购的过程，卖家需要组包商品然后通过物流网络发货，买家收到货物后验证信息是否正确并逐层拆去包装最终拿到商品。
 
-## 2. UDP Socket
-### 2.1 基本用法
-常用方法|功能
+## 3. UDP Socket
+
+![UDP 通信模型](../img/senior/udp.jpg)
+
+### 3.1 基本用法
+基本函数|功能
 :-|:-
 `sendto(data,('hostaddr',port))`|发送数据。`data`如果是字符串需要进行编码
 `recvfrom(buffersize)`|接收数据。返回值为`(data, address info)`
@@ -103,7 +124,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### 2.2 UDP 广播
+### 3.2 UDP 广播
 
 UDP通讯中，我们想广播地址发送的数据，网络交换机会自动广播到当前网络中的所有地址。如局域网通讯软件，一个用户上线之后就可以广播上线信息，这样所有在线用户都可以收到他的上线通知。
 
@@ -120,8 +141,8 @@ bd.sendto("test broadcast".encode(), ("<broadcast>", 8080))  # 发送到广播�
 bd.close()
 ```
 
-## 3. TFTP
-### 3.1 TFTP 简介
+## 4. TFTP
+### 4.1 TFTP 简介
 TFTP（Trivial File Transfer Protocol,简单文件传输协议）是一个基于UDP协议的简单的、低开销的文件传输协议。使用端口号为69。TFTP常用于小容量存储的服务器，如路由器等。
 
 从网络服务器下载文件时，首先会在按照一定规则在本地创建一个空文件。服务器则会打开文件并逐次向客户端发送文件字节流，客户端接收到后将其写入之前创建的文件中，如此往复直到文件内容传输完成，即文件下载完成。文件上传过程与之类似，只是在服务端创建文件和传输方向不同。
@@ -140,7 +161,7 @@ TFTP传输的数据包格式固定，如上图所示。传输中有三种模式�
 
 > [TFTP Server on mac](/it/tftp)
 
-### 3.2 TFTP 客户端开发
+### 4.2 TFTP 客户端开发
 #### 1）大端/小端
 
 内存单位的地址是有高低位不同顺序的。一个多字节对象也是有高低位的，如0x1122,11是高位,22是低位。多字节的内存对象一般会占用多个内存单位，此时对象在内存中的存储顺序就有两种选择。如过，对象低位存储使用低位内存，称为小端。反之，低位对象使用高位内存则称为大端。
@@ -177,77 +198,72 @@ from struct import pack, unpack
 
 
 def download(file):
-    rrq = pack(("!H%dsb5sb" % len(file)), 1, file.encode(), 0, b"octet", 0)  # 构建下载请求
+    rrq = pack("!H{}sb5sb".format(len(file)), 1, file.encode(), 0, b"octet", 0)  # 构建下载请求
     udp.sendto(rrq, (ip, 69))  # 发送下载文件请求
 
-    p_num = 0  # 本地模块号
-    recvFile = None
+    chunk = 0  # 本地模块号
+    recv_file = None
 
     while True:
-        recvData, recvAddr = udp.recvfrom(1024)
-        recvDataLen = len(recvData)
-        cmd_num = unpack("!HH", recvData[:4])
-        cmd = cmd_num[0]  # 操作码
-        current_num = cmd_num[1]  # 模块号
+        recv_data, recv_addr = udp.recvfrom(1024)
+        recv_len = len(recv_data)
+        code_chunk = unpack("!HH", recv_data[:4])
+        code = code_chunk[0]  # 操作码
+        current_chunk = code_chunk[1]  # 模块号
 
-        if cmd == 3:  # 数据包
-            if current_num == 1:  # 如果是第一次接收到数据，那么就创建文件
-                recvFile = open(file, "ab")
+        if code == 3:  # 数据包
+            if current_chunk == 1:  # 如果是第一次接收到数据，那么就创建文件
+                recv_file = open(file, "ab")
 
-            if p_num + 1 == current_num:  # 校验模块号
-                recvFile.write(recvData[4:])
-                p_num += 1
-                print('第(%d)次接收到数据 %d byte(s)' % (p_num, recvDataLen))
+            if chunk + 1 == current_chunk:  # 校验模块号
+                recv_file.write(recv_data[4:])
+                chunk += 1
+                print("第{}次接收到数据 {} byte(s)".format(chunk, recv_len))
+                ack = pack("!HH", 4, chunk)
+                udp.sendto(ack, recv_addr)
 
-                ack = pack("!HH", 4, p_num)
-                udp.sendto(ack, recvAddr)
-
-            if recvDataLen < 516:  # 判断是否完成
-                recvFile.close()
+            if recv_len < 516:  # 判断是否完成
+                recv_file.close()
                 print('文件下载成功')
                 break
 
-        elif cmd == 5:  # 错误应答
-            (error_msg,) = unpack(("!%ds" % (recvDataLen - 4)), recvData[4:recvDataLen])
-            print("error occured at num-%d.error message:%s" % (current_num, error_msg.decode()))
+        elif code == 5:  # 错误应答
+            (error_msg,) = unpack("!{}s".format(recv_len - 4), recv_data[4:recv_len])
+            print("error occured at chunk-{}.error message:{}".format(current_chunk, error_msg.decode()))
             break
 
 
 def upload(file):
-    wrq = pack(("!H%dsb5sb" % len(file)), 2, file.encode(), 0, b"octet", 0)  # 构建上传请求
+    wrq = pack("!H{}sb5sb".format(len(file)), 2, file.encode(), 0, b"octet", 0)  # 构建上传请求
     udp.sendto(wrq, (ip, 69))  # 发送下载上传请求
 
-    p_num = 1  # 本地模块号
-    sendFile = None
+    chunk = 1  # 本地模块号
+    send_file = None
 
     while True:
-        recvData, recvAddr = udp.recvfrom(1024)
-        recvDataLen = len(recvData)
-        cmd_num = unpack("!HH", recvData[:4])
-        cmd = cmd_num[0]  # 操作码
-        current_num = cmd_num[1]  # 模块号
+        recv_data, recv_addr = udp.recvfrom(1024)
+        code, current_chunk = unpack("!HH", recv_data[:4])
 
-        if cmd == 4:  # ACK
-            if current_num == 0:  # 如果是第一次，那么就打开文件
-                sendFile = open(file, "rb")
+        if code == 4:  # ACK
+            if current_chunk == 0:  # 如果是第一次，那么就打开文件
+                send_file = open(file, "rb")
 
-            if p_num - 1 == current_num:  # 校验模块号
-                data = sendFile.read(512)  # 读取 512 byte数据
+            if current_chunk + 1 == chunk:  # 校验模块号
+                data = send_file.read(512)  # 读取 512 byte数据
+                send_data = pack("!HH{}s".format(len(data)), 3, chunk, data)
+                udp.sendto(send_data, recv_addr)  # 打包发送数据
+                print("第{}次数据已发送 {} byte(s)".format(chunk, len(send_data)))
+                chunk += 1
 
                 if len(data) <= 0:  # 判断文件是否读取完成
-                    sendFile.close()
+                    send_file.close()
                     print("文件上传完成...")
                     break
 
-                sendData = pack(b"!HH512s", 3, p_num, data)
-                udp.sendto(sendData, recvAddr)  # 打包发送数据
-
-                print("第(%d)次数据已发送 %d byte(s)" % (p_num, len(sendData)))
-                p_num += 1
-
-        elif cmd == 5:  # 错误应答
-            (error_msg,) = unpack(("!%ds" % (recvDataLen - 4)), recvData[4:recvDataLen])
-            print("error occured at num-%d.error message:%s" % (current_num, error_msg.decode()))
+        elif code == 5:  # 错误应答
+            recv_len = len(recv_data)
+            (error_msg,) = unpack("!{}s".format(recv_len - 4), recv_data[4:recv_len])
+            print("error occured at chunk-{}.error message:{}".format(current_chunk, error_msg.decode()))
             break
 
 
@@ -260,6 +276,7 @@ def main():
 
     ip = input("please type the hostname of TFTP server:\n")
     udp = socket(AF_INET, SOCK_DGRAM)  # 创建udp套接字
+    udp.bind(('', 8080))
 
     while True:
         act = int(input("please choose what to do?\n1:download\n2:upload\n3:quit\n"))

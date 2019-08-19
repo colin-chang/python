@@ -39,6 +39,13 @@ MSL(Maximum Segment Lifetime) 是报文最大生存时间，即报文在网络�
 
 在TIME_WAIT状态时两端的端口不能使用，要等到2MSL时间结束才可继续使用。实际应用中可以通过设置SO_REUSEADDR选项达到不必等待2MSL时间结束再使用此端口。
 
+```py
+from socket import *
+
+tcp = socket(AF_INET, SOCK_STREAM)
+tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 服务器不必等待2MSL时间结束再使用此端口
+```
+
 ## 4. 长连接与短连接
 TCP在真正的读写操作之前，server与client之间会通过三次握手建立一个连接，当读写操作完成后，双方不再需要这个连接时会经历四次挥手释放这个连接，每次连接都会有一定的资源和时间消耗。
 

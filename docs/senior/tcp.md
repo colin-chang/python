@@ -105,3 +105,284 @@ tcp_client.close()
 
 半连接队里与已连接队列中客户端的总和称为TCP服务器最大连接数，即同一时间TCP服务器可以接收的最多客户端连接数。这个数值就是`socket.listen(backlog)`中`backlog`设定的值。需要注意的是，**Linux会忽略用户设置而由系统决定最大连接数**。
 :::
+
+## 6. 多任务TCP服务器
+默认情况下Socket通信采用的是同步阻塞IO模型。这种情况下服务器只能同时为一个客户端服务。如果要TCP服务器同时为多客户单同时服务，最简单可以使用多进程、多线程或协程实现。除此之外，我们还可以使用非阻塞IO模型和IO多路复用模型实现，而这些模型都是单线程的。
+
+我们可以参考以下代码测试多客户端同时连接TCP服务器。
+
+```py
+from socket import *
+import random
+import time
+
+g_socketList = []
+for i in range(5):
+    s = socket(AF_INET, SOCK_STREAM)
+    s.connect(('127.0.0.1', 8088))
+    g_socketList.append(s)
+
+while True:
+    for s in g_socketList:
+        s.send(str(random.randint(0, 100)).encode())
+
+    time.sleep(1)
+```
+
+### 6.1 协程
+与多线程用法类似，将会阻塞程序的耗时操作交由[协程](coroutine.md#_4-gevent)执行，以实现多任务，同时为多客户端服务。
+
+
+```py {1,3,4,33}
+from gevent import monkey, socket
+
+monkey.patch_all()
+from gevent import spawn
+
+sockets = []  # 记录socket对象
+
+
+def process_request(client, info):
+    ip, port = info
+    while True:
+        data = client.recv(1024)
+        if data:
+            print("%s:%d - %s" % (ip, port, data.decode()))
+        else:
+            client.close()
+            print("%s:%d was disconnected" % (ip, port))
+            break
+
+
+def main():
+    tcp = socket.socket()  # 必须使用gevent包装的socket模块
+    tcp.bind(('', 8088))
+    tcp.listen()
+    sockets.append(tcp)
+
+    try:
+        while True:
+            client, (ip, port) = tcp.accept()
+            sockets.append(client)
+            print("%s:%d connected..." % (ip, port))
+
+            spawn(process_request, client, (ip, port))  # 创建协程为客户端服务
+    except:
+        pass
+    finally:
+        for sock in sockets:
+            sock.close()
+        sockets.clear()
+
+
+if __name__ == '__main__':
+    main()
+
+```
+
+### 6.2 非阻塞IO模型
+除了传统的阻塞IO模型，我们还可以设置Socket为非阻塞模式。非阻塞模式下，服务端监听和客户端接收消息都不再阻塞程序。
+
+python中使用非阻塞的socket,TCP服务端执行`accept()`时如果客户端没有`connect()`会抛出`OSError`，`recv()`则会抛出`BlockingIOError`需要开发者捕获异常。
+
+下面是一个用非阻塞IO模型实现的单线程仿多任务案例。
+
+```py {11,17}
+from socket import *
+
+clients = []
+
+
+def main():
+    tcp = socket(AF_INET, SOCK_STREAM)
+    tcp.bind(('', 8088))
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.listen()
+    tcp.setblocking(False)  # 设置socket为非阻塞模式
+
+    try:
+        while True:
+            try:  # 非阻塞模式执行accept()时如果客户端没有connect()会抛出OSError
+                client, (ip, port) = tcp.accept()
+                client.setblocking(False)  # 设置通讯socket为非阻塞模式
+                clients.append((client, (ip, port)))
+                print("%s:%d connected..." % (ip, port))
+            except:
+                pass
+
+            disconnected_clients = []  # 记录已断开的客户端
+            for client, (ip, port) in clients:
+                try:
+                    data = client.recv(1024)
+                    if data:
+                        print("%s:%d - %s" % (ip, port, data.decode()))
+                    else:  # 接收到客户端数据长度为0，表示客户端关闭连接
+                        client.close()  # 关闭为客户端服务的socket
+                        disconnected_clients.append((client, (ip, port)))
+                        print("%s:%d was disconnected" % (ip, port))
+                except:
+                    pass
+
+            for client in disconnected_clients:  # 删除已断开连接
+                clients.remove(client)
+            disconnected_clients.clear()
+
+    except:
+        pass
+    finally:
+        tcp.close()
+        for sock in clients:
+            sock.close()
+        clients.clear()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+案例中使用了非阻塞的socket,`accept()`和`recv()`都不会阻塞程序，这样我们就可以通过单任务串行实现先检查是否有新客户端连接，然后再遍历已连接客户端接收数据，当客户端连接较少时，遍历已连接客户端接收消息耗时非常短，感觉上去基本与多任务效果无异。
+
+### 6.3 IO多路复用模型
+传统多进程或多线程中一个IO流就会开启一个进程(线程)处理，当IO流数量巨大时，会造成大量的资源占用。所以人们提出了I/O多路复用这个模型，一个线程，通过记录IO流的状态来同时管理多个IO，可以提高服务器的吞吐能力。
+
+在多路复用的模型中，比较常用的有`select`,`pool`和`epoll`模型。这些都是系统接口，由操作系统提供，各编程语言都是在此基础上做了更高级的封装。
+
+#### 6.3.1 select/pool
+
+python将`select`系统接口封装在`select`模块中。`select(rlist, wlist, xlist) -> (rlist, wlist, xlist)`。用户将IO操作的socket添加到`select`的对应列表中。程序运行到`select()`时会被阻塞，此时系统内核会监视所有`select`负责的的`socket`，当监测的队列发生变化，会立即解阻塞并返回当前检测列表，用户可以从新的列表中读取数据。`select()`监测的三个列表依次 可读列表/可写列表/异常列表。
+
+```py {13,18}
+from socket import *
+from select import select
+from sys import stdin
+
+
+def main():
+    tcp = socket(AF_INET, SOCK_STREAM)
+    tcp.bind(('', 8088))
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.listen()
+    tcp.setblocking(False)  # 设置socket为非阻塞模式
+
+    detected = [tcp, stdin]  # 初始化select可读监测列表。当tcp对象或stdin标准输入有状态变化时将会解除select阻塞
+    clients = {}  # 记录客户端连接socket与其地址对应关系
+
+    print("type 'q' to exit")
+    while True:
+        readable, writeable, exceptions = select(detected, [], [])
+
+        for sock in readable:
+            if sock == stdin:  # 1. 用户输入-解除select阻塞
+                cmd = stdin.readline()
+                if cmd != "q\n":  # 输入q关闭所有socket并退出程序
+                    continue
+
+                for so in detected:
+                    so.close()
+                detected.clear()
+                print("exit...")
+                exit()
+            elif sock == tcp:  # 2. 客户端连接-解除select阻塞
+                client, (ip, port) = tcp.accept()
+                client.setblocking(False)
+                detected.append(client)  # 将客户端连接加入监测列表
+                clients[client] = (ip, port)
+                print("%s:%d connected..." % (ip, port))
+            else:  # 3. 客户端消息-解除select阻塞
+                data = sock.recv(1024)
+                ip, port = clients.get(sock)
+                if data:
+                    print("%s:%d - %s" % (ip, port, data.decode()))
+                else:  # 接收到客户端数据长度为0，表示客户端关闭连接
+                    sock.close()  # 关闭为客户端服务的socket
+                    detected.remove(sock)
+                    del clients[sock]
+                    print("%s:%d was disconnected" % (ip, port))
+
+
+if __name__ == '__main__':
+    main()
+```
+
+使用内核`select`可以高效地监测socket对象的状态变化并提取有变动的socket队形，如此可以有的放矢的操作有效socket，而不必一直手动遍历轮训所有客户端socket接收数据。`select`目前支持所有常见平台。
+
+select的一个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制。每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大，同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也会很大。
+
+
+`poll`与`select`没有本质上的差别，仅仅是没有了最大文件描述符数量的限制，使用较少不做详述。
+
+#### 6.3.2 epool
+epoll(**仅支持Linux**)具备了`select`和`poll`的一切优点，公认为性能最好的多路IO就绪通知方法。
+`epoll`没有最大并发连接的限制，能打开的FD(指的是文件描述符，通俗的理解就是套接字对应的数字编号)的上限远大于1024。
+
+`epoll`不用轮询socket的方式，转而采用事件通知机制。有效的活跃连接发生变化时会主动调用`callback`函数，而不需要轮询。`epoll`最大的优点就在于它只管“活跃”的连接，而跟连接总数无关，它不会随着FD数目的增加效率下降，因此在实际的网络环境中，`epoll`的效率就会远远高于`select`和`poll`。
+
+ ::: tip 水平触发与边缘触发(EPOLLET)
+`epoll`同时支持水平触发与边缘触发(EPOLLET),默认水平触发。理论上边缘触发的性能略高一些。
+
+* 水平触发：将就绪的文件描述符告诉进程后，如果进程没有对其进行IO操作，那么下次调用epoll时将再次报告这些文件描述符，这种方式称为水平触发
+* 边缘触发：只告诉进程哪些文件描述符刚刚变为就绪状态，它只说一遍，如果我们没有采取行动，那么它将不会再次告知，这种方式称为边缘触发
+ :::
+
+```py {14,15,16,21,45}
+# 以下代码仅支持Linux
+
+from socket import *
+from select import *
+from sys import stdin
+
+
+def main():
+    tcp = socket(AF_INET, SOCK_STREAM)
+    tcp.bind(('', 8088))
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.listen()
+
+    epl = epoll()  # 创建一个epoll对象
+    epl.register(tcp.fileno(), EPOLLIN | EPOLLET)  # tcp对象注册epoll"可读"事件
+    epl.register(stdin.fileno(), EPOLLIN | EPOLLET)  # 注册标准键盘输入
+
+    clients = {}  # 记录客户端连接socket与其地址对应关系
+    print("type 'q' to exit")
+    while True:
+        pol = epl.poll()  # epoll 阻塞进行 fd 扫描。注册的socket对象状态有变动会自动进行事件通知并解阻塞
+        for fd, event in pol:
+            if fd == stdin.fileno():  # 1. 键盘输入
+                cmd = stdin.readline()
+                if cmd != "q\n":  # 输入q关闭所有socket并退出程序
+                    continue
+
+                for fn, (client, info) in clients:  # 注销所有epoll事件监听并关闭所有socket
+                    epl.unregister(fn)
+                    client.close()
+                clients.clear()
+                print("exit...")
+                exit()
+            elif fd == tcp.fileno():  # 2. 有客户端连接
+                client, (ip, port) = tcp.accept()
+                clients[client.fileno()] = (client, (ip, port))
+                epl.register(client.fileno(), EPOLLIN | EPOLLET)  # 客户端连接socket注册epoll可读事件
+                print("%s:%d connected..." % (ip, port))
+            elif event == EPOLLIN:  # 3. 有客户端消息
+                client, (ip, port) = clients[fd]
+                data = client.recv(1024)
+                if data:
+                    print("%s:%d - %s" % (ip, port, data.decode()))
+                else:  # 接收到客户端数据长度为0，表示客户端关闭连接
+                    epl.unregister(fd)  # 注销epoll事件监听
+                    client.close()  # 关闭为客户端服务的socket
+                    del clients[fd]
+                    print("%s:%d was disconnected" % (ip, port))
+
+
+if __name__ == '__main__':
+    main()
+```
+
+:::tip 多任务TCP服务器的各种实现方式性能比较
+网络通信属于IO密集型操作，因此多线程和协程比多进程更有优势。而协程比多线程更为高效。
+
+自定义实现的非阻塞IO模型需要手动遍历客户端连接变化，没有内核级的`select`方式的IO多路复用高效，而采用事件通知机制的`epoll`又比轮询方式的`select`效率更高。
+
+协程实现方式中协程的调度函数会不断的判断协程中耗时操作执行情况，以在合适时间切换协程，相当于轮询操作，依然没有`epoll`的主动事件通知高效,遗憾的是`epoll`仅支持Linux平台。
+:::

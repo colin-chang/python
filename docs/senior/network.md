@@ -16,7 +16,7 @@ TCP/IP协议（传输控制协议/互联网协议）不是简单的一个协议�
     传输层主要为两台主机上的应用程序提供端到端的通信。在TCP/IP协议族中，有两个互不相同的传输协议：TCP（Transmission Control Protocol，传输控制协议）和UDP（User Datagram Protocol，用户数据报协议）。
 * 应用层
 
-    应用层负责处理特定的应用程序细节。几乎各种不同的TCP/IP实现都会提供下面这些通用的应用程序：Telnet远程登录、SMTP、FTP、HTTP等。
+    应用层负责处理特定的应用程序细节。它决定了要传输的数据内容和其采用的数据传输格式(协议)，如HTTP/FTP/DNS等。
 
 
 <style>#tcpip tr th:first-child,#tcpip tr td:first-child{border-right:3px solid lightblue;}#tcpip tr:nth-child(5),#tcpip tr:nth-child(6),#tcpip tr:nth-child(7){border-top:2px dashed green;}</style>
@@ -30,6 +30,8 @@ TCP/IP协议（传输控制协议/互联网协议）不是简单的一个协议�
     <tr><td>数据链路层</td><td rowspan='2'>链路层</td><td rowspan='2'>物理网络接口(以太网等)</td></tr>
     <tr><td>物理层</td></tr>
 </table>
+
+如果把一次网路通信过程比作邮寄快递。应用层决定了要寄什么东西和采用什么方式邮寄(数据内容和协议)。传输层决定选用哪家快递(TCP/UDP)。网络层负责填写邮寄地址(IP),链路层则决定使用空运或陆运等具体运送途径(以太网等)。
 
 ## 2. 划分子网
 IP地址在设计时就考虑到地址分配的层次特点，将每个IP地址都分割成网络号和主机号两部分，以便于IP地址的寻址操作。

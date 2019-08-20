@@ -72,6 +72,7 @@ module.exports = {
                     '/senior/pdb',
                     '/senior/process',
                     '/senior/thread',
+                    '/senior/coroutine',
                     '/senior/network',
                     '/senior/udp',
                     '/senior/tcp',

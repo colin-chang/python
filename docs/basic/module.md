@@ -13,13 +13,19 @@
 为了提升代码执行效率，解释器会在首次程序执行时把需要使用的模块解释成的字节码文件缓存到`__pycache__`目录下，缓存文件名一般为`模块名.解释器.python版本.pyc`。程序下次执行需要调用模块时会首先从缓存中读取，避免耗时的重复解释。
 
 ### 2.1 import
-在python中用关键字import来引入某个模块。使用`模块名.成员名`方式调用的。
+在python中用关键字`import`来引入某个模块。使用`模块名.成员名`方式调用的。
 
 ```py
 import time   # 引入time模块
 
 time.ctime()  # 调用time模块ctime函数
 time.sleep(5)  # 让程序延迟执行5秒
+```
+
+`__import__(name)`魔法方法可以导入指定名称(字符串)的包或模块,其返回值为导入对象
+```py
+time = __import__("time")
+time.ctime()
 ```
 
 ### 2.2 from...import...
@@ -86,9 +92,6 @@ import module
 
 from module import *
 ```
-
-
-
 
 ## 3. 模块高级
 ### 3.1 重新加载

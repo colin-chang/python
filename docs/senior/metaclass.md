@@ -6,7 +6,7 @@
 定义类的过程同时也是创建类对象的过程。简单讲，当遇到`class`关键字时,python解释器会自动创建这个类对象。
 
 ```py
-class Test:  # 创建类对象
+class Test(object):  # 创建类对象
     pass
 
 
@@ -18,7 +18,7 @@ print(Test)  # 打印类对象
 ## 2. type 类
 我们知道对象是通过类创建的，那类对象怎么通过其类型创建呢。我们知道内建函数`type`常用来查看对象类型，那我们下面就使用`type`来查看以下类对象的类型。
 ```py
-class Person:
+class Person(object):
     pass
 
 
@@ -43,7 +43,7 @@ Person = type("Person",(),{})  # 动态创建Person类
 :::
 
 ```py {30,31,32,33}
-class Animal:
+class Animal(object):
     def eat(self):
         print("eat something...")
 

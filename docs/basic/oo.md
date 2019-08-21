@@ -7,7 +7,7 @@
 * **python中每个类本身就是一个对象常称做[类对象](../senior/metaclass.md#_1-类对象)，可以直接使用类名访问**。
 
 ```py
-class Person:
+class Person(object):
     'Person帮助信息'
 
     def __init__(self, name):
@@ -120,7 +120,7 @@ if __name__ == '__main__':
 `__del__()`类似于C#当中的析构函数，会在对象销毁时调用。由于对象是地址引用，一个对象实际可能有多个变量引用，一般会在对象的[引用计数](../senior/gc.md#_1-引用计数)为0时才会[GC](../senior/gc.md)。
 
 ```py {2}
-class Person:
+class Person(object):
     def __del__(self):
         print("对象被销毁")
 
@@ -154,7 +154,7 @@ if __name__ == '__main__':
 C#中一个对象被直接打印时默认会输出其类名，我们可以通过`override`其`ToString()`方法定制输出内容。与之类似，python中对象被直接`print`时会默认输出类名和对象内存地址，我们可以通过`__str__()`定制输出内容，该方法必须返回字符串。
 
 ```py {5}
-class Person:
+class Person(object):
     def __init__(self, name):
         self.__name = name
 
@@ -174,7 +174,7 @@ if __name__ == '__main__':
 在一个在对象后使用`()`表示调用对象，如,`print('hi')`。目前我们都知道函数和类是可以被调用的(`callable`),那如何判断一个对象是否可以被调用呢？python内建函数`callable(obj)`功能就是判断一个对象是否可以别调用。
 
 ```py
-class Person:
+class Person(object):
     def sayhi(self):
         print("Hi there...")
 
@@ -193,7 +193,7 @@ if __name__ == '__main__':
 实例对象是不可调用的，但只要在类定义中声明一个`__call__()`，该类的实例对象就是`callable`了。实例对象被调用时会执行`__call__()`
 
 ```py {2}
-class Person:
+class Person(object):
     def __call__(self):
         print("called...")
 
@@ -206,7 +206,7 @@ p()  # called...
 `__getattribute__()`会在访问实例属性时被触发，称为属性访问拦截器。通常可以在拦截器中记录日志或控制返回内容。
 
 ```py {11,14}
-class Person:
+class Person(object):
     def __init__(self, name, age, gender):
         self.name = name
         self.__age = age
@@ -269,7 +269,7 @@ if __name__ == '__main__':
 `__bases__`|类的所有父类构成元素
 
 ```py
-class Person:
+class Person(object):
     "人类"
 
     def __init__(self, name, age, gender):
@@ -300,7 +300,7 @@ if __name__ == '__main__':
 除了之外python还提供`property`方式操作属性。
 
 ```py {12}
-class Person:
+class Person(object):
     def __init__(self):
         self.__name = "Colin"
 
@@ -329,7 +329,7 @@ if __name__ == '__main__':
 除了以上方式，我们还可以使用`property`[装饰器](../senior/decorator.md)简化其使用。此方式要求`getter`和`setter`方法必须使用相同方法名，此方法名也是我们最终操作的`property`对象名称。`getter`方法必须在`setter`前面定义。
 
 ```py {5,10}
-class Person:
+class Person(object):
     def __init__(self):
         self.__name = "Colin"
 
@@ -358,7 +358,7 @@ if __name__ == '__main__':
 只读/只写 property
 :::
 ```py {6,13}
-class Person:
+class Person(object):
     def __init__(self, name, age):
         self.__name = name
         self.__age = age
@@ -394,7 +394,7 @@ if __name__ == '__main__':
 前面我们用到的属性都是实例属性，实例属性一般在`__init__`中初始化。除此之外，我们还可以直接在类根代码块中定义类属性。
 
 ```py {2}
-class Person:
+class Person(object):
     count = 0  # 类属性。一般需要私有化类属性，通过类方法操作类属性
 
     def __init__(self):
@@ -431,7 +431,7 @@ if __name__ == '__main__':
 类方法至少有一个参数，通常为`cls`指向类本身(类本身就是一个对象)。
 
 ```py {5,9}
-class Person:
+class Person(object):
     __count = 0  # 类属性
 
     # 类方法
@@ -470,7 +470,7 @@ if __name__ == '__main__':
 静态方法常用于封装通用工具方法，静态方法既可以通过类名访问也可以通过实例访问。静态方法可以无参。
 
 ```py {3,7}
-class Message:
+class Message(object):
     # 静态文件装饰器
     @staticmethod
     def send_notification(msg):
@@ -495,7 +495,7 @@ if __name__ == '__main__':
 ### 4.4 类属性案例
 #### 4.4.1 单例类
 ```py {2,3,10,11,15,16}
-class China:
+class China(object):
     __instance = None
     __initialized = False
 
@@ -531,7 +531,7 @@ if __name__ == '__main__':
 ```
 #### 4.4.2 在线用户统计
 ```py
-class User:
+class User(object):
     __onlineUsers = []  # 记录所有在线用户
 
     @classmethod
@@ -597,7 +597,7 @@ if __name__ == '__main__':
 ## 5. 继承
 继承语法如下:
 ```py
-class BaseClass:
+class BaseClass(object):
     pass
 
 class SubClass(BaseClass):
@@ -609,7 +609,7 @@ class SubClass(BaseClass):
 ### 5.1 方法重写
 在子类中定义与父类同名的方法即可重写父类方法。子类中可以通过父类名称或`super()`调用父类方法。
 ```py {2,6,8}
-class Animal:
+class Animal(object):
     def eat(self):
         print("开吃...")
 
@@ -632,7 +632,7 @@ tom.eat()
 python支持多继承。如果多个或多级父类中存在同名方法，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
 
 ```py {16,23,25}
-class People:
+class People(object):
     def speak(self):
         print("说话...")
 
@@ -673,7 +673,7 @@ C#等强类型多态主要包括方法重载体现的编译时的多态性和虚
 以下示例演示了python中重写父类方法体现的简单多态特性。
 ```py
 # 模拟抽象类
-class People:
+class People(object):
     # 模拟抽象方法
     def sayhi(self):
         pass

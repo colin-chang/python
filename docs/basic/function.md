@@ -369,7 +369,7 @@ any([])  # false
 `issubclass()`判断一个类是否是指定类的子类。
 
 ```py
-class A:
+class A(object):
     pass
 
 class B(A):

@@ -32,7 +32,7 @@ person = {"name": "Colin", "age": 18}
 "my name is {name} and I'm {age}".format(**person)
 
 # 对象参数
-class Person:
+class Person(object):
     def __init__(self, name, age):
         self.__name = name
         self.__age = age

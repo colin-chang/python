@@ -22,7 +22,7 @@ _internal = "module internal"
 __private = "module private"
 
 
-class Person:
+class Person(object):
     def __init__(self, name, age, gender):
         self.name = name  # 公有属性
         self._age = age  # 模块内属性
@@ -69,7 +69,7 @@ python2/3中名字重整的规则是在私有属性名称加`_ClassName`前缀�
 通过`dir(obj)`我们可以看到对象被名字重整之后的新属性名称。
 
 ```py
-class Person:
+class Person(object):
     def __init__(self):
         self.__name = "Colin"
 

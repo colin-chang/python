@@ -23,7 +23,7 @@ Console.WriteLine(d.Age);
 ## 2. 动态扩展对象
  这里我们定义一个`Person`类并实例化一个`person`对象，下面操作都以此为例。
 ```py
-class Person:
+class Person(object):
     def __init__(self,name):
         self.name = name
 
@@ -91,7 +91,7 @@ delattr(person,"sayhi")
 ## 3. \_\_slots\_\_
 通过前面学习我们知道python允许我们为对象动态扩展实例属性和方法，有时为了避免扩展属性带来的问题，我们可以通过`__slots__`变量限制扩展实例属性。
 ```py
-class Person:
+class Person(object):
     __slots__ = ("name", "age")  # 限定当前实例对象可以使用的所有属性名称，包含现有属性和扩展属性
 
     def __init__(self, name):  # 现有属性也必须出现在__slots__中

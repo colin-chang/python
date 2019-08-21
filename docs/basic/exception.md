@@ -42,7 +42,7 @@ class InvalidContentException(Exception):
         return self.__error_message
 
 
-class User:
+class User(object):
     def __init__(self, username, password: str):
         self.__user_name = username
         if not password.isalnum():

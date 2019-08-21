@@ -198,7 +198,7 @@ say_hello = color('blue')(say_hello)()
 当装饰器是类(无参)时，会首先创建类的一个实例对象，并把当前函数作参数传入`__init__()`中，然后返回新创建的对象并赋值给原函数名。当调用函数时实际调用的是装饰后的对象，因此会执行对象的`__call__()`。我们可以在`__call__()`中对原函数进行扩展。
 
 ```py {5}
-class Strong:  # 声明类装饰器
+class Strong(object):  # 声明类装饰器
     def __init__(self, func):
         self.__func = func
 
@@ -220,7 +220,7 @@ print(sayhi("Colin"))  # <strong>hi Colin</strong>
 无参类装饰器的执行过程前面已经探讨过了，这里我们主要来看有参类装饰器。当解释器发现类装饰器有参时会使用指定参数或默认参数初始化一个装饰器类对象，紧接着自动调用其`__call__()`并将原函数作为参数传入，我们可以在`__call__()`中对原函数进行装饰扩展，然后将装饰后的函数返回并赋值给原函数名。
 
 ```py
-class Color:
+class Color(object):
     def __init__(self, color='red'):
         self.__color = color
 

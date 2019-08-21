@@ -166,7 +166,7 @@ def b():
 __all__ = ["TestClass", "sum"]
 
 
-class TestClass:
+class TestClass(object):
     pass
 
 
@@ -220,7 +220,7 @@ print(sum)
 除了模块外，类和函数也有`__name__`属性表示自身名称。
 
 ```py
-class Person:
+class Person(object):
     def sayhi():
         pass
 

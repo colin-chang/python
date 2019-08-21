@@ -34,10 +34,11 @@ p1 = person.copy()  # 复制到字典，非地址引用
 
 ```py
 person = {"name": "Colin", "age": 18}
-person["age"]           # 18
-person["gender"]        # 异常，key不存在
-person.get("name")      # Colin
-person.get("gender")    # None
+person["age"]                 # 18
+person["gender"]              # 异常，key不存在
+person.get("name")            # Colin
+person.get("gender")          # None
+person.get("nation","China")  # China key不存在则使用提供的默认值
 ```
 
 ### 2.3 Update

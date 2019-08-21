@@ -37,13 +37,19 @@ MSL(Maximum Segment Lifetime) 是报文最大生存时间，即报文在网络�
 
 2MSL即两倍的MSL，TCP的TIME_WAIT状态也称为2MSL等待状态，当TCP的一端发起主动关闭，前第三次挥手完成后发送了第四次握手的ACK包后就进入了TIME_WAIT状态，如果出现服务端没有收到最后一次ACK确认的情况，服务端会在超时后重发第三次挥手的FIN包，经历来回数据包传输，所以客户端必须在此状态上停留两倍的MSL时间。客户端接到重发的FIN包后可以再发一个ACK应答包。
 
-在TIME_WAIT状态时两端的端口不能使用，要等到2MSL时间结束才可继续使用。实际应用中可以通过设置SO_REUSEADDR选项达到不必等待2MSL时间结束再使用此端口。
+在TIME_WAIT状态时两端的端口不能使用，要等到2MSL时间结束才可继续使用。实际应用中可以通过设置`SO_REUSEADDR`选项达到不必等待2MSL时间结束再使用此端口。
 
 ```py
 from socket import *
 
 tcp = socket(AF_INET, SOCK_STREAM)
-tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 服务器不必等待2MSL时间结束再使用此端口
+
+"""
+SOL_SOCKET -> 设置级别(Socket Option Level)为SOCKET
+SO_REUSEADDR -> 设置地址重用选项(Socket Option Reuse Address)
+1 -> 
+"""
+tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # Socket地址重用  不必等待2MSL再使用当前地址
 ```
 
 ## 4. 长连接与短连接
@@ -150,7 +156,7 @@ def process_request(client, info):
             print("%s:%d - %s" % (ip, port, data.decode()))
         else:
             client.close()
-            print("%s:%d was disconnected" % (ip, port))
+            print("%s:%d was disconnected" % info)
             break
 
 
@@ -162,11 +168,11 @@ def main():
 
     try:
         while True:
-            client, (ip, port) = tcp.accept()
+            client, addr = tcp.accept()
             sockets.append(client)
-            print("%s:%d connected..." % (ip, port))
+            print("%s:%d connected..." % addr)
 
-            spawn(process_request, client, (ip, port))  # 创建协程为客户端服务
+            spawn(process_request, client, addr)  # 创建协程为客户端服务
     except:
         pass
     finally:
@@ -196,17 +202,17 @@ clients = []
 def main():
     tcp = socket(AF_INET, SOCK_STREAM)
     tcp.bind(('', 8088))
-    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     tcp.listen()
     tcp.setblocking(False)  # 设置socket为非阻塞模式
 
     try:
         while True:
             try:  # 非阻塞模式执行accept()时如果客户端没有connect()会抛出OSError
-                client, (ip, port) = tcp.accept()
+                client, addr = tcp.accept()
                 client.setblocking(False)  # 设置通讯socket为非阻塞模式
-                clients.append((client, (ip, port)))
-                print("%s:%d connected..." % (ip, port))
+                clients.append((client, addr))
+                print("%s:%d connected..." % addr)
             except:
                 pass
 
@@ -260,7 +266,7 @@ from sys import stdin
 def main():
     tcp = socket(AF_INET, SOCK_STREAM)
     tcp.bind(('', 8088))
-    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     tcp.listen()
     tcp.setblocking(False)  # 设置socket为非阻塞模式
 
@@ -283,11 +289,11 @@ def main():
                 print("exit...")
                 exit()
             elif sock == tcp:  # 2. 客户端连接-解除select阻塞
-                client, (ip, port) = tcp.accept()
+                client, addr = tcp.accept()
                 client.setblocking(False)
                 detected.append(client)  # 将客户端连接加入监测列表
-                clients[client] = (ip, port)
-                print("%s:%d connected..." % (ip, port))
+                clients[client] = addr
+                print("%s:%d connected..." % addr)
             else:  # 3. 客户端消息-解除select阻塞
                 data = sock.recv(1024)
                 ip, port = clients.get(sock)
@@ -335,7 +341,7 @@ from sys import stdin
 def main():
     tcp = socket(AF_INET, SOCK_STREAM)
     tcp.bind(('', 8088))
-    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # 设置服务器复用端口
+    tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     tcp.listen()
 
     epl = epoll()  # 创建一个epoll对象
@@ -359,10 +365,10 @@ def main():
                 print("exit...")
                 exit()
             elif fd == tcp.fileno():  # 2. 有客户端连接
-                client, (ip, port) = tcp.accept()
-                clients[client.fileno()] = (client, (ip, port))
+                client, addr = tcp.accept()
+                clients[client.fileno()] = (client, addr)
                 epl.register(client.fileno(), EPOLLIN | EPOLLET)  # 客户端连接socket注册epoll可读事件
-                print("%s:%d connected..." % (ip, port))
+                print("%s:%d connected..." % addr)
             elif event == EPOLLIN:  # 3. 有客户端消息
                 client, (ip, port) = clients[fd]
                 data = client.recv(1024)

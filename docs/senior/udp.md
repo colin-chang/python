@@ -99,10 +99,10 @@ def receive():
         print("%s:%d %s\t%s" % (host, port, ctime(), msg.decode()))
 
 
-def send(ip, port):
+def send(addr):
     while True:
         msg = input().encode()
-        skt.sendto(msg, (ip, port))
+        skt.sendto(msg, addr)
 
 
 skt: socket = None

@@ -232,7 +232,7 @@ class Person(object):
         return "my name is %s,I'm %d and my gender is %s" % (self.name, self.age, self.__gender)
 
 
-def main()
+def main():
     p = Person("Colin", 16, "male")
     p.self_introduce()
 
@@ -260,7 +260,37 @@ if __name__ == '__main__':
 
 **切勿在`__getattribute__()`中使用实例属性**，属性拦截器中访问实例属性会进入再次触发拦截器，导致陷入递归死循环。
 
-### 2.7 内建属性
+### 2.7 \_\_getattr\_\_()
+python遵循以下顺序来访问一个对象的属性。
+
+* `obj.__dict__`
+* `class.__dict__`
+* `obj.__getattr__()`
+
+首先搜索对象本身的`__dict__`字典，找到则返回，否则搜索对象所属类型的`__dict__`字典，找到则返回，否则尝试执行对象的`__getattr__()`，如果对象定义了`__getattr__()`则执行，否则将抛出`AttributeError`。
+
+**只有访问对象不存在的属性时才会执行`__getattr__()`，只要定义了此方法，访问任何不存在属性都不再报错。`__getattr__()`不适用于方法。**
+
+```py {2,4,10}
+class Person(object):
+    def __getattr__(self, item):
+        print(item)
+        return self  # 返回当前实例，以此可使用链式属性访问
+
+
+def main():
+    p = Person()
+    p.name
+    p.age.gender
+
+
+if __name__ == '__main__':
+    main()
+```
+
+对象的`__getattribute__()`控制着对象属性整个访问流程，而`__getattr__()`则仅仅是检索对象属性的最后一环而已。
+
+### 2.8 内建属性
 常用属性|说明|
 :-|:-
 `__class__`|实例类型。`obj.__class__`等价于`type(obj)`
@@ -603,8 +633,8 @@ class BaseClass(object):
 class SubClass(BaseClass):
     pass
 ```
-* 所有类最终都继承自`object`类。
-* 子类不能访问父类私有成员。
+
+所有类最终都继承自`object`类。
 
 ### 5.1 方法重写
 在子类中定义与父类同名的方法即可重写父类方法。子类中可以通过父类名称或`super()`调用父类方法。
@@ -630,6 +660,8 @@ tom.eat()
 
 ### 5.2 多继承
 python支持多继承。如果多个或多级父类中存在同名方法，解释器会按照一定顺序选择进行调用。这个选择顺序保存在当前类的`__mro__`属性当中，该顺序由C3算法决定。如果要明确调用某个父类的方法或不按照`__mro__`顺序调用，可以使用[方法重写](#_4-1-方法重写)中提到的第一种方法根据父类名称调用父类方法。
+
+显式声明继承自`object`的类称为新式类，否则称为旧式类，旧式类仅存在于python2中。多继承中，搜索类的继承成员时，新式类使用广度搜索，旧式类使用深度搜索。
 
 ```py {16,23,25}
 class People(object):

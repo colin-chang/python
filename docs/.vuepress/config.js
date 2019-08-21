@@ -75,7 +75,7 @@ module.exports = {
                     '/senior/coroutine',
                     '/senior/network',
                     '/senior/udp',
-                    '/senior/tcp',
+                    '/senior/tcp'
                 ]
             }
         ],

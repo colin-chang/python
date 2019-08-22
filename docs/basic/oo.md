@@ -385,7 +385,7 @@ if __name__ == '__main__':
 ```
 
 ::: tip
-只读/只写 property
+只读 / 只写 property
 :::
 ```py {6,13}
 class Person(object):

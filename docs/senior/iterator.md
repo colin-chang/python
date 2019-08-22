@@ -1,7 +1,7 @@
 # 迭代器
 
 ## 1. 可迭代对象
-可以被迭代的对象称为可迭代对象(Iterable)。简单讲凡是可用作`for`循环的对象，如集合(`list/tuple/set/dict/str`)和生成器(generator)对象都是可迭代对象。
+可以被迭代的对象称为可迭代对象(Iterable)。简单讲凡是可用作`for`循环的对象，如集合(`list / tuple / set / dict / str`)和生成器(generator)对象都是可迭代对象。
 
 可迭代类型都继承自`Iterable`类(位于`collections`模块)，我们可以通过内建函数`isinstance(obj,class)`来判断一个对象是否是可迭代对象。通过`issubclass(cls,baseclass)`来判断一个类型是否为可迭代类型。
 
@@ -42,7 +42,7 @@ issubclass(range,Iterator)  # False
 
 **迭代器对象一定是可迭代对象，可迭代对象不一定是迭代器对象。**
 
-我们发现`list/tuple/set/dict/str`都是可迭代对象(`Iterable`)，但却不是迭代器(`Iterator`),生成器(`generator`)是迭代器(`Iterator`)。
+我们发现`list / tuple / set / dict / str`都是可迭代对象(`Iterable`)，但却不是迭代器(`Iterator`),生成器(`generator`)是迭代器(`Iterator`)。
 
 :::tip 迭代器转换
 在确定一个对象是可迭代对象时，可以使用`iter(iterable)`函数将其转为迭代器对象。

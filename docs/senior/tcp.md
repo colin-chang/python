@@ -19,7 +19,7 @@ RST | 重置连接
 SYN | 同步(建立连接)
 FIN | 终止。发送方已经结束向对方发送数据。
 
-TCP 标志位为6bit，从左至右分别为URG/ACK/PSH/RST/SYN/FIN。如`0b000010`表示SYN，`0b010000`表示ACK。
+TCP 标志位为6bit，从左至右分别为 `URG / ACK / PSH / RST / SYN / FIN`。如`0b000010`表示SYN，`0b010000`表示ACK。
 
 ## 2. 四次挥手
 ![TCP三次握手四次挥手与十种状态](../img/senior/tcp-status.jpg)
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
 在多路复用的模型中，比较常用的有`select`,`pool`和`epoll`模型。这些都是系统接口，由操作系统提供，各编程语言都是在此基础上做了更高级的封装。
 
-#### 6.3.1 select/pool
+#### 6.3.1 select / pool
 
 python将`select`系统接口封装在`select`模块中。`select(rlist, wlist, xlist) -> (rlist, wlist, xlist)`。用户将IO操作的socket添加到`select`的对应列表中。程序运行到`select()`时会被阻塞，此时系统内核会监视所有`select`负责的的`socket`，当监测的队列发生变化，会立即解阻塞并返回当前检测列表，用户可以从新的列表中读取数据。`select()`监测的三个列表依次 可读列表/可写列表/异常列表。
 

@@ -59,7 +59,7 @@ module.exports = {
                 ]
             },
             {
-                title: 'python深入',
+                title: 'python高级',
                 collapsable: false,
                 children: [
                     '/senior/generator',
@@ -76,6 +76,13 @@ module.exports = {
                     '/senior/network',
                     '/senior/udp',
                     '/senior/tcp'
+                ]
+            },
+            {
+                title: '算法与数据结构',
+                collapsable: false,
+                children: [
+                    '/datastructure/algorithm',
                 ]
             }
         ],

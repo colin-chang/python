@@ -139,7 +139,7 @@ while True:
 与多线程用法类似，将会阻塞程序的耗时操作交由[协程](coroutine.md#_4-gevent)执行，以实现多任务，同时为多客户端服务。
 
 
-```py {1,3,4,33}
+```py {1,3,4,35}
 from gevent import monkey, socket
 
 monkey.patch_all()
@@ -156,6 +156,7 @@ def process_request(client, info):
             print("%s:%d - %s" % (ip, port, data.decode()))
         else:
             client.close()
+            sockets.remove(client)
             print("%s:%d was disconnected" % info)
             break
 
@@ -164,6 +165,7 @@ def main():
     tcp = socket.socket()  # 必须使用gevent包装的socket模块
     tcp.bind(('', 8088))
     tcp.listen()
+    tcp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sockets.append(tcp)
 
     try:

@@ -221,6 +221,7 @@ namespace TcpClient
     }
 }
 ```
+![客户端共享TCP连接](../img/senior/tcp-connection.jpg)
 
 > 以上案例代码共享在[Github](https://github.com/colin-chang/LongConnectionExploration)，有兴趣的读者可以自行测试。
 

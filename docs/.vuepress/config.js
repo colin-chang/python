@@ -83,7 +83,13 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/datastructure/algorithm',
-                    '/datastructure/datastructure'
+                    '/datastructure/datastructure',
+                    'datastructure/sequencelist',
+                    'datastructure/chaintable',
+                    'datastructure/stack',
+                    'datastructure/queue',
+                    'datastructure/tree',
+                    'datastructure/sort'
                 ]
             }
         ],

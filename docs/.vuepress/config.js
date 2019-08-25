@@ -83,6 +83,7 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/datastructure/algorithm',
+                    '/datastructure/datastructure'
                 ]
             }
         ],

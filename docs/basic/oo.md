@@ -143,11 +143,12 @@ def main():
 if __name__ == '__main__':
     main()
 
-    # 输出内容如下：
+    """
     3
     p1被删除
     对象被销毁
     p2被删除
+    """
 ```
 
 ### 2.4 \_\_str\_\_()
@@ -237,7 +238,6 @@ def main():
     p.self_introduce()
 
     """
-    输出结果:
     self_introduce was visited...
     _Person__format was visited...
     name was visited...

@@ -54,7 +54,10 @@ def print_info(name, age=18, gender='男'):
 
 
 print_info("colin")
-# 输出 name = colin age = 18 gender = 男
+
+"""
+name = colin age = 18 gender = 男
+"""
 ```
 
 ::: tip 偏函数
@@ -98,7 +101,7 @@ def fun(a, b, *args, **kwargs):
 
 fun(1, 2, 3, 4, 5, m=6, n=7, p=8)
 
-# 输出结果为
+"""
 a = 1
 b = 2
 args: 
@@ -107,6 +110,7 @@ kwargs:
 m = 6
 n = 7
 p = 8
+"""
 ```
 
 如果以变量形式对 `*args`和`**kwargs` 传参，则需要按如下方式对实参拆包,否则未命名参数都会作为元组组成部分传递被 `*args`接收。

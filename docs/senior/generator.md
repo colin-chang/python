@@ -26,8 +26,9 @@ g.__next__()  # 2
 for i in (x for x in range(5)):
     print(i,end=' ')
 
-# 输出
-0 1 2 3 4 
+"""
+0 1 2 3 4
+"""
 ```
 
 ## 3. yield
@@ -48,8 +49,9 @@ def fib(n):
 for i in fib(5):
     print(i, end=' ')
 
-# 输出
+"""
 1 1 2 3 5
+"""
 ```
 上面案例中生成器遍历完成后就会退出，所以`return`语句不会被执行，如果需要拿到`return`值则不能使用`for`循环迭代生成器，使用`next`函数一直取值到出现`StopIteration`异常，捕捉异常后可以在其中拿到`return`返回值。**一般情况下不会在生成器循环之后写return语句**。
 
@@ -78,7 +80,7 @@ while True:
         break
     n += 1
 
-#  输出
+"""
 -
 1
 --
@@ -88,4 +90,5 @@ while True:
 ----
 4
 -----
+"""
 ```

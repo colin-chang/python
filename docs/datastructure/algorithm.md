@@ -77,3 +77,23 @@ for m in range(4):
 O(1) > O(logn) > O(n) > O(nlogn) > O(n<sup>2</sup>) > O(n<sup>3</sup>) > O(2<sup>n</sup>) > O(n!) > O(n<sup>n</sup>)
 :::
 
+## 3. timeit
+`timeit`模块的`Timer`类封装了用来测试代码的执行时间的方法。
+
+`Timer(stmt='pass', setup='pass', timer=<timer function>)`
+* `stmt`是要测试的代码语句(statment)。
+* `setup`是运行代码时需要的配置，如导入相应模块等
+* `timer`是一个定时器函数，与平台有关
+
+`Timer.timeit([number=1000000])`方法测算并返回代码执行时间，number参数指定执行次数，默认为100万次。
+```py
+from timeit import Timer
+
+
+def fun():
+    lst = list(range(100))
+
+
+timer = Timer("fun()", "from __main__ import fun")
+print(timer.timeit(10000))  # 计算fun函数执行1W次的耗时 
+```

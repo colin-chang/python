@@ -23,7 +23,7 @@ lst.extend(["Jerry","John"])   # ['Colin', 'Robin', 'Tom', 'Sean', 'Jerry', 'Joh
 ```
 
 :::tip 连接列表
-extend方法可以将一个列表添加到当前列表中，除此之外还可以直接将两个列表相加。
+extend方法可以将一个列表添加到当前列表中，除此之外还可以直接将两个列表相加(效率很低，不建议使用)。
 :::
 
 ```py
@@ -62,15 +62,16 @@ lst[0] = "Colin Chang" # ['Colin Chang', 'Robin']
 #### 1.1.4 Delete
 函数|作用
 :-|:-
-pop|出栈最后的元素并返回
+pop([i])|出栈元素并返回,默认出栈最后一个元素
 remove|删除列表中第一个匹配的元素
 del list[n]|删除列表中特定下标的元素
 
 ```py
 lst = ['Colin', 'Robin', 'Tom', 'Sean', 'Jerry', 'John']
 lst.pop()  # ['Colin', 'Robin', 'Tom', 'Sean', 'Jerry'] 返回'John'
-lst.remove("Tom")   # ['Colin', 'Robin', 'Sean', 'Jerry'] 
-del lst[2] # ['Colin', 'Robin', 'Jerry'] 删除特定下标的元素
+lst.pop(2)  # ['Colin', 'Robin', 'Sean', 'Jerry'] 返回'Tom'
+lst.remove("Jerry")   # ['Colin', 'Robin', 'Sean']
+del lst[2] # ['Colin', 'Robin'] 删除特定下标的元素
 ```
 
 C#中不允许在遍历集合时新增或删除集合元素，这样会导致迭代器异常，而动态类型语言python则允许这么做，但这样会存在一定的问题。列表遍历列表过程中，
@@ -80,7 +81,7 @@ C#中不允许在遍历集合时新增或删除集合元素，这样会导致迭
 
 综上，**即使python允许在遍历过程中修改列表，我们也应当尽量避免这种容易导致莫名异常的用法，集合亦是如此**。如果确实需要遍历列表过程然后修改，我们通常可以分两步完成，首先遍历列表标记数据，完成遍历后直接按之前标记对列表修改。
 ```py
-lst = [i for i in range(10)]
+lst = list(range(10))
 
 # 要求删除lst中奇数和质数
 prime = [2, 3, 5, 7]  # 质数
@@ -148,10 +149,36 @@ python2中`range`产生一个列表，python3中则返回一个[可迭代对象]
 请写出一段 Python 代码实现分组一个 list 里面的元素,比如 [1,2,3,...100]变成 [[1,2,3],[4,5,6]....]
 ```py
 start, end, step = 1, 100, 3
-lst = [i for i in range(start, end + 1)]  # 模拟现有列表
+lst = list(range(start, end + 1))  # 模拟现有列表
 
 # 以下为分组方法
 [lst[i:i+3] for i in range(start-1,len(lst),step)]
+```
+
+列表推导式是一种轻量级循环生成列表的方式，可以按照一定规则和格式生成列表，如果只是普通的列表并不需任何规则和格式推荐直接使用效率更高的`list(range())`方式,其[算法时间复杂度](../datastructure/algorithm.md#_2-时间复杂度)更低。
+
+```py
+from timeit import Timer
+
+
+def fun1():
+    lst = list(range(1000))
+
+
+def fun2():
+    lst = [i for i in range(1000)]
+
+
+timer1 = Timer("fun1()", "from __main__ import fun1")
+print("func1 耗时：%s" % timer1.timeit())
+
+timer2 = Timer("fun2()", "from __main__ import fun2")
+print("func2 耗时: %s" % timer2.timeit())
+
+"""
+func1 耗时：15.172858574000001
+func2 耗时: 33.958301105000004
+"""
 ```
 
 ## 2. 元组

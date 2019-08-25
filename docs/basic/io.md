@@ -50,15 +50,16 @@ print("my phone number is %s and its balance is %.2f" % (phone_number, balance))
 
 percent = 0.875
 print("my homework is finished about %.2f%%" % (percent * 100))
-```
-输出内容为
-```
+
+"""
+输出内容为:
 my name is colin
 I'm 20 years old
 my id number is 000001
 my phone number is 110 
 and its balance is 10.20
 my homework is finished about 87.50%
+"""
 ```
 
 ::: tip
@@ -68,14 +69,18 @@ print函数`end`参数控制输出内容以什么结尾，默认为`end='\n'`输
 ```py
 print(123)
 print(456)
-# 输出结果
+
+"""
 123
 456
+"""
 
 print(123,end='')
 print(456)
-# 输出结果
+
+"""
 123456
+"""
 ```
 
 ## 3. 程序参数

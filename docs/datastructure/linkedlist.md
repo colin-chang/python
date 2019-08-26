@@ -36,7 +36,7 @@
 
 链表结构在不同的开发平台都有各自语言的版本实现，如链表在C#当中实现为`LinkedList<T>`，而Python并没有内建链表实现，需要我们自定义实现。
 
-> 本节自定义链表模块已共享在 [Github](https://github.com/colin-chang/linearlist)
+> 本节自定义链表模块已共享在 [Github](https://github.com/colin-chang/pythonstructure)
 
 ```py
 __all__ = ["SingleLinkList", "SingleCycleLinkList", "DoubleLinkList"]

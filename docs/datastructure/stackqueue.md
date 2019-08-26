@@ -136,4 +136,4 @@ if __name__ == "__main__":
 
 ```
 
-> 本节自定义栈和队列模块已共享在 [Github](https://github.com/colin-chang/linearlist)
+> 本节自定义栈和队列模块已共享在 [Github](https://github.com/colin-chang/pythonstructure)

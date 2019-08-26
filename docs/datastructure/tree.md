@@ -179,7 +179,7 @@ def postorder(self, node):
 
 [上图二叉树](#cbt)，后序遍历结果为 `HIDJEBFGCA`
 
-> 本节二叉树及其遍历算法代码已共享在 [Github](https://github.com/colin-chang/linearlist)
+> 本节二叉树及其遍历算法代码已共享在 [Github](https://github.com/colin-chang/pythonstructure)
 
 :::tip 深度遍历确定唯一完全二叉树
 二叉树遍历过程中，所有节点会作为一个序列输出，左右子树的节点是同级的且有序的(先左后右)，如果可以确定根节点，那就可以使用根节点递归划分左右子树来，这样就可以唯一确定、一棵二叉树树的结构。

@@ -220,8 +220,8 @@ join用于连接字符串。
 
 ```py
 s = " "
-list = ['how', 'do', 'you', 'do']
-s.join(list)  # 'how do you do'
+lst = ['how', 'do', 'you', 'do']
+s.join(lst)  # 'how do you do'
 ```
 
 ## 3. 正则表达式

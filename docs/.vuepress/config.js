@@ -85,7 +85,7 @@ module.exports = {
                     '/datastructure/algorithm',
                     '/datastructure/datastructure',
                     'datastructure/sequencelist',
-                    'datastructure/chaintable',
+                    'datastructure/linkedlist',
                     'datastructure/stack',
                     'datastructure/queue',
                     'datastructure/tree',

@@ -27,5 +27,6 @@
     "@vuepress/plugin-back-to-top": "^1.0.3",
     "@vuepress/plugin-google-analytics": "^1.0.3",
     "vuepress": "^1.0.3"
-  }
+  },
+  "dependencies": {}
 }

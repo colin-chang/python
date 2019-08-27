@@ -92,6 +92,13 @@ module.exports = {
                     'datastructure/stackqueue',
                     'datastructure/tree'
                 ]
+            },
+            {
+                title: '数据操作',
+                collapsable: false,
+                children: [
+                    '/database/mysql'
+                ]
             }
         ],
         displayAllHeaders: true,

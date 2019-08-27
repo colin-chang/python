@@ -6,7 +6,7 @@ python中进行文件读写的基本流程如下：
 * 读写文件。读取或修改文件内容。
 * 关闭文件。保存并关闭文件。
 
-### 1.1 打开文件
+### 1.1 打开文件
 python中使用`open()`打开一个已存在的文件或者创建一个新文件，获得文件流。其格式为:
 
 `open(file, mode='r', buffering=None, encoding=None, errors=None, newline=None, closefd=True)`
@@ -46,28 +46,37 @@ python中使用`open()`打开一个已存在的文件或者创建一个新文件
 ### 1.2 关闭文件
 文件读写完成后需要调用`close()`刷新缓冲区里任何还没写入的信息，并关闭该文件，这之后便不能再进行写入。当一个文件对象的引用被重新指定给另一个文件时，python 会自动关闭之前的文件。
 
+:::tip 使用 with 语句安全操作文件
+`open()`是[上下文管理器](../senior/contextmanager.md)，可以使用 `with` 语句可以在离开其作用域时自动调用文件对象的`close()`,简单且安全的操作文件。
+:::
+
+```py
+with open("test.txt","w") as file
+    file.write("content")
+
+# 离开with作用域不管是否发生异常都会自动调用 file.close()
+```
+
 ### 1.3 文件读写
 
 读写文件时，会有一个文件位置指针，类似于文本编辑器的光标位置，也可以看作是一个游标，读写操作都在指针指向的位置执行。
 
 `tell()/seek()`分别用于获取和设置指针位置。
 ```py
-file = open("test.txt", "r")
-file.tell()  # 获取文件指针位置
-file.seek(0)  # 将文件指针移动到文件头
+with open("test.txt", "r") as file
+    file.tell()  # 获取文件指针位置
+    file.seek(0)  # 将文件指针移动到文件头
 ```
-
 
 #### 1.3.1 写文件
 `write()/writelines()`常用于写入文件内容和内容列表(并不会换行，换行可自行添加`\n`)。
 
 ```py
-file = open("test.txt", "w")
-file.write("write something...\n")  # 写入字符串
-file.writelines(["try\n", "writelines"])  # 写入列表
+with open("test.txt", "w") as file
+    file.write("write something...\n")  # 写入字符串
+    file.writelines(["try\n", "writelines"])  # 写入列表
 
-# file.flush()    # 强制清空缓存去并保存文件修改
-file.close()
+    # file.flush()    # 强制清空缓存去并保存文件修改
 ```
 
 一般情况下修改文件内容后，修改的文件流内容会保存在内存缓存区而不会马上写磁盘，调用`flush()`可以强制其立即写入磁盘并清空缓存区。
@@ -76,23 +85,21 @@ file.close()
 读取文件常用`read()/readline()/readlines()`三个函数。
 
 ```python
-file = open("test.txt", "r")
-content = file.read()  # 一次性读取文件所有内容
-line = file.readline()  # 读取一行，并将文件指针下移一行。
-lines = file.readlines()  # 一次性读取所有行。返回列表
-file.close()
+with open("test.txt", "r") as file
+    content = file.read()  # 一次性读取文件所有内容
+    line = file.readline()  # 读取一行，并将文件指针下移一行。
+    lines = file.readlines()  # 一次性读取所有行。返回列表
 ```
 
 当文件较大时一次性读取文件会占用大量内存甚至内存溢出导致程序奔溃。我们可以考虑使用`readline()`逐行读取，但如果文件压缩没有换行，此方案也不适用，此外我们可以设定`read()`每次读取内容的字节数，然后逐步读取，此方案可以应对所有情况。
 
 ```py
-file = open("test.txt", "r")
-while True:
-    content = file.read(10 * 1024)  # 每次读取10KB
-    if len(content) <= 0:
-        break
-    print(content)
-file.close()
+with open("test.txt", "r") as file
+    while True:
+        content = file.read(10 * 1024)  # 每次读取10KB
+        if len(content) <= 0:
+            break
+        print(content)
 ```
 
 ## 2. 文件 / 目录操作
@@ -188,19 +195,14 @@ def backup(file: str, backup_file=''):
         file_name, ext = os.path.splitext(file)
         backup_file = file_name + "[copy]" + ext
 
-    # 打开文件
-    old_file = open(file, "rb")
-    new_file = open(backup_file, "wb")
-
     # 备份文件
-    while True:
-        content = old_file.read(10 * 1024)
-        if len(content) <= 0:
-            break
-        new_file.write(content)
+    with open(file, "rb") as old_file
+        with open(backup_file, "wb") as new_file        
+            while True:
+                content = old_file.read(10 * 1024)
+                if len(content) <= 0:
+                    break
+                new_file.write(content)
 
-    # 关闭文件
-    old_file.close()
-    new_file.close()
     return True
 ```

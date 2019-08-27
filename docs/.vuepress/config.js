@@ -55,7 +55,8 @@ module.exports = {
                     '/basic/accessibility',
                     '/basic/copy',
                     '/basic/file',
-                    '/basic/exception'
+                    '/basic/exception',
+                    '/basic/logging'
                 ]
             },
             {

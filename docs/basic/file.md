@@ -51,7 +51,7 @@ python中使用`open()`打开一个已存在的文件或者创建一个新文件
 :::
 
 ```py
-with open("test.txt","w") as file
+with open("test.txt","w") as file:
     file.write("content")
 
 # 离开with作用域不管是否发生异常都会自动调用 file.close()
@@ -63,7 +63,7 @@ with open("test.txt","w") as file
 
 `tell()/seek()`分别用于获取和设置指针位置。
 ```py
-with open("test.txt", "r") as file
+with open("test.txt", "r") as file:
     file.tell()  # 获取文件指针位置
     file.seek(0)  # 将文件指针移动到文件头
 ```
@@ -72,7 +72,7 @@ with open("test.txt", "r") as file
 `write()/writelines()`常用于写入文件内容和内容列表(并不会换行，换行可自行添加`\n`)。
 
 ```py
-with open("test.txt", "w") as file
+with open("test.txt", "w") as file:
     file.write("write something...\n")  # 写入字符串
     file.writelines(["try\n", "writelines"])  # 写入列表
 
@@ -85,7 +85,7 @@ with open("test.txt", "w") as file
 读取文件常用`read()/readline()/readlines()`三个函数。
 
 ```python
-with open("test.txt", "r") as file
+with open("test.txt", "r") as file:
     content = file.read()  # 一次性读取文件所有内容
     line = file.readline()  # 读取一行，并将文件指针下移一行。
     lines = file.readlines()  # 一次性读取所有行。返回列表
@@ -94,7 +94,7 @@ with open("test.txt", "r") as file
 当文件较大时一次性读取文件会占用大量内存甚至内存溢出导致程序奔溃。我们可以考虑使用`readline()`逐行读取，但如果文件压缩没有换行，此方案也不适用，此外我们可以设定`read()`每次读取内容的字节数，然后逐步读取，此方案可以应对所有情况。
 
 ```py
-with open("test.txt", "r") as file
+with open("test.txt", "r") as file:
     while True:
         content = file.read(10 * 1024)  # 每次读取10KB
         if len(content) <= 0:
@@ -196,8 +196,8 @@ def backup(file: str, backup_file=''):
         backup_file = file_name + "[copy]" + ext
 
     # 备份文件
-    with open(file, "rb") as old_file
-        with open(backup_file, "wb") as new_file        
+    with open(file, "rb") as old_file:
+        with open(backup_file, "wb") as new_file:        
             while True:
                 content = old_file.read(10 * 1024)
                 if len(content) <= 0:

@@ -65,6 +65,7 @@ module.exports = {
                     '/senior/generator',
                     '/senior/iterator',
                     '/senior/decorator',
+                    '/senior/contextmanager',
                     '/senior/dynamic',
                     '/senior/metaclass',
                     '/senior/intern',

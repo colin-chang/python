@@ -66,15 +66,21 @@ mysql> SELECT gender,GROUP_CONCAT(name) as names FROM students GROUP BY gender;
 +--------+---------------+
 ```
 
-### 1.2 UPDATE ... JOIN ...
-
-### 1.3 CREATE TABLE ... SELECT ...
+### 1.2 CREATE TABLE ... SELECT ...
 ```sql
--- 通过create table ...select来创建数据表并且同时插入数据
--- 创建商品分类表，注意: 需要对brand_name 用as起别名，否则name字段就没有值
-create table good_brands (     
+-- 创建年级表，并且将从班级中查询到的年级数据插入新建的年级表中
+create table grades (
 id int unsigned primary key auto_increment,     
-name varchar(40) not null) select brand_name as name from goods group by brand_name;
+name varchar(30) not null) select grade as name from classes group by grade;
+```
+
+### 1.3 UPDATE ... JOIN ...
+```sql
+-- 查看classes表中的年级名称对应的年级id
+SELECT * FROM classes as c JOIN grades as g ON c.grade=g.name
+
+-- 根据连接查询结果，将grade.id更新到class.grade字段中。 可以将UPDATE关键字后的表连接结果视作一张虚拟表
+UPDATE classes as c JOIN grades as g ON c.grade=g.name set c.grade=g.id
 ```
 
 ### 1.4 存储引擎
@@ -109,6 +115,10 @@ commit
 -- 回滚事务
 rollback
 ```
+
+### 1.5 字符集与排序规则
+* 字符集。数据库字符集即编码格式，一般选择`utf8`的国际通用编码格式, 支持中文。
+* 排序规则。常用`utf8_general_ci`和`utf8_bin`.前者大小写不敏感，后者大小写敏感
 
 ## 2. PyMySQL
 PyMySQL是python中的MySQL Driver。

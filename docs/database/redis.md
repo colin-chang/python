@@ -16,16 +16,18 @@ pip3 install redis
 from redis import StrictRedis
 
 # 创建redis连接
-with StrictRedis(host="192.168.0.200", password="123123") as sr:
-    # 1. 设值
-    res = sr.set("name", "Colin")
-    print(res)  # True
+sr = StrictRedis(host="192.168.0.200", password="123123")
+# 1. 设值
+res = sr.set("name", "Colin")
+print(res)  # True
 
-    # 2. 取值
-    name = sr.get("name")  # 取值 字符串. 若不不存在则返回None
-    name = name.decode() if name else ""
-    print(name)  # 'Colin'
+# 2. 取值
+name = sr.get("name")  # 取值 字符串. 若不不存在则返回None
+name = name.decode() if name else ""
+print(name)  # 'Colin'
 ```
+
+需要注意的是，`redis-py`默认维护了Reids连接池，一般不需要我们单独处理连接建立和关闭的问题。以下摘自其官方文档。[Behind the scenes, redis-py uses a connection pool to manage connections to a Redis server. By default, each Redis instance you create will in turn create its own connection pool.](https://pypi.org/project/redis/)
 
 `redis`提供的数据类型操作接口基本与Redis命令一致。
 
@@ -79,7 +81,7 @@ pip3 install redis-py-cluster
 
 除了Redis连接对象不同，其他操作与单节点交互无异。
 ```py
-from rediscluster import *
+from rediscluster import RedisCluster
 
 # 集群节点列表
 redis_nodes = [
@@ -89,15 +91,15 @@ redis_nodes = [
 ]
 
 # 创建集群连接
-with RedisCluster(startup_nodes=redis_nodes, decode_responses=True) as rc:
-    # 1. 设值
-    res = rc.set("name", "Colin")
-    print(res)  # True
+rc = RedisCluster(startup_nodes=redis_nodes, decode_responses=True)
+# 1. 设值
+res = rc.set("name", "Colin")
+print(res)  # True
 
-    # 2. 取值
-    name = rc.get("name")  # 取值 字符串. 若不不存在则返回None
-    name = name.decode() if name else ""
-    print(name)  # 'Colin'
+# 2. 取值
+name = rc.get("name")  # 取值 字符串. 若不不存在则返回None
+name = name.decode() if name else ""
+print(name)  # 'Colin'
 ```
 
-## 3. RedisHelper
+> Redis集群环境搭建参阅 [https://colin-chang.site/architecture/nosql/redis.html#_2-3-redis集群](https://colin-chang.site/architecture/nosql/redis.html#_2-3-redis集群)

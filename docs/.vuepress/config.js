@@ -1,6 +1,6 @@
 module.exports = {
-    title: 'python学习笔记',
-    description: 'python—人工智能主流语言',
+    title: 'Python 修炼手册',
+    description: '深入浅出的Python学习文档，从Python基础和高级编程到算法数据结构,Web开发，爬虫，大数据和人工智能',
     base: '/python/',
     head: [
         ['link', {
@@ -36,7 +36,7 @@ module.exports = {
         ],
         sidebar:[
             {
-                title: 'python基础',
+                title: 'Python基础',
                 collapsable: false,
                 children: [
                     '/basic/intro',
@@ -60,7 +60,7 @@ module.exports = {
                 ]
             },
             {
-                title: 'python高级',
+                title: 'Python高级',
                 collapsable: false,
                 children: [
                     '/senior/generator',

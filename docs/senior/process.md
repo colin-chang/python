@@ -2,7 +2,7 @@
 
 ## 1. fork
 
-python的`os`模块中`fork()`可以创建新的进程。
+Python的`os`模块中`fork()`可以创建新的进程。
 
 ```py {3}
 import os
@@ -27,7 +27,7 @@ else:
 ![fork创建进程](../img/senior/fork.jpg)
 
 ## 2. Process
-`multiprocessing`模块是python跨平台的多进程模块，Windows下也可以使用。`multiprocessing`模块提供了一个`Process`类来管理进程对象，通过`Process`管理进程，**只有当所有子进程执行完成并退出后，主进程才会退出**。
+`multiprocessing`模块是Python跨平台的多进程模块，Windows下也可以使用。`multiprocessing`模块提供了一个`Process`类来管理进程对象，通过`Process`管理进程，**只有当所有子进程执行完成并退出后，主进程才会退出**。
 
 ### 2.1 Process
 创建一个`Process`实例即是一个子进程。`Process`常用初始化参数如下表：
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 ```
 
 ## 4. 进程间通信(IPC)
-我们可以使用队列实现生产者消费者模式来进行进程间通信。python为多任务提供了三个队列。
+我们可以使用队列实现生产者消费者模式来进行进程间通信。Python为多任务提供了三个队列。
 
 * `multiprocessing.Queue()`用于`Process`方式使用进程
 * `multiprocessing.Manager().Queue()`用于进程池方式使用进程

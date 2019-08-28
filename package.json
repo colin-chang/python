@@ -1,7 +1,7 @@
 {
   "name": "python",
   "version": "1.0.0",
-  "description": "python—人工智能主流语言",
+  "description": "Python—人工智能主流语言",
   "main": "index.js",
   "directories": {
     "doc": "docs"

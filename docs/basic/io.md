@@ -1,7 +1,7 @@
 # 输入输出
 
 ## 1. 输入
-python捕获用户输入使用`input`函数。任何输入都将以`str`类型接收。
+Python捕获用户输入使用`input`函数。任何输入都将以`str`类型接收。
 
 ```py
 age = input("请输入您的年龄")
@@ -9,11 +9,11 @@ print(age)
 ```
 
 ::: warning  
-python2.x中使用`raw_input`函数获取用户输入，而`input`则只能接收表达式。python3.x已将两者合并为`input`函数
+Python2.x中使用`raw_input`函数获取用户输入，而`input`则只能接收表达式。Python3.x已将两者合并为`input`函数
 :::
 
 ## 2. 输出
-python中输出内容使用`Print`函数。普通的输出一个字符串可以直接使用`print(str)`如,`print("Hello")`。如果要按照特定格输出内容或者输出动态内容，就需要利用格式化输出，python的格式化输出于C语言类似。
+Python中输出内容使用`Print`函数。普通的输出一个字符串可以直接使用`print(str)`如,`print("Hello")`。如果要按照特定格输出内容或者输出动态内容，就需要利用格式化输出，Python的格式化输出于C语言类似。
 
 格式符|转换
 -:|:-
@@ -85,7 +85,7 @@ print(456)
 
 ## 3. 程序参数
 
-当我们执行python程序时可以指定需要的参数，这些参数可以通过以下方式获得。
+当我们执行Python程序时可以指定需要的参数，这些参数可以通过以下方式获得。
 
 `main.py`:
 ```py

@@ -1,10 +1,10 @@
 # 字符串
 
 ## 1. 字符串基础
-与javascript类似，python中用单引号或双引号声明字符串对象，python中只有字符串(str)类型，没有字符(char)类型。
+与javascript类似，Python中用单引号或双引号声明字符串对象，Python中只有字符串(str)类型，没有字符(char)类型。
 
 ### 1.1 下标
-与其他语言类似，python字符串可以看作是字符数组，顺序下标从0开始。不同的是，python支持从后往前的逆序下标，使用负数作为字符串下标，从-1开始。
+与其他语言类似，Python字符串可以看作是字符数组，顺序下标从0开始。不同的是，Python支持从后往前的逆序下标，使用负数作为字符串下标，从-1开始。
 
 ```py
 name = "Colin"
@@ -30,7 +30,7 @@ s[::-1]  # 字符串逆序 结果HGFEdcba
 
 ### 1.3 字符串格式
 * 原生字符串
-与大多数编程语言相同，python使用"\"作为转义字符。同时使用`r`标记原生字符串，类似于C#中使用`@`标记原生字符串。
+与大多数编程语言相同，Python使用"\"作为转义字符。同时使用`r`标记原生字符串，类似于C#中使用`@`标记原生字符串。
 这在书写正则表达式中常用。
 
 ```py
@@ -40,7 +40,7 @@ print(r"a\tb")  # a\tb
 ```
 
 * 带格式字符串
-python中使用`"""`或`'''`声明带格式字符串。
+Python中使用`"""`或`'''`声明带格式字符串。
 
 ```py
 s = """<div>
@@ -117,7 +117,7 @@ p = Person("Colin", 18)
 
 ## 2. 常用操作
 ### 2.1 find / index
-python中获取字符串索引可以使用`find / rfind`和`index / rindex`。`find`和`index`从左至右查找,`rfind`和`rindex`表示从右至左查找。
+Python中获取字符串索引可以使用`find / rfind`和`index / rindex`。`find`和`index`从左至右查找,`rfind`和`rindex`表示从右至左查找。
 如果字符串没有找到，`find / rfind`返回-1，而`index / rindex`则会抛出异常。
 
 ```py
@@ -129,7 +129,7 @@ s.index("haha") # 异常
 ```
 
 :::tip contains
-python中字符串没有contains函数，我们可以通过以下两种方式判断是否包含字符串。
+Python中字符串没有contains函数，我们可以通过以下两种方式判断是否包含字符串。
 :::
 
 ```py
@@ -245,13 +245,13 @@ mh.groups()  # ('123', 'abc', '456')
 ```
 
 #### 特殊语法
-* `\group` 可以引用前面分组内容，此语法并非在所有语言中都支持，如javascript不支持此语法，python / C#则支持
+* `\group` 可以引用前面分组内容，此语法并非在所有语言中都支持，如javascript不支持此语法，Python / C#则支持
 
     ```py
     re.match(r"<(\w*)><(\w*)>.*</\2></\1>", "<strong><i>text</i></strong>")
     ```
 
-* `(?P<groupname>)`和`(?P=groupname)` 分别用于定义分组别名和引用分组别名，此语法仅python支持
+* `(?P<groupname>)`和`(?P=groupname)` 分别用于定义分组别名和引用分组别名，此语法仅Python支持
     ```py
     re.match(r"<(?P<name1>\w*)><(?P<name2>\w*)>.*</(?P=name2)></(?P=name1)>", "<strong><i>text</i></strong>")
     ```

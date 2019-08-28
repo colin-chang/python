@@ -312,7 +312,7 @@ if __name__ == '__main__':
 ### 6.2 非阻塞IO模型
 除了传统的阻塞IO模型，我们还可以设置Socket为非阻塞模式。非阻塞模式下，服务端监听和客户端接收消息都不再阻塞程序。
 
-python中使用非阻塞的socket,TCP服务端执行`accept()`时如果客户端没有`connect()`会抛出`OSError`，`recv()`则会抛出`BlockingIOError`需要开发者捕获异常。
+Python中使用非阻塞的socket,TCP服务端执行`accept()`时如果客户端没有`connect()`会抛出`OSError`，`recv()`则会抛出`BlockingIOError`需要开发者捕获异常。
 
 下面是一个用非阻塞IO模型实现的单线程仿多任务案例。
 
@@ -378,7 +378,7 @@ if __name__ == '__main__':
 
 #### 6.3.1 select / pool
 
-python将`select`系统接口封装在`select`模块中。`select(rlist, wlist, xlist) -> (rlist, wlist, xlist)`。用户将IO操作的socket添加到`select`的对应列表中。程序运行到`select()`时会被阻塞，此时系统内核会监视所有`select`负责的的`socket`，当监测的列发生变化，会立即解阻塞并返回当前检测列表，用户可以从新的列表中读取数据。`select()`监测的三个列表依次 可读列表/可写列表/异常列表。
+Python将`select`系统接口封装在`select`模块中。`select(rlist, wlist, xlist) -> (rlist, wlist, xlist)`。用户将IO操作的socket添加到`select`的对应列表中。程序运行到`select()`时会被阻塞，此时系统内核会监视所有`select`负责的的`socket`，当监测的列发生变化，会立即解阻塞并返回当前检测列表，用户可以从新的列表中读取数据。`select()`监测的三个列表依次 可读列表/可写列表/异常列表。
 
 ```py {13,18}
 from socket import *

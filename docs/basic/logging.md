@@ -223,6 +223,6 @@ except Exception as ex:
 ## 6. 分布式日志
 如果需要使用分布式日志,可以借助`logging`的`HTTPHandler/SocketHandler/DatagramHandler`等组件发送日志到分布式日志服务器监听地址。
 
-[ELK](https://colin-chang.site/distribution/pages/log-elk.html)作为流行的分布式日志框架，可以借助[Docker快速搭建](https://github.com/colin-chang/ELK.Stack)。
+[ELK](https://colin-chang.site/architecture/log/elk.html)作为流行的分布式日志框架，可以借助[Docker快速搭建](https://github.com/colin-chang/ELK.Stack)。
 
-分布式日志服务器搭建和使用参见 [https://colin-chang.site/distribution/pages/log-elk.html](https://colin-chang.site/distribution/pages/log-elk.html)
+分布式日志服务器搭建和使用参见 [https://colin-chang.site/architecture/log/elk.html](https://colin-chang.site/architecture/log/elk.html)

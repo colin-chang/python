@@ -26,7 +26,7 @@ module.exports = {
                 items: [
                     { text: '.Net Core', link: 'https://colin-chang.site/netcore/' },
                     { text: 'Linux', link: 'https://colin-chang.site/linux/' },
-                    { text: '分布式', link: 'https://colin-chang.site/distribution/' }
+                    { text: '系统架构设计', link: 'https://colin-chang.site/architecture/' }
                   ]
             },
             {

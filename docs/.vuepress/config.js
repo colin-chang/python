@@ -97,7 +97,8 @@ module.exports = {
                 title: '数据操作',
                 collapsable: false,
                 children: [
-                    '/database/mysql'
+                    '/database/mysql',
+                    '/database/redis'
                 ]
             }
         ],

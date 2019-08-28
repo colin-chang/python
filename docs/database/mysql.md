@@ -195,7 +195,7 @@ from pymysql import connect
 import logging
 
 
-class SqlHelper(object):
+class MySqlHelper(object):
     """SqlHelper for MySQL"""
 
     def __init__(self, host, user, password, database, port=3306, charset="utf8"):
@@ -261,7 +261,7 @@ class SqlHelper(object):
 
 if __name__ == '__main__':
 
-    helper = SqlHelper("127.0.0.1", "root", "123123", "python")
+    helper = MySqlHelper("127.0.0.1", "root", "123123", "python")
 
     students = helper.execute_datatable("select * from students where id<=%s", [4])
     print(students)

@@ -72,6 +72,37 @@ print(name)  # 'Colin'
 </table>
 
 ## 2. Redis 集群交互
+
+### 2.1 redis-sentinel
+redis-sentinel更多内容请参阅 [https://colin-chang.site/python/nosql/redis.html#_2-3-redis-sentinel](https://colin-chang.site/python/nosql/redis.html#_2-3-redis-sentinel)
+```py
+from redis.sentinel import Sentinel
+
+# 连接哨兵服务器(主机名也可以用域名)
+sentinel = Sentinel([('192.168.0.225', 26379),
+                     ('192.168.0.225', 26380),
+                     ('192.168.0.225', 26381)])
+
+# 获取主服务器地址
+master = sentinel.discover_master('redis-service')
+print(master)
+
+# 获取从服务器地址
+slaves = sentinel.discover_slaves('redis-service')
+print(slaves)
+
+# 获取主服务器进行写入
+master = sentinel.master_for('redis-service')
+master.set('comment', b'handsome')
+
+# # 获取从服务器进行读取（默认是round-roubin）
+slave = sentinel.slave_for('redis-service')
+comment = slave.get('comment')
+print(comment)
+```
+
+### 2.2 redis-cluster
+
 使用`redis-py-cluster`扩展包可以实现Redis集群交互。
 
 ```sh
@@ -102,4 +133,4 @@ name = name.decode() if name else ""
 print(name)  # 'Colin'
 ```
 
-> Redis集群环境搭建参阅 [https://colin-chang.site/architecture/nosql/redis.html#_2-3-redis集群](https://colin-chang.site/architecture/nosql/redis.html#_2-3-redis集群)
+> Redis集群环境搭建参阅 [https://colin-chang.site/python/nosql/redis.html#_2-4-redis-cluster](https://colin-chang.site/python/nosql/redis.html#_2-4-redis-cluster)

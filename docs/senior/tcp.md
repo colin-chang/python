@@ -231,7 +231,7 @@ namespace TcpClient
 
 为了避免客户端共享连接造成多任务间相互干扰，我们就需要为每个任务分配不同的数据库连接，而多数任务都是简单短促地执行完成，待任务完成后，我们不关闭数据库连接，而是将其放入一个共享队列中，待到其他任务需要申请数据库连接时，程序就可以直接到共享队列中快速获取一个连额使用而不需再经历三次握手重新建立新的连接，我们称这个共享队列为数据库连接池。
 
-不同的开发平台中对关系型数据库和非关系型数据库都有其各自的对数据库连接池实现和应用。以.Net平台为例，访问关系型数据库完成后调用`IDbConnection`对象的`Dispose()`时(多通过`using`关键字自动实现)会释放`IDbConnection`对象并将其占用的数据库连接归还到连接池中。在非关系型数据库中也有对数据库连接池的应用，如[MongoDB连接池](https://colin-chang.site/architecture/nosql/mongo.html#_4-2-mongo连接池),在`Mongo Driver`中提供的`MongoClient`对象本身就实现了一个线程安全的连接池。以下是来自其官方的阐述。
+不同的开发平台中对关系型数据库和非关系型数据库都有其各自的对数据库连接池实现和应用。以.Net平台为例，访问关系型数据库完成后调用`IDbConnection`对象的`Dispose()`时(多通过`using`关键字自动实现)会释放`IDbConnection`对象并将其占用的数据库连接归还到连接池中。在非关系型数据库中也有对数据库连接池的应用，如[MongoDB连接池](https://colin-chang.site/architecture/nosql/mongo.html#_8-2-mongo-连接池),在`Mongo Driver`中提供的`MongoClient`对象本身就实现了一个线程安全的连接池。以下是来自其官方的阐述。
  
 > Note: The Mongo object instance actually represents a pool of connections to the database; you will only need one object of class Mongo even with multiple threads. See the concurrency doc page for more information.The Mongo class is designed to be thread safe and shared among threads. Typically you create only 1 instance for a given DB cluster and use it across your app. 
 

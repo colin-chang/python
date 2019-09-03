@@ -2,7 +2,7 @@
 
 MongoDB是非常流行的入门级的大数据数据库，关于MongoDB的详细介绍可以参阅 [https://colin-chang.site/architecture/nosql/mongo.html](https://colin-chang.site/architecture/nosql/mongo.html#)。
 
-本节我们来简单演示如何使用`pymongo`扩展包与Monggo服务交互。
+本节我们来简单演示如何使用`pymongo`扩展包与Mongo服务交互。`pymongo`的API基本与 [Mongo Shell](https://colin-chang.site/architecture/nosql/mongo.html#_4-mongo-shell) 一致。
 
 > Mongo Python Driver 官方文档 : [https://api.mongodb.com/python/current/tutorial.html](https://api.mongodb.com/python/current/tutorial.html)
 

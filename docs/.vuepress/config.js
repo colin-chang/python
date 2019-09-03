@@ -98,7 +98,8 @@ module.exports = {
                 collapsable: false,
                 children: [
                     '/database/mysql',
-                    '/database/redis'
+                    '/database/redis',
+                    '/database/mongo'
                 ]
             }
         ],

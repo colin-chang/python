@@ -248,14 +248,14 @@ print(say_hello("Robin"))  # <font color="blue">hello Robin</font>
 不难发现，有参类装饰器中的`__call__()`就是一个函数装饰器，不同的是，它是类实例函数，作用域被限定在类内部，当装饰器逻辑比较复杂时，可以在类内部拆解为多个方法处理，类内部共享数据，符合面向对象的思想且适合处理复杂逻辑。
 
 ## 6. wraps 装饰器
-使用装饰器时，被装饰后的函数其实已经是另外一个函数了，函数的`doc`也会随之变成装饰器的`doc`,更多情况下我们期望使用原函数的`doc`，而`functools`模块中的`wraps`装饰器函数作用就是为了这个问题。
+使用装饰器时，被装饰后的函数其实已经是另外一个函数了，函数的`doc`也会随之变成装饰器的`doc`,更多情况下我们期望使用原函数的`doc`，而`functools`模块中的`wraps`装饰器函数作用就是为了解决这个问题。
 
 ```py
-import functools
+from functools import wraps
 
 
 def test_decorator(func):
-    @functools.wraps(func)
+    @wraps(func)
     def new_func():
         "new function"
         return func()

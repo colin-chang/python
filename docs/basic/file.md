@@ -166,7 +166,7 @@ import os
 pycs = []
 for root, dirs, files in os.walk("."):
     for file in files:
-        if (file.endswith(".pyc")):
+        if file.endswith(".pyc"):
             pycs.append(os.path.join(root, file))
 print(pycs)
 ```

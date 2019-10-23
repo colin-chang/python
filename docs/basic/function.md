@@ -61,7 +61,7 @@ name = colin age = 18 gender = 男
 ```
 
 ::: tip 偏函数
-`functiontool`模块中的`partial()`被称作偏函数，它可以把一个函数的某些参数设置默认值。
+`functools`模块中的`partial()`被称作偏函数，它可以把一个函数的某些参数设置默认值。
 :::
 ```py {7}
 import functools

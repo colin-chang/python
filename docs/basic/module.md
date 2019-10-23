@@ -387,9 +387,9 @@ beautifulsoup4|HTML/XML的解析器
 celery|分布式任务调度模块
 redis|缓存
 Pillow(PIL)|图像处理
-xlsxwriter|仅写excle功能,支持xlsx
-xlwt|仅写excle功能,支持xls ,2013或更早版office
-xlrd|仅读excle功能
+xlsxwriter|仅写excel功能,支持xlsx
+xlwt|仅写excel功能,支持xls ,2013或更早版office
+xlrd|仅读excel功能
 elasticsearch|全文搜索引擎
 pymysql|数据库连接库
 mongoengine/pymongo|mongodb Python接口

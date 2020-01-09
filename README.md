@@ -15,3 +15,10 @@
 * 扩展丰富
     
     Python有着完善的生态圈。除了庞大的标准库，还有丰富的高质量第三方库。
+
+> How to run?
+
+```sh
+yarn add -D vuepress
+yarn dev
+```

@@ -24,14 +24,14 @@ module.exports = {
             {
                 text: 'Books',
                 items: [
-                    { text: '.Net Core', link: 'https://netcore.colinchang.net/' },
-                    { text: 'Linux', link: 'https://linux.colinchang.net/' },
-                    { text: '系统架构设计', link: 'https://architecture.colinchang.net/' }
+                    { text: '.Net Core', link: 'https://netcore.ccstudio.org/' },
+                    { text: 'Linux', link: 'https://linux.ccstudio.org/' },
+                    { text: '系统架构设计', link: 'https://architecture.ccstudio.org/' }
                   ]
             },
             {
                 text: 'Blog',
-                link: 'https://colinchang.net/'
+                link: 'https://ccstudio.org/'
             }
         ],
         sidebar:[

@@ -9,7 +9,7 @@
 * 每一个非根节点有且只有一个父节点；
 * 除了根节点外，每个子节点可以分为多个不相交的子树；
 
-![树状图](../img/datastructure/tree.png)
+![树状图](https://s2.ax1x.com/2020/01/21/1FnUQP.png)
 
 ### 1.1 相关术语
 
@@ -39,7 +39,7 @@
     * **B树**。一种对读写操作进行优化的自平衡的二叉查找树，能够保持数据有序，拥有多余两个子树
 * **无序树**。树中任意节点的子节点之间没有顺序关系，这种树称为无序树，也称为自由树。
 
-![满二叉树](../img/datastructure/fullBinaryTree.png)
+![满二叉树](https://s2.ax1x.com/2020/01/19/1CuxzV.png)
 
 
 ### 1.3 应用场景
@@ -62,7 +62,7 @@
 
 一般情况下，二叉树多使用完全二叉树方式存储，如下图就是一个完全二叉树。
 
-<img id="cbt" src="../img/datastructure/completeBinaryTree.png" alt="完全二叉树" />
+<img id="cbt" src="https://s2.ax1x.com/2020/01/19/1CKSMT.png" alt="完全二叉树" />
 
 我们可以仿照链表的数据结构方式，构建完全二叉树。
 

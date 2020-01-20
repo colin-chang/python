@@ -17,7 +17,7 @@ sed -i "" "s/base: '\/python\/'/base: '\/'/g" docs/.vuepress/config.js
 npm run build
 sed -i "" "s/base: '\/'/base: '\/python\/'/g" docs/.vuepress/config.js
 cd docs/.vuepress/dist
-echo 'python.colinchang.net' > CNAME
+echo 'python.ccstudio.org' > CNAME
 git init
 git add -A
 git commit -m 'deploy'

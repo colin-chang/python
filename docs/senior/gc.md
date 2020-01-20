@@ -55,7 +55,7 @@ list2.append(list1)
 del list1, list2
 ```
 
-![循环引用](../img/senior/circular-reference.jpg)
+![循环引用](https://s2.ax1x.com/2020/01/20/1ijjZ8.jpg)
 
 * `list1=[]`会首先申请一块内存假设地址为`addr1`,然后将`list1`指向`addr1`。同理假定`list2`指向`addr2`。
 
@@ -70,12 +70,12 @@ Python使用一种链表来持续追踪活跃的对象,Python的内部C代码将
 
 图中蓝色的箭头表示对象正在被零代链表之外的变量所引用。可以看到ABC和DEF节点包含的引用数为1且没有零代链之外的对象引用，说明它们在零代链表中现存对象中存在引用。
 
-![generation zero](../img/senior/gc-0.jpg)
+![generation zero](https://s2.ax1x.com/2020/01/20/1ijvdS.jpg)
 
 随后，Python会循环遍历零代链表上的每个对象，检查链表中每个互相引用的对象。在这个过程中，Python会一个接一个的统计内部引用的数量以防过早地释放对象。
 
 根据规则Python会尝试把循环引用的变量引用数减1，在下图中国可以看到ABC和DEF的引用计数已经变归零。这意味着收集器可以释放它们并回收内存空间了。剩下的活跃的对象则被移动到一个新的链表，一代链表。
-![generation one](../img/senior/gc-1.jpg)
+![generation one](https://s2.ax1x.com/2020/01/20/1ijxIg.jpg)
 
 零代链表的GC过程同样发生在一代链表中，经过一代链表GC后，剩下活跃的对象会被移动二代链表。代码长期使用的对象和持续访问的活跃对象，会从零代链表转移到一代再转移到二代。通过不同的阈值设置，Python可以在不同的时间间隔处理这些对象。Python处理零代最为频繁，其次是一代然后才是二代。回收高`higher generation`时也会清理`lower generation`,如回收二代时会回收一代和零代。
 

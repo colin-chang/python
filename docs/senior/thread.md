@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 线程的击中状态如下图所示。
 
-![线程状态](../img/senior/thread.jpg)
+![线程状态](https://s2.ax1x.com/2020/01/20/1ivZoF.jpg)
 
 ## 2. 线程同步
 
@@ -210,7 +210,7 @@ mutex.acquire(timeout=3)  # 设置抢锁超时时间为3s。死锁3s后当前线
 #### 1）函数参数传递
 ```py
 def crawl():
-    data = download("https://colinchang.net/data")
+    data = download("https://ccstudio.org/data")
     data = clean(data)
     save(data)
 
@@ -232,7 +232,7 @@ from threading import current_thread
 global_dict = {}
 
 def crawl():
-    data = download("https://colinchang.net/data")
+    data = download("https://ccstudio.org/data")
     global_dict[current_thread()] = data
     data = clean()
     save()
@@ -256,7 +256,7 @@ from threading import local
 global_local = local()
 
 def crawl():
-    global_local.data = download("https://colinchang.net/data")
+    global_local.data = download("https://ccstudio.org/data")
     clean()
     save()
 

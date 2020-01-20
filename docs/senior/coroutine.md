@@ -127,8 +127,8 @@ def download(url):
 
 
 joinall([
-    spawn(download, "https://python.colinchang.net"),
-    spawn(download, "https://netcore.colinchang.net"),
-    spawn(download, "https://linux.colinchang.net")
+    spawn(download, "https://python.ccstudio.org"),
+    spawn(download, "https://netcore.ccstudio.org"),
+    spawn(download, "https://linux.ccstudio.org")
 ])
 ```

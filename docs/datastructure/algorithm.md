@@ -71,7 +71,7 @@ for m in range(4):
 
 * <small>常将log<sub>2</sub>n(以2为底n的对数)简写成logn</small>
 
-![算法时间复杂度对比图](../img/datastructure/complexity.jpg)
+![算法时间复杂度对比图](https://s2.ax1x.com/2020/01/19/1CuvR0.jpg)
 
 ::: tip 常见时间复杂度效率排序如下
 O(1) > O(logn) > O(n) > O(nlogn) > O(n<sup>2</sup>) > O(n<sup>3</sup>) > O(2<sup>n</sup>) > O(n!) > O(n<sup>n</sup>)

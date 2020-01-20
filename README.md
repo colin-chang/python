@@ -1,6 +1,6 @@
 # Python 修炼手册
 
-<img src='https://python.colinchang.net/hero.png' width='450' />
+<img src='https://python.ccstudio.org/hero.png' width='450' />
 
 ## 未来已来，用 Python 拥抱大数据和 AI
 

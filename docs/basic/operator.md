@@ -61,4 +61,4 @@ not	| not x	|布尔"非"：如果 x 为 True，返回 False 。如果 x 为 Fals
 ::: tip 
 进制互转
 :::
-![进制转换](../img/basic/numbertrans.jpg)
+![进制转换](https://s2.ax1x.com/2020/01/19/1CubZQ.jpg)

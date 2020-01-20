@@ -24,7 +24,7 @@ else:
 * 父子进程执行顺序完全取决于操作系统的调度算法，没有固定顺序。
 * 每个进程中都可以多次执行`fork()`创建新的子进程
 
-![fork创建进程](../img/senior/fork.jpg)
+![fork创建进程](https://s2.ax1x.com/2020/01/20/1ij7RA.jpg)
 
 ## 2. Process
 `multiprocessing`模块是Python跨平台的多进程模块，Windows下也可以使用。`multiprocessing`模块提供了一个`Process`类来管理进程对象，通过`Process`管理进程，**只有当所有子进程执行完成并退出后，主进程才会退出**。

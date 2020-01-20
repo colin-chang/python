@@ -3,7 +3,7 @@
 ## 1. Redis 交互
 本节我们来简单演示如何使用`redis`扩展包与Redis服务交互。
 
-> 更详尽的Redis资料，请参阅 [https://architecture.colinchang.net/nosql/redis.html](https://architecture.colinchang.net/nosql/redis.html)
+> 更详尽的Redis资料，请参阅 [https://architecture.ccstudio.org/nosql/redis.html](https://architecture.ccstudio.org/nosql/redis.html)
 
 ```sh
 # 安装 redis 扩展包
@@ -74,7 +74,7 @@ print(name)  # 'Colin'
 ## 2. Redis 集群交互
 
 ### 2.1 redis-sentinel
-redis-sentinel更多内容请参阅 [https://python.colinchang.net/nosql/redis.html#_2-3-redis-sentinel](https://python.colinchang.net/nosql/redis.html#_2-3-redis-sentinel)
+redis-sentinel更多内容请参阅 [https://python.ccstudio.org/nosql/redis.html#_2-3-redis-sentinel](https://python.ccstudio.org/nosql/redis.html#_2-3-redis-sentinel)
 ```py
 from redis.sentinel import Sentinel
 
@@ -133,4 +133,4 @@ name = name.decode() if name else ""
 print(name)  # 'Colin'
 ```
 
-> Redis集群环境搭建参阅 [https://python.colinchang.net/nosql/redis.html#_2-4-redis-cluster](https://python.colinchang.net/nosql/redis.html#_2-4-redis-cluster)
+> Redis集群环境搭建参阅 [https://python.ccstudio.org/nosql/redis.html#_2-4-redis-cluster](https://python.ccstudio.org/nosql/redis.html#_2-4-redis-cluster)

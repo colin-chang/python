@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /hero.png
+heroImage: https://s2.ax1x.com/2020/01/21/1Fcu4g.png
 heroText: 用 Python 对话 AI
 tagline: 未来已来，用 Python 拥抱大数据和 AI 
 actionText: 快速了解 →

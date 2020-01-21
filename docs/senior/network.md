@@ -89,7 +89,8 @@ MAC地址是全球唯一不重复的，可以唯一确定一个网络设备。
 
 第一步需要做的是匹配目标IP的MAC地址，终端会首先检测本地ARP缓存中是否存在IP对应的MAC地址，如果存在则直接发送ICMP包到交换机，交换机转发至目标终端设备，终端设备回复数据包经由交换机发回当前终端设备；如果ARP缓存中不存在IP对应MAC地址，则使用ARP协议发送数据包到交换机，交换机广播ARP包到所有终端，终端收到ARP包后解析包中IP与自身IP是否一致，如果不一致则直接丢弃，如果一致则返回自身MAC地址至交换机转发回当前主机，并缓存MAC地址与IP对应关系，确定目标MAC地址之后会执行前面提到的过程。
 
-<video src='../video/arp.mp4' width='100%' autoplay controls muted></video>
+<iframe src="//player.bilibili.com/player.html?aid=84396949&cid=144353965&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" autoplay width='100%' height='540'> </iframe>
+
 
 ARP缓存有时效性，过期后会在交换机与终端设备之间重新获取。不难看出ARP协议主要通过广播确定IP对应MAC地址，而RARP协议的功能则是根据MAC地址确定IP地址。
 
@@ -118,7 +119,7 @@ arp -d
 
 网络A中的主机发现数据包的目的主机不在本地网络中，就把数据包转发给它自己的网关，再由网关转发给网络B的网关，网络B的网关再转发给网络B的某个主机。网络B向网络A转发数据包的过程也是如此。
 
-<video src='../video/router.mp4' width='100%' autoplay controls muted></video>
+<iframe src="//player.bilibili.com/player.html?aid=84399338&cid=144365417&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" autoplay width='100%' height='540'> </iframe>
 
 路由器会按照路由策略转发数据，**数据包转发过程中，目标主机的IP地址是保持不变的，而每路由一步目标设备的MAC地址是一直变化的**，指向路由路径中下台设备的MAC地址。这也是为什么网络设备中IP地址和MAC地址均可标志一台网路设备而同却并存的一个重要原因。
 
@@ -147,7 +148,7 @@ TTL的主要作用是避免IP包在网络中的无限循环和收发，节省了
 
 下面短片模拟了交换机/路由器/服务器较为复杂的组网过程中DNS服务器的配置和使用。
 
-<video src='../video/dns.mp4' width='100%' autoplay controls muted></video>
+<iframe src="//player.bilibili.com/player.html?aid=84397547&cid=144362260&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" autoplay width='100%' height='540'> </iframe>
 
 ## 6. 常见网络攻击
 ### 6.1 TCP 半连接攻击

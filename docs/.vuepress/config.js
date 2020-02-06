@@ -24,9 +24,9 @@ module.exports = {
             {
                 text: 'Books',
                 items: [
-                    { text: '.Net Core', link: 'https://netcore.ccstudio.org/' },
-                    { text: 'Linux', link: 'https://linux.ccstudio.org/' },
-                    { text: '系统架构设计', link: 'https://architecture.ccstudio.org/' }
+                    { text: '.Net Core', link: 'https://ccstudio.org/netcore' },
+                    { text: 'Linux', link: 'https://ccstudio.org/linux' },
+                    { text: '系统架构设计', link: 'https://ccstudio.org/architecture' }
                   ]
             },
             {

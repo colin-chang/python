@@ -74,7 +74,7 @@ print(name)  # 'Colin'
 ## 2. Redis 集群交互
 
 ### 2.1 redis-sentinel
-redis-sentinel更多内容请参阅 [https://python.ccstudio.org/nosql/redis.html#_2-3-redis-sentinel](https://python.ccstudio.org/nosql/redis.html#_2-3-redis-sentinel)
+redis-sentinel更多内容请参阅 [https://ccstudio.org/python/nosql/redis.html#_2-3-redis-sentinel](https://ccstudio.org/python/nosql/redis.html#_2-3-redis-sentinel)
 ```py
 from redis.sentinel import Sentinel
 
@@ -133,4 +133,4 @@ name = name.decode() if name else ""
 print(name)  # 'Colin'
 ```
 
-> Redis集群环境搭建参阅 [https://python.ccstudio.org/nosql/redis.html#_2-4-redis-cluster](https://python.ccstudio.org/nosql/redis.html#_2-4-redis-cluster)
+> Redis集群环境搭建参阅 [https://ccstudio.org/python/nosql/redis.html#_2-4-redis-cluster](https://ccstudio.org/python/nosql/redis.html#_2-4-redis-cluster)

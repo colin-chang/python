@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 线程的击中状态如下图所示。
 
-![线程状态](https://s2.ax1x.com/2020/01/20/1ivZoF.jpg)
+![线程状态](https://i.loli.net/2020/02/25/gSrJFxEW8o3Otqm.jpg)
 
 ## 2. 线程同步
 

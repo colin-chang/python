@@ -10,7 +10,7 @@ Python的解释器如今有多个语言实现，我们常用的是CPython（官�
 
 ## 2. Python与AI
 
-![人工智能未来蓝图](https://s2.ax1x.com/2020/01/19/1CuTsS.png '人工智能未来蓝图')
+![人工智能未来蓝图](https://i.loli.net/2020/02/25/Qj6x47WVUYtOkaA.png '人工智能未来蓝图')
 
 #### Python是人工智能（AI）和数据分析常用语言
 Google开源机器学习框架：TensorFlow

@@ -234,7 +234,7 @@ Person().sayhi.__name__  # sayhi
 
 当包被引用时，会首先执行包的`__init__.py`文件,它控制着包的导入行为。与模块使用类似，包也有两种引用方式，示例如下图：
 
-![包引用示例](https://s2.ax1x.com/2020/01/19/1Cu7qg.jpg)
+![包引用示例](https://i.loli.net/2020/02/25/i9kVPAZuqhpXI3B.jpg)
 
 包支持嵌套使用，即在包中包含子包，多级目录。
 

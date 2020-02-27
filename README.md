@@ -1,6 +1,6 @@
 # Python 修炼手册
 
-<img src='https://s2.ax1x.com/2020/01/21/1Fcu4g.png' width='450' />
+<img src="https://i.loli.net/2020/02/25/xeojMyGzgnCRJuw.png" width="450" />
 
 ## 未来已来，用 Python 拥抱大数据和 AI
 

@@ -201,7 +201,7 @@ func()
 ```
 
 ## 4. lambda 匿名函数
-Pyton中可以使用lambda表达式创建匿名函数。语法格式为 `lambda [arg1[, arg2, ... argN]]: expression`。可以有任意参数任，且主体只有一条表达式返回。
+Pyton中可以使用lambda表达式创建匿名函数。语法格式为 `lambda [arg1[, arg2, ... argN]]: expression`。可以有任意参数，且主体只有一条表达式返回。
 
 ```py
 sum = lambda x, y: x + y

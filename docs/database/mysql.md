@@ -209,7 +209,7 @@ class MySqlHelper(object):
     def __execute(self, fun):
         with connect(host=self.__host, port=self.__port, user=self.__user, password=self.__password,
                      database=self.__database,
-                     charset=self.__charset) as cur:
+                     charset=self.__charset).cursor() as cur:
             return fun(cur)
 
     def execute_datatable(self, sql, *args):

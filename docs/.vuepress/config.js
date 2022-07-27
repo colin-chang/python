@@ -1,7 +1,7 @@
 module.exports = {
     title: 'Python 修炼手册',
     description: '深入浅出的Python学习文档，从Python基础和高级编程到算法数据结构,Web开发，爬虫，大数据和人工智能',
-    base: '/python/',
+    base: '/',
     head: [
         ['link', {
             rel: 'icon',

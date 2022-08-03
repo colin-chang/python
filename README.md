@@ -19,6 +19,8 @@
 > How to run?
 
 ```sh
-yarn add -D vuepress
-yarn dev
+npm install -D vuepress
+npm install watchman
+npm install
+npm run dev
 ```

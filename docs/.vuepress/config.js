@@ -24,14 +24,14 @@ module.exports = {
             {
                 text: 'Books',
                 items: [
-                    { text: '.Net Core', link: 'https://ccstudio.org/dotnet' },
-                    { text: 'Linux', link: 'https://ccstudio.org/linux' },
-                    { text: '系统架构设计', link: 'https://ccstudio.org/architecture' }
+                    { text: '.Net', link: 'https://dotnet.a-nomad.com' },
+                    { text: 'Linux', link: 'https://linux.a-nomad.com' },
+                    { text: '系统架构设计', link: 'https://architecture.a-nomad.com' }
                   ]
             },
             {
                 text: 'Blog',
-                link: 'https://ccstudio.org/'
+                link: 'https://a-nomad.com'
             }
         ],
         sidebar:[

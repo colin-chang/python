@@ -19,8 +19,6 @@
 > How to run?
 
 ```sh
-npm install -D vuepress
-npm install watchman
-npm install
+npm install -D vuepress @vuepress/plugin-active-header-links @vuepress/plugin-back-to-top @vuepress/plugin-google-analytics @vuepress/plugin-medium-zoom watchman
 npm run dev
 ```

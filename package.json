@@ -3,27 +3,22 @@
   "version": "1.0.0",
   "description": "Python—人工智能主流语言",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs"
   },
-  "repository": "git+https://github.com/colin-chang/python.git",
+  "repository": "https://github.com/colin-chang/python",
   "author": "Colin Chang",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/colin-chang/python/issues"
   },
-  "homepage": "https://python.a-nomad.com",
   "devDependencies": {
-    "@vuepress/plugin-active-header-links": "^1.0.3",
-    "@vuepress/plugin-back-to-top": "^1.0.3",
-    "@vuepress/plugin-google-analytics": "^1.0.3",
-    "vuepress": "^1.9.7"
-  },
-  "dependencies": {
+    "@vuepress/plugin-active-header-links": "^1.9.7",
+    "@vuepress/plugin-back-to-top": "^1.9.7",
+    "@vuepress/plugin-google-analytics": "^1.9.7",
+    "@vuepress/plugin-medium-zoom": "^1.9.7",
+    "vuepress": "^1.9.7",
     "watchman": "^1.0.0"
   }
 }

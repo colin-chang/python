@@ -21,6 +21,12 @@ module.exports = {
         logo:'https://s2.loli.net/2022/08/04/UXqgLBVfzPuvb5A.png',
         repo: 'https://github.com/colin-chang/python',
         smoothScroll:true,
+        search: false,
+        algolia: {
+            apiKey: '8560f06db7508fff341be702fc136cbb',
+            indexName: 'python-a-nomad',
+            appId: '6MH6QA2TSK'
+        },
         nav: [{
                 text: 'Get Start',
                 link: '/basic/intro'

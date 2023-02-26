@@ -511,7 +511,7 @@ class Message(object):
         print("邮件通知" + msg)
 
 
-def main:
+def main():
     # 类名方式访问
     Message.send_notification("hello")
     msg = Message()

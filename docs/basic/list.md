@@ -99,7 +99,7 @@ for i in to_del:
 #### 1.1.5 排序/乱序
 ```py {6}
 nums = [4,1,3,2]
-nums.sort() # [1,2,3,4] 默认为生序
+nums.sort() # [1,2,3,4] 默认为升序
 nums.sort(reverse=True) # [4,3,2,1] 降序
 
 persons = [{"name": "Colin", "age": 19}, {"name": "Robin", "age": 21}, {"name": "Sean", "age": 20}]

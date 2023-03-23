@@ -232,10 +232,6 @@ Person().sayhi.__name__  # sayhi
 ### 4.1 包使用简介
 日常开发中，我们通常会将关联性较强的模块组织在一起，放在同一个目录下，为了管理其中的模块，我们通常通会在目录中建一个名为`__init__.py`的特殊文件(Python2必须,Python3非必须)，类似于模块清单，此时我们就把这个目录就称之为包。Python包相当于C#中的类库和Java中的包。
 
-当包被引用时，会首先执行包的`__init__.py`文件,它控制着包的导入行为。与模块使用类似，包也有两种引用方式，示例如下图：
-
-![包引用示例](https://i.loli.net/2020/02/25/i9kVPAZuqhpXI3B.jpg)
-
 包支持嵌套使用，即在包中包含子包，多级目录。
 
 ### 4.2 发布包
@@ -243,104 +239,62 @@ Person().sayhi.__name__  # sayhi
 #### 1) 配置
 假设我们有包目录结构如下。
 ```
-.
-├── setup.py
-├── notification
+my_project/
+├── my_package/
 │   ├── __init__.py
-│   ├── mail.py
-│   └── sms.py
-└── persistance
-    ├── __init__.py
-    ├── db.py
-    └── file.py
+│   ├── module1.py
+│   └── module2.py
+└── setup.py
 ```
+`__init__.py`是一个空文件，用于指示该文件夹是一个Python包。当包被引用时，会首先执行包的`__init__.py`文件,它控制着包的导入行为。
+
+`my_package/module1.py`:
+```py
+from .module2 import hello_module2
+
+def hello_module1():
+    print("Hello from module1!")
+    hello_module2()
+```
+`my_package/module2.py`:
+```py
+def hello_module2():
+    print("Hello from module2!")
+```
+特别需要注意的是包中存在内部模块引用时，务必使用相对路径，否则打包之后第三方调用时会提示找不到模块的错误。
+
+#### 2) 打包
 在包同级目录下创建`setup.py`文件，内容如下：
 ```py
-from distutils.core import setup
+from setuptools import setup, find_packages
 
-setup(name="colinutils", version="1.0", description="some utils", author="colin chang",
-      py_modules=['notification.mail', 'notification.sms', 'persistance.db', 'persistance.file'])
+setup(
+    name='my_package',
+    version='1.0',
+    packages=find_packages(),
+    install_requires=[
+        # List any dependencies here
+    ]
+)
 ```
-#### 2) 构建
+我们使用`find_packages()`函数来查找所有包含在`my_package`文件夹中的模块，并将它们包含在我们的Python包中。我们还可以使用`install_requires`参数来指定我们的Python包所依赖的任何其他Python包。
+
+最后，我们可以使用以下命令来构建并打包我们的Python包。
 ```sh
-python3 setup.py build
+python setup.py sdist
 ```
-构建完成后会生成`build`目录。
-```py
-.
-├── build
-│   └── lib
-│       ├── notification
-│       │   ├── __init__.py
-│       │   ├── mail.py
-│       │   └── sms.py
-│       └── persistance
-│           ├── __init__.py
-│           ├── db.py
-│           └── file.py
-├── setup.py
-├── notification
-│   ├── __init__.py
-│   ├── mail.py
-│   └── sms.py
-└── persistance
-    ├── __init__.py
-    ├── db.py
-    └── file.py
-```
-#### 3) 打包
+此命令将创建一个名为`dist`的文件夹，并在其中创建一个压缩文件，其中包含我们的Python包。该文件可以通过电子邮件、FTP或其他方式发送给第三方使用。
+
+#### 3) 安装
+使用我们的Python包的第三方可以通过以下命令来安装它：
 ```sh
-python3 setup.py sdist
+pip install my_package-1.0.tar.gz
 ```
-打包完成后会生成`dist`目录和`MANIFEST`文件,压缩包`colinutils-1.0.tar.gz`生成在`dist`目录下。
+一旦安装完成，第三方就可以使用我们包中的函数了。
 ```py
-.
-├── build
-│   └── lib
-│       ├── notification
-│       │   ├── __init__.py
-│       │   ├── mail.py
-│       │   └── sms.py
-│       └── persistance
-│           ├── __init__.py
-│           ├── db.py
-│           └── file.py
-├── dist
-│   └── colinutils-1.0.tar.gz
-├── MANIFEST.py
-├── setup.py
-├── notification
-│   ├── __init__.py
-│   ├── mail.py
-│   └── sms.py
-└── persistance
-    ├── __init__.py
-    ├── db.py
-    └── file.py
-```
-至此包的发布就完成了，我们可以把生成的压缩包分享给他人。
+from my_package.module1 import hello_module1
 
-#### 4) 安装
-拿到分享的压缩包后解压执行如下命令进行安装
-```sh
-tar -zxvf colinutils-1.0.tar.gz && cd colinutils-1.0 # 解压并进入解压目录
-python3 setup.py install
-```
-
-#### 5) 引用
-安装完成后就可以像系统模块一样在任意位置所以使用。
-```py
-# 方式1
-from notification import *
-
-mail.send("zhangcheng5468@gmail.com", "hi there")
-sms.send("110", "hi there")
-
-# 方式2
-import persistance
-
-persistance.db.save("db0", "data")
-persistance.file.save("file.txt", "data")
+hello_module1()
 ```
 
 ## 5. 标准库

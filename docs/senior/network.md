@@ -21,7 +21,7 @@ TCP/IP协议（传输控制协议/互联网协议）不是简单的一个协议�
 
 <style>#tcpip tr th:first-child,#tcpip tr td:first-child{border-right:3px solid lightblue;}#tcpip tr:nth-child(5),#tcpip tr:nth-child(6),#tcpip tr:nth-child(7){border-top:2px dashed green;}</style>
 <table id='tcpip'>
-    <tr><th>OSI</th><th colspan='2'>TCP/IP族</th></tr></thead>
+    <thead><tr><th>OSI</th><th colspan='2'>TCP/IP族</th></tr></thead>
     <tr><td>应用层</td><td rowspan='3'>应用层</td><td rowspan='3'>Telnet / SMTP / FTP / HTTP / DNS等</td></tr>
     <tr><td>表示层</td></tr>
     <tr><td>会话层</td></tr>

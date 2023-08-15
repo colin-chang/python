@@ -1,6 +1,7 @@
 # Redis
 
 ## 1. Redis 交互
+
 本节我们来简单演示如何使用`redis`扩展包与Redis服务交互。
 
 > 更详尽的Redis资料，请参阅 [https://architecture.a-nomad.com/nosql/redis.html](https://architecture.a-nomad.com/nosql/redis.html)
@@ -72,6 +73,7 @@ print(name)  # 'Colin'
 </table>
 
 ## 2. RedisHelper
+
 ```py
 from redis import StrictRedis
 from collections.abc import Iterable
@@ -247,7 +249,9 @@ if __name__ == '__main__':
 ## 3. Redis 集群交互
 
 ### 3.1 redis-sentinel
+
 redis-sentinel更多内容请参阅 [https://architecture.a-nomad.com/nosql/redis.html#_2-3-redis-sentinel](https://architecture.a-nomad.com/nosql/redis.html#_2-3-redis-sentinel)
+
 ```py
 from redis.sentinel import Sentinel
 
@@ -284,6 +288,7 @@ pip3 install redis-py-cluster
 ```
 
 除了Redis连接对象不同，其他操作与单节点交互无异。
+
 ```py
 from rediscluster import RedisCluster
 

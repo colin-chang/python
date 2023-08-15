@@ -1,6 +1,7 @@
 # 流控制语句
 
 ## 1. 条件语句
+
 ```py
 if condition1:
     do something
@@ -11,6 +12,7 @@ elif condition3:
 else:
     do something
 ```
+
 * `if`之后判断条件可以省略括号，如果判断条件较长则可以使用括号后将条件换行
 * 判断条件之后使用`:`
 * 执行内容之前的代码缩进为一个tab键，或者4个空格。Tab和空格不可混用
@@ -34,20 +36,23 @@ else:
 ```
 
 ::: warning if 真假条件
+
 * if之后除了使用bool值，还可以使用其他类型，这些类型会转为真假条件。真假相当于True和Flase，但不等于True和False
 * `"" /  None / 0 / [] / {}` 以上内容的均为假。一般表示空的内容都为假，否则为真。
 * 数字类型比较特殊,0为假，非0为真。
 :::
 
-::: tip 
+::: tip
 三元表达式
 :::
+
 ```py
 x, y = 1, 2
 max = x if x > y else y # 三元表达式
 ```
 
 ## 2. 循环语句
+
 ### 2.1 while
 
 ```py
@@ -66,7 +71,9 @@ while i <= 100:
 
 print(sum)  # 2550
 ```
+
 ::: warning
+
 * Python不支持 `i++` / `i--` 等自增自减等语法
 * Python不支持 `do while`语法
 * Python支持`break`和`continue`语法
@@ -96,8 +103,10 @@ while i <= 9:
 """
 ```
 
-### 2.2 for...in...
+### 2.2 for...in
+
 Python的`for in`循环与JavaScript类似,相当与C#的`foreach`。
+
 ```py
 for x in "name":
     print(x)
@@ -109,6 +118,7 @@ m
 e
 """
 ```
+
 Python没有C#等语言中普通的`for`循环语法方便的控制循环次数，但可以借助 [range](list.md#_1-2-1-range) 实现。
 
 ```py
@@ -122,6 +132,7 @@ for i in range(5, 10):
 ```
 
 ### 2.3 循环中的else
+
 在while和for循环当中也可以使用else关键字。执行逻辑是，**只要循环中执行了break则else不执行，否则else必定执行**。此语法仅在Python中存在，较少使用。
 
 ```py

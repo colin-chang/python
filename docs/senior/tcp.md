@@ -3,9 +3,11 @@
 传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议。TCP是为了在不可靠的互联网络上提供可靠的端到端字节流而专门设计的一个传输协议。
 
 ## 1. 三次握手
+
 TCP使用三次握手协议建立连接。当主动方发出SYN连接请求后，等待对方回答SYN+ACK，并最终对对方的 SYN 执行 ACK 确认。
 
 TCP三次握手的过程如下：
+
 * (1) 客户端发送SYN（SEQ=x）报文给服务器端，进入SYN_SEND状态。
 * (2) 服务器端收到SYN报文，回应一个SYN （SEQ=y）ACK（ACK=x+1）报文，进入SYN_RECV状态。
 * (3) 客户端收到服务器端的SYN报文，回应一个ACK（ACK=y+1）报文，进入Established状态。
@@ -22,17 +24,20 @@ FIN | 终止。发送方已经结束向对方发送数据。
 TCP 标志位为6bit，从左至右分别为 `URG / ACK / PSH / RST / SYN / FIN`。如`0b000010`表示SYN，`0b010000`表示ACK。
 
 ## 2. 四次挥手
+
 ![TCP三次握手四次挥手与十种状态](https://i.loli.net/2020/02/25/vQGpumfiMOletc7.jpg)
 
 由于TCP连接是全双工的，因此每个方向都必须单独进行关闭。这原则是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个 FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。首先进行关闭的一方将执行主动关闭，而另一方执行被动关闭。
 
 TCP四次挥手过程如下：
+
 * (1) TCP客户端发送一个FIN，用来关闭客户到服务器的数据传送。
 * (2) 服务器收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。和SYN一样，一个FIN将占用一个序号。
 * (3) 服务器关闭客户端的连接，发送一个FIN给客户端。
 * (4) 客户端发回ACK报文确认，并将确认序号设置为收到序号加1。
 
 ## 3. 2MSL
+
 MSL(Maximum Segment Lifetime) 是报文最大生存时间，即报文在网络上存在的最长时间，超过这个时间报文将被丢弃。MSL在不同操作系统中市场也不尽相同。
 
 Platform|MSL
@@ -59,6 +64,7 @@ tcp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)  # Socket地址重用  不必等待2
 ```
 
 ## 4. TCP Socket
+
 TCP是一种面向连接的单播协议，在发送数据前，通信双方必须在彼此间建立一条连接。由于需要比较复杂的过程建立连接，TCP需要耗费比UDP更多的资源，且速度略慢于UDP。
 
 ![TCP通信模型](https://i.loli.net/2020/02/25/c8k9RmvDw45gFZs.png)
@@ -102,6 +108,7 @@ tcp_client.close()
 ## 5. 长连接与短连接
 
 ### 5.1 长短连接简介
+
 TCP在真正的读写操作之前，server与client之间会通过三次握手建立一个连接，当读写操作完成后，双方不再需要这个连接时会经历四次挥手释放这个连接，每次连接都会有一定的资源和时间消耗。
 
 在建立一次TCP连接之后完成一次数据传输工作后立即关闭连接，这种连接使用方式称为短链接，而连接建立后进行一次数据传输完成后，保持连接不关闭，直接进行后续数据操作直到完成后关闭连接，这种方式则称为长连接。
@@ -123,9 +130,11 @@ TCP在真正的读写操作之前，server与client之间会通过三次握手�
 TCP服务器会为每个客户端连接创建一个专属Socket对象负责与此客户端进行通信。TCP服务端以连接为单位提供服务。所有客户端连接都被维护在连接队列当中，不同连接之间一般是并行执行，而单个连接内部则是串行执行。
 
 ### 5.3 共享连接
+
 单客户端连接在服务端是串行执行，这也就意味着单个客户端内部，多任务之间共享一个连接对象时，即便并发请求也会被服务端串行依次处理。如果某此请求执行耗时任务，之后的请求就会等待，客户端在2MSL内没有收到ACK数据包就会执行重发，直到耗时任务行完毕后才会执行后续请求。因此，客户端程序中多任务共享单个连接与单任务执行并无分别。
 
 我们可以通过以下示例来验证刚才的结论。
+
 ```py
 from gevent import monkey, socket
 from gevent import spawn, sleep
@@ -177,6 +186,7 @@ if __name__ == '__main__':
 ```
 
 为了避免CPython中[GIL](thread.md#_4-全局解释器锁-gil)伪多线程的影响，这里我们使用.Net来实现多任务TCP客户端。
+
 ```csharp
 using System;
 using System.Text;
@@ -221,6 +231,7 @@ namespace TcpClient
     }
 }
 ```
+
 ![客户端共享TCP连接](https://i.loli.net/2020/02/25/5QMEajBxP7HkLdo.jpg)
 
 > 以上案例代码共享在[Github](https://github.com/colin-chang/LongConnectionExploration)，有兴趣的读者可以自行测试。
@@ -232,10 +243,11 @@ namespace TcpClient
 为了避免客户端共享连接造成多任务间相互干扰，我们就需要为每个任务分配不同的数据库连接，而多数任务都是简单短促地执行完成，待任务完成后，我们不关闭数据库连接，而是将其放入一个共享队列中，待到其他任务需要申请数据库连接时，程序就可以直接到共享队列中快速获取一个连额使用而不需再经历三次握手重新建立新的连接，我们称这个共享队列为数据库连接池。
 
 不同的开发平台中对关系型数据库和非关系型数据库都有其各自的对数据库连接池实现和应用。以.Net平台为例，访问关系型数据库完成后调用`IDbConnection`对象的`Dispose()`时(多通过`using`关键字自动实现)会释放`IDbConnection`对象并将其占用的数据库连接归还到连接池中。在非关系型数据库中也有对数据库连接池的应用，如[MongoDB连接池](https://architecture.a-nomad.com/nosql/mongo.html#_8-2-mongo-连接池),在`Mongo Driver`中提供的`MongoClient`对象本身就实现了一个线程安全的连接池。以下是来自其官方的阐述。
- 
-> Note: The Mongo object instance actually represents a pool of connections to the database; you will only need one object of class Mongo even with multiple threads. See the concurrency doc page for more information.The Mongo class is designed to be thread safe and shared among threads. Typically you create only 1 instance for a given DB cluster and use it across your app. 
+
+> Note: The Mongo object instance actually represents a pool of connections to the database; you will only need one object of class Mongo even with multiple threads. See the concurrency doc page for more information.The Mongo class is designed to be thread safe and shared among threads. Typically you create only 1 instance for a given DB cluster and use it across your app.
 
 ## 6. 多任务TCP服务器
+
 默认情况下Socket通信采用的是同步阻塞IO模型。这种情况下服务器只能同时为一个客户端服务。如果要TCP服务器同时为多客户单同时服务，最简单可以使用多进程、多线程或协程实现。除此之外，我们还可以使用非阻塞IO模型和IO多路复用模型实现，而这些模型都是单线程的。
 
 我们可以参考以下代码测试多客户端同时连接TCP服务器。
@@ -259,6 +271,7 @@ while True:
 ```
 
 ### 6.1 协程
+
 与多线程用法类似，将会阻塞程序的耗时操作交由[协程](coroutine.md#_4-gevent)执行，以实现多任务，同时为多客户端服务。
 
 ```py {1,3,4,35}
@@ -310,6 +323,7 @@ if __name__ == '__main__':
 ```
 
 ### 6.2 非阻塞IO模型
+
 除了传统的阻塞IO模型，我们还可以设置Socket为非阻塞模式。非阻塞模式下，服务端监听和客户端接收消息都不再阻塞程序。
 
 Python中使用非阻塞的socket,TCP服务端执行`accept()`时如果客户端没有`connect()`会抛出`OSError`，`recv()`则会抛出`BlockingIOError`需要开发者捕获异常。
@@ -372,6 +386,7 @@ if __name__ == '__main__':
 案例中使用了非阻塞的socket,`accept()`和`recv()`都不会阻塞程序，这样我们就可以通过单任务串行实现先检查是否有新客户端连接，然后再遍历已连接客户端接收数据，当客户端连接较少时，遍历已连接客户端接收消息耗时非常短，感觉上去基本与多任务效果无异。
 
 ### 6.3 IO多路复用模型
+
 传统多进程或多线程中一个IO流就会开启一个进程(线程)处理，当IO流数量巨大时，会造成大量的资源占用。所以人们提出了I/O多路复用这个模型，一个线程，通过记录IO流的状态来同时管理多个IO，可以提高服务器的吞吐能力。
 
 在多路复用的模型中，比较常用的有`select`,`pool`和`epoll`模型。这些都是系统接口，由操作系统提供，各编程语言都是在此基础上做了更高级的封装。
@@ -437,10 +452,10 @@ if __name__ == '__main__':
 
 select的一个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制。每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大，同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也会很大。
 
-
 `poll`与`select`没有本质上的差别，仅仅是没有了最大文件描述符数量的限制，使用较少不做详述。
 
 #### 6.3.2 epool
+
 epoll(**仅支持Linux**)具备了`select`和`poll`的一切优点，公认为性能最好的多路IO就绪通知方法。
 `epoll`没有最大并发连接的限制，能打开的FD(指的是文件描述符，通俗的理解就是套接字对应的数字编号)的上限远大于1024。
 

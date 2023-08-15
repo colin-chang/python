@@ -1,6 +1,7 @@
 # 可访问性
 
 ## 1. 可访问性
+
 在C#中对象可访问性有`public / internal / protected / private`等，虽然没有像C#对可访问性做如此细分的控制，但Python中也有类似的对象可访问性控制。
 
 Python对象的可访问性是通过对象命名区分的。
@@ -16,6 +17,7 @@ Python对象的可访问性是通过对象命名区分的。
 * 类中定义的所有类型的变量都会被子类继承，只是私有变量[名字重整](#_2-名字重整)不可直接访问而已。
 
 `person.py`:
+
 ```py
 public = "module public"
 _internal = "module internal"
@@ -34,7 +36,9 @@ class Student(Person):
         print("my name is %s,I'm %d" % (self.name, self._age))
         # print(self.__gender) 私有属性不可访问
 ```
+
 `main.py`:
+
 ```py
 from setup import *
 
@@ -62,6 +66,7 @@ if __name__ == '__main__':
 :::
 
 ## 2. 名字重整
+
 对象的私有成员也存在于对象的内存空间中，那么为什么外部不能访问呢，因为Python对其进行了名字重整(name mangling)。通俗的讲就是按照一定规则对其进行了重命名。
 
 名字重整的规则是在私有属性名称加`_ClassName`前缀，`_ClassName`是定义私有属性的类的类名称。在子类中也可以按此规则访问私有变量。

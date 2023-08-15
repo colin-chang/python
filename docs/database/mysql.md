@@ -1,8 +1,9 @@
-# MySQL 
+# MySQL
 
 本节我们以最流行的关系型数据库MySQL为例，简单介绍python的数据库交互。
 
 ## 1. MySQL
+
 MySQL是最流行的关系型数据库之一，下面我们来简单介绍一些MySQL特有的语法和并穿插讲解一些注意点。
 
 ```sh
@@ -54,6 +55,7 @@ mysql> SHOW CREATE TABLE students;
 ```
 
 ### 1.1 GROUP_CONCAT
+
 mysql在分组中提供了一个`GROUP_CONCAT()`可以按组将特定字段用逗号拼接，作为一个聚合字段。
 
 ```sh
@@ -66,7 +68,8 @@ mysql> SELECT gender,GROUP_CONCAT(name) as names FROM students GROUP BY gender;
 +--------+---------------+
 ```
 
-### 1.2 CREATE TABLE ... SELECT ...
+### 1.2 CREATE TABLE ... SELECT
+
 ```sql
 -- 创建年级表，并且将从班级中查询到的年级数据插入新建的年级表中
 create table grades (
@@ -74,7 +77,8 @@ id int unsigned primary key auto_increment,
 name varchar(30) not null) select grade as name from classes group by grade;
 ```
 
-### 1.3 UPDATE ... JOIN ...
+### 1.3 UPDATE ... JOIN
+
 ```sql
 -- 查看classes表中的年级名称对应的年级id
 SELECT * FROM classes as c JOIN grades as g ON c.grade=g.name
@@ -84,6 +88,7 @@ UPDATE classes as c JOIN grades as g ON c.grade=g.name set c.grade=g.id
 ```
 
 ### 1.4 存储引擎
+
 ```sh
 # 显示当前支持的表存储引擎
 mysql> SHOW ENGINES;
@@ -117,10 +122,12 @@ rollback
 ```
 
 ### 1.5 字符集与排序规则
+
 * 字符集。数据库字符集即编码格式，一般选择`utf8`的国际通用编码格式, 支持中文。
 * 排序规则。常用`utf8_general_ci`和`utf8_bin`.前者大小写不敏感，后者大小写敏感
 
 ## 2. PyMySQL
+
 PyMySQL是python中的MySQL Driver。
 
 ```py
@@ -129,6 +136,7 @@ pip3 install pymysql
 ```
 
 ### 2.1 CRUD
+
 ```py {1,4,6,9,12,17,27,34,36}
 from pymysql import connect
 
@@ -172,9 +180,11 @@ except Exception as ex:
 cur.close()
 conn.close()
 ```
+
 参数化查询语句中，不管字段是什么类型，统一使用`%s`占位符,且不能加引号。
 
 ### 2.2 with
+
 ```py
 from pymysql import connect
 
@@ -190,6 +200,7 @@ with connect(host="127.0.0.1", port=3306, user="root", password="123123", databa
 ```
 
 ## 3. SqlHelper
+
 ```py
 from pymysql import connect
 import logging

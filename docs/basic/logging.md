@@ -55,7 +55,7 @@ format 字段格式|描述
 `%(lineno)d`|当前行号
 `%(funcName)s`|日志产生的函数名
 `%(message)s`|日志内容
-`%(asctime)s`|日记产生时间
+`%(asctime)s`|日志产生时间
 `%(process)s`|当前进程ID
 `%(processName)s`|当前进程名称
 `%(thread)s`|当前线程ID
